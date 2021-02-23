@@ -79,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser currentUser = mAuth.getCurrentUser();
                     if (currentUser != null) {
                         currentUser.reload();
+                        FirebaseAuth.getInstance().signOut();
                     } else {
                         mAuth.createUserWithEmailAndPassword(tiet_email.getText().toString().trim(),
                                 tiet_password.getText().toString().trim())
@@ -97,15 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Account created successfully.",
                             Toast.LENGTH_SHORT).show();
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.putExtra(User.USER_EMAIL, user.getEmail());
-
-                    setResult(RESULT_OK);
                     finish();
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Authentication failed.",
+                            task.getException().toString(),
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -114,21 +110,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validate() {
         if (tiet_name.getText().toString().trim().length() < 3) {
-            tiet_name.setError("Name must have at least 3 characters.");
+            tiet_name.setError(getString(R.string.error_invalid_name));
             return false;
         } else {
             tiet_name.setError(null);
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(tiet_email.getText().toString().trim()).matches()) {
-            tiet_email.setError("Invalid e-mail address.");
+            tiet_email.setError(getString(R.string.error_invalid_email));
             return false;
         } else {
             tiet_email.setError(null);
         }
 
         if (tiet_password.getText().toString().trim().length() < 8) {
-            tiet_password.setError("Password mush have at least 8 characters.");
+            tiet_password.setError(getString(R.string.error_invalid_password));
             return false;
         } else {
             tiet_password.setError(null);
