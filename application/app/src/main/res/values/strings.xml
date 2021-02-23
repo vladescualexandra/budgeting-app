@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">budgeting-app</string>
+    <string name="text_email">E-mail</string>
+    <string name="text_password">Password</string>
+    <string name="login_register_text">Don\'t have an account yet? Register now.</string>
+    <string name="text_login">Login</string>
+</resources>
