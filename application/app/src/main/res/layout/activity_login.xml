@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".LoginActivity"
     android:layout_gravity="center"
-    >
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -17,10 +15,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_email"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_email"
-            style="@style/text_style_input"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -32,6 +30,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_password"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_password"
@@ -41,29 +40,32 @@
 
     <TextView
         android:id="@+id/login_redirect_to_register"
+        style="@style/text_style_redirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16sp"
         android:layout_gravity="center_horizontal"
+        android:layout_margin="16sp"
+        android:padding="16sp"
+
         android:text="@string/login_register_text" />
 
     <Button
         android:id="@+id/login_login_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16sp"
         android:layout_gravity="center_horizontal"
-        android:text="@string/text_login"
-    />
+        android:layout_marginLeft="32sp"
+        android:layout_marginRight="32sp"
+
+        android:text="@string/text_login" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/login_google_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16sp"
         android:layout_gravity="center_horizontal"
-        android:text="Login with Google"
-        />
+        android:layout_marginLeft="32sp"
+        android:layout_marginRight="32sp" />
 
 
 </LinearLayout>

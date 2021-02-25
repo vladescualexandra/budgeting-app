@@ -1,6 +1,13 @@
 package com.example.budgeting_app.user;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import java.io.Serializable;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class User implements Serializable {
 
@@ -22,9 +29,10 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public User(String key, String name) {
+    public User(String key, String name, String email) {
         this.key = key;
-        this.name = name;
+        this.name = "Default name";
+        this.email = email;
     }
 
     public String getKey() {
@@ -41,5 +49,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setAccount(Context context, User user) {
+        SharedPreferences preferences = context.getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(User.USER_KEY, user.getKey());
+        editor.putString(User.USER_NAME, user.getName());
+        editor.putString(User.USER_EMAIL, user.getEmail());
+        editor.apply();
     }
 }

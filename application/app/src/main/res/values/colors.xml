@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="rally_white">#EEEEEE</color>
     <color name="rally_green">#1EB980</color>
     <color name="rally_dark_green">#045D56</color>
     <color name="rally_orange">#FF6859</color>
@@ -16,4 +17,5 @@
 
     <color name="rally_dark_grey">#272731</color>
     <color name="rally_grey">#33343e</color>
+
 </resources>

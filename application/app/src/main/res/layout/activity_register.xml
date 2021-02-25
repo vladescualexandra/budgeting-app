@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,6 +14,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_name"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_name"
@@ -31,6 +31,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_email"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_email"
@@ -46,6 +47,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_password"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_password"
@@ -55,6 +57,7 @@
 
     <TextView
         android:id="@+id/login_redirect_to_login"
+        style="@style/text_style_redirect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -63,18 +66,20 @@
 
     <Button
         android:id="@+id/register_create_account_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="16sp"
+        android:layout_marginLeft="32sp"
+        android:layout_marginRight="32sp"
         android:text="@string/text_register" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/register_google_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="16sp"
+        android:layout_marginLeft="32sp"
+        android:layout_marginRight="32sp"
         android:text="@string/btn_register_with_google" />
 
 
