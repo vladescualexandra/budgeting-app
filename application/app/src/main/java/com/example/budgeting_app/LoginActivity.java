@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.budgeting_app.user.User;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText tiet_password;
     private TextView tv_redirect_to_register;
     private Button btn_login;
+    private SignInButton btn_login_google;
 
     User user;
 
@@ -117,5 +119,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "163196167654-c3mvb6ccse5jmdu2a7pt7voindfsr856.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.budgeting_app",
+            "certificate_hash": "b8c6402c2e63c57e19c223626926c18f12842e51"
+          }
+        },
+        {
           "client_id": "163196167654-uo7k08goai2r5qhtkk3ea5b0bq4jimi6.apps.googleusercontent.com",
           "client_type": 3
         }

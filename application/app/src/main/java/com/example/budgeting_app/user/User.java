@@ -1,6 +1,8 @@
 package com.example.budgeting_app.user;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     public static final String USER_PREFS = "user_info";
     public static final String USER_EXTRA = "user_extra";
