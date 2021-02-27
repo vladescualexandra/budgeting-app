@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_analytics"
+        android:enabled="true"
+        android:title="@string/menu_analytics"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_transaction"
+        android:enabled="true"
+        android:title="@string/menu_new_transaction"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/menu_settings"
+        android:enabled="true"
+        android:title="@string/menu_settings"
+        app:showAsAction="ifRoom" />
+</menu>

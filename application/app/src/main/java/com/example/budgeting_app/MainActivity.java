@@ -20,6 +20,7 @@ import com.example.budgeting_app.fragments.TodayFragment;
 import com.example.budgeting_app.fragments.TotalFragment;
 import com.example.budgeting_app.fragments.WeekFragment;
 import com.example.budgeting_app.fragments.YearFragment;
+import com.example.budgeting_app.settings.SettingsActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.tabs.TabLayout;
@@ -27,10 +28,9 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
 
     private String USER_KEY;
-    private String USER_NAME;
-    private String USER_EMAIL;
 
-    TextView tv_text;
+    private Button btn_settings;
+
     private TabLayout tabLayout;
 
 
@@ -39,42 +39,53 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getUID();
+
         initComponents();
+
+
+        btn_settings = findViewById(R.id.menu_settings);
+        btn_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initComponents() {
+        tabLayout = findViewById(R.id.main_tabs);
+        tabLayout.addOnTabSelectedListener(changeTabEventListener());
+
+        SharedPreferences prefs = getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
+        USER_KEY = prefs.getString(User.USER_KEY, null);
 
         TodayFragment fragment = new TodayFragment();
         show(fragment);
-
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {
         return new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Fragment fragment = null;
+                Fragment fragment;
                 switch (tab.getPosition()) {
                     case 1:
-                        // day
                         fragment = new DayFragment();
                         break;
                     case 2:
                         fragment = new WeekFragment();
-                        // week
                         break;
                     case 3:
-                        // month
                         fragment = new MonthFragment();
                         break;
                     case 4:
-                        // year
                         fragment = new YearFragment();
                         break;
                     case 5:
-                        // total
                         fragment = new TotalFragment();
                         break;
                     default:
-                        // today
                         fragment = new TodayFragment();
                         break;
                 }
@@ -104,48 +115,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initComponents() {
-        Button btn_sign_out = findViewById(R.id.sign_out);
-
-
-        tv_text = findViewById(R.id.textView2);
-        tv_text.setText(USER_EMAIL);
-
-        btn_sign_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoogleAuthentication ga = new GoogleAuthentication(getApplicationContext());
-                GoogleSignInClient client = ga.getClient();
-                client.signOut().addOnCompleteListener(signOutEventListener());
-            }
-        });
-
-        tabLayout = findViewById(R.id.main_tabs);
-        tabLayout.addOnTabSelectedListener(changeTabEventListener());
-    }
-
-    private OnCompleteListener<Void> signOutEventListener() {
-        return task -> {
-            SharedPreferences preferences = getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.remove(User.USER_KEY);
-            editor.remove(User.USER_NAME);
-            editor.remove(User.USER_EMAIL);
-            editor.apply();
-
-            Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-            startActivity(intent);
-        };
-    }
-
-    private void getUID() {
-        SharedPreferences prefs = getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
-        USER_KEY = prefs.getString(User.USER_KEY, null);
-        USER_EMAIL = prefs.getString(User.USER_EMAIL, null);
-
-        Log.e("getUID", USER_EMAIL);
-
-    }
 
     @Override
     public void onBackPressed() {
