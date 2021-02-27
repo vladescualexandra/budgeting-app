@@ -1,4 +1,4 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,15 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.budgeting_app.MainActivity;
+import com.example.budgeting_app.R;
 import com.example.budgeting_app.authentication.EmailAuthentication;
 import com.example.budgeting_app.authentication.GoogleAuthentication;
+import com.example.budgeting_app.authentication.LoginActivity;
 import com.example.budgeting_app.util.InputValidation;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_SIGN_IN = 201;
+    private final int REQUEST_CODE_SIGN_IN = 201;
 
     private TextInputEditText tiet_name;
     private TextInputEditText tiet_email;

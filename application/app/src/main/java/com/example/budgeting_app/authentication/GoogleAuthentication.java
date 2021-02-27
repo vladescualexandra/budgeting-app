@@ -2,18 +2,15 @@ package com.example.budgeting_app.authentication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.example.budgeting_app.user.User;
+import com.example.budgeting_app.authentication.user.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class GoogleAuthentication {
 

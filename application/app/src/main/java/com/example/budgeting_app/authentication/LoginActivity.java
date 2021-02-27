@@ -1,4 +1,4 @@
-package com.example.budgeting_app;
+package com.example.budgeting_app.authentication;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,22 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.budgeting_app.authentication.EmailAuthentication;
-import com.example.budgeting_app.authentication.GoogleAuthentication;
-import com.example.budgeting_app.user.User;
+import com.example.budgeting_app.MainActivity;
+import com.example.budgeting_app.R;
 import com.example.budgeting_app.util.InputValidation;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.io.Serializable;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_SIGN_IN = 201;
+    private final int REQUEST_CODE_SIGN_IN = 201;
     private TextInputEditText tiet_email;
     private TextInputEditText tiet_password;
     private TextView tv_redirect_to_register;

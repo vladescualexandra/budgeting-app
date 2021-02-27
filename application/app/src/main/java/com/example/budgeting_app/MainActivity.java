@@ -1,7 +1,8 @@
 package com.example.budgeting_app;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,14 +11,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.budgeting_app.authentication.GoogleAuthentication;
-import com.example.budgeting_app.user.User;
+import com.example.budgeting_app.authentication.user.User;
+import com.example.budgeting_app.fragments.DayFragment;
+import com.example.budgeting_app.fragments.MonthFragment;
+import com.example.budgeting_app.fragments.TodayFragment;
+import com.example.budgeting_app.fragments.TotalFragment;
+import com.example.budgeting_app.fragments.WeekFragment;
+import com.example.budgeting_app.fragments.YearFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private String USER_EMAIL;
 
     TextView tv_text;
+    private TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,67 @@ public class MainActivity extends AppCompatActivity {
 
         getUID();
         initComponents();
+
+        TodayFragment fragment = new TodayFragment();
+        show(fragment);
+
+    }
+
+    private TabLayout.OnTabSelectedListener changeTabEventListener() {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment = null;
+                switch (tab.getPosition()) {
+                    case 1:
+                        // day
+                        fragment = new DayFragment();
+                        break;
+                    case 2:
+                        fragment = new WeekFragment();
+                        // week
+                        break;
+                    case 3:
+                        // month
+                        fragment = new MonthFragment();
+                        break;
+                    case 4:
+                        // year
+                        fragment = new YearFragment();
+                        break;
+                    case 5:
+                        // total
+                        fragment = new TotalFragment();
+                        break;
+                    default:
+                        // today
+                        fragment = new TodayFragment();
+                        break;
+                }
+                show(fragment);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
+    }
+
+    private void show(Fragment fragment) {
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.main_fragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     private void initComponents() {
@@ -51,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
                 client.signOut().addOnCompleteListener(signOutEventListener());
             }
         });
+
+        tabLayout = findViewById(R.id.main_tabs);
+        tabLayout.addOnTabSelectedListener(changeTabEventListener());
     }
 
     private OnCompleteListener<Void> signOutEventListener() {

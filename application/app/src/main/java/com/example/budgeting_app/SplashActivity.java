@@ -7,7 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.budgeting_app.user.User;
+import com.example.budgeting_app.authentication.LoginActivity;
+import com.example.budgeting_app.authentication.user.User;
 
 public class SplashActivity extends AppCompatActivity {
 

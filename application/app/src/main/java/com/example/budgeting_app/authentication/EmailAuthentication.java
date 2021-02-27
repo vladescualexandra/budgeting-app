@@ -4,13 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.example.budgeting_app.MainActivity;
-import com.example.budgeting_app.user.User;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.example.budgeting_app.authentication.user.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;

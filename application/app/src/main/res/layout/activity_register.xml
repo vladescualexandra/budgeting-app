@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".authentication.RegisterActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/login_register_input"

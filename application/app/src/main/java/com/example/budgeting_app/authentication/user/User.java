@@ -1,9 +1,7 @@
-package com.example.budgeting_app.user;
+package com.example.budgeting_app.authentication.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.io.Serializable;
 

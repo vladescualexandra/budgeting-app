@@ -13,5 +13,13 @@
     <string name="error_invalid_password">Password mush have at least 8 characters.</string>
     <string name="btn_register_with_google">Register with Google</string>
     <string name="error_invalid_name">Name must have at least 3 characters.</string>
+    <string name="tab_today">Today</string>
+    <string name="tab_week">Week</string>
+    <string name="tab_month">Month</string>
+    <string name="tab_total">Total</string>
+    <string name="tab_day">DAY</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_year">Year</string>
 
 </resources>
