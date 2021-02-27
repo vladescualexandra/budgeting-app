@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App">
-        <activity android:name=".settings.SettingsActivity"></activity>
+        <activity android:name=".settings.CategoriesActivity"/>
+        <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".authentication.LoginActivity" />
         <activity android:name=".authentication.RegisterActivity" />

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16sp">
+
+    <ImageView
+        android:id="@+id/row_item_category_icon"
+        android:src="@drawable/common_full_open_on_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp"/>
+
+    <TextView
+        android:id="@+id/row_item_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/default_category_name"
+        android:textSize="20sp"
+        android:textColor="@color/rally_white"
+        android:textAlignment="center"
+        android:gravity="center" />
+</LinearLayout>

@@ -35,5 +35,13 @@
     <string name="settings_sign_out">Sign out</string>
     <string name="settings_contact">Contact</string>
     <string name="settings_reminders">Reminders</string>
+    <string name="settings_customize_categories">Customize categories</string>
+    <string name="settings_back">Back</string>
+    <string name="categories_expenses">Expenses</string>
+    <string name="categories_income">Income</string>
+    <string name="add_new_category">Add new category</string>
+    <string name="default_category_name">default category name</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_save">Save</string>
 
 </resources>

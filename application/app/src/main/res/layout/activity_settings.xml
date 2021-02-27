@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="0"
-        android:contentDescription="Back"
+        android:contentDescription="@string/settings_back"
         android:padding="8sp"
+        android:background="@color/rally_grey"
         android:src="@drawable/abc_vector_test" />
 
     <androidx.cardview.widget.CardView
@@ -58,25 +59,14 @@
 
 
     <Button
-        android:id="@+id/settings_categories_expenses"
+        android:id="@+id/settings_categories"
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_row="3"
         android:layout_column="0"
         android:gravity="start|center"
-        android:text="@string/settings_categories_expenses"
-        android:textAlignment="textStart"/>
-
-    <Button
-        android:id="@+id/settings_categories_income"
-        style="@style/settings_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_row="4"
-        android:layout_column="0"
-        android:gravity="start|center"
-        android:text="@string/settings_categories_income"
+        android:text="@string/settings_customize_categories"
         android:textAlignment="textStart"/>
 
     <Button
@@ -84,7 +74,7 @@
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="5"
+        android:layout_row="4"
         android:layout_column="0"
         android:gravity="start|center"
         android:text="@string/settings_templates"
@@ -95,7 +85,7 @@
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="6"
+        android:layout_row="5"
         android:layout_column="0"
         android:gravity="start|center"
         android:text="@string/settings_theme"
@@ -106,7 +96,7 @@
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="7"
+        android:layout_row="6"
         android:layout_column="0"
         android:gravity="start|center"
         android:text="@string/settings_language"
@@ -118,7 +108,7 @@
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="8"
+        android:layout_row="7"
         android:layout_column="0"
         android:gravity="start|center"
         android:text="@string/settings_reminders"
@@ -129,7 +119,7 @@
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="9"
+        android:layout_row="8"
         android:layout_column="0"
         android:gravity="start|center"
         android:text="@string/settings_contact"
@@ -141,7 +131,7 @@
         style="@style/settings_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="10"
+        android:layout_row="9"
         android:layout_column="0"
         android:gravity="start|center"
         android:text="@string/settings_sign_out"

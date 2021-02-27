@@ -3,21 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_analytics"
+        android:id="@+id/menu_categories_expenses"
         android:enabled="true"
-        android:title="@string/menu_analytics"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:title="@string/categories_expenses"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_transaction"
+        android:id="@+id/menu_categories_income"
         android:enabled="true"
-        android:title="@string/menu_new_transaction"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:title="@string/categories_income"
+        app:showAsAction="always" />
 
 
-    <item
-        android:id="@+id/menu_settings"
-        android:enabled="true"
-        android:title="@string/menu_settings"
-        app:showAsAction="ifRoom" />
 </menu>

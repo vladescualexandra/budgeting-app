@@ -20,8 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView tv_user_email;
     private ImageButton btn_back;
     private Button btn_balances;
-    private Button btn_categories_expenses;
-    private Button btn_categories_income;
+    private Button btn_categories;
     private Button btn_templates;
     private Button btn_theme;
     private Button btn_language;
@@ -50,8 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         btn_back = findViewById(R.id.settings_back);
         btn_balances = findViewById(R.id.settings_balances);
-        btn_categories_expenses = findViewById(R.id.settings_categories_expenses);
-        btn_categories_income = findViewById(R.id.settings_categories_income);
+        btn_categories = findViewById(R.id.settings_categories);
         btn_templates = findViewById(R.id.settings_templates);
         btn_theme = findViewById(R.id.settings_theme);
         btn_language = findViewById(R.id.settings_language);
@@ -77,8 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_back.setOnClickListener(v -> finish());
         
         btn_balances.setOnClickListener(balancesEventListener());
-        btn_categories_expenses.setOnClickListener(expenseCategoriesEventListener());
-        btn_categories_income.setOnClickListener(incomeCategoriesEventListener());
+        btn_categories.setOnClickListener(categoriesEventListener());
         btn_templates.setOnClickListener(templatesEventListener());
         btn_theme.setOnClickListener(themeEventListener());
         btn_language.setOnClickListener(languageEventListener());
@@ -103,15 +100,10 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
-    private View.OnClickListener expenseCategoriesEventListener() {
+    private View.OnClickListener categoriesEventListener() {
         return v-> {
-
-        };
-    }
-
-    private View.OnClickListener incomeCategoriesEventListener() {
-        return v-> {
-
+            Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
+            startActivity(intent);
         };
     }
 
