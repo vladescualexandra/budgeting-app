@@ -12,6 +12,7 @@ import android.widget.TextView;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
+import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.authentication.user.User;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -88,6 +89,9 @@ public class SettingsActivity extends AppCompatActivity {
             editor.remove(User.USER_NAME);
             editor.remove(User.USER_EMAIL);
             editor.apply();
+
+            GoogleAuthentication googleAuthentication = new GoogleAuthentication(getApplicationContext());
+            googleAuthentication.signOut();
 
             Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(intent);

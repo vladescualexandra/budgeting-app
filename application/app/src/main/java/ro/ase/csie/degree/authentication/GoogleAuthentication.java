@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class GoogleAuthentication {
 
@@ -28,6 +29,9 @@ public class GoogleAuthentication {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut();
+        }
     }
 
     public GoogleSignInClient getClient() {
@@ -57,6 +61,10 @@ public class GoogleAuthentication {
     private void setAccount(GoogleSignInAccount account) {
         User user = new User(account.getId(), account.getDisplayName(), account.getEmail());
         user.setAccount(context, user);
+    }
+
+    public void signOut() {
+        FirebaseAuth.getInstance().signOut();
     }
 
 
