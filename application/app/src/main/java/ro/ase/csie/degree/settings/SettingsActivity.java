@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
