@@ -18,15 +18,16 @@
         <item name="android:textColor">@color/rally_white</item>
     </style>
 
-    <style name="settings_button">
+    <style name="settings_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
         <item name="backgroundColor">@color/rally_grey</item>
         <item name="android:textColor">@color/rally_white</item>
         <item name="background">@color/rally_grey</item>
         <item name="backgroundTint">@color/rally_grey</item>
         <item name="colorButtonNormal">@color/rally_grey</item>
         <item name="android:colorBackground">@color/rally_grey</item>
-        <item name="borderWidth">0dp</item>
+        <item name="android:paddingLeft">16sp</item>
     </style>
 
 </resources>
