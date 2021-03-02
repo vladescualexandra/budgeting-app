@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:163196167654:android:cabf968fa89045cc01a227",
+        "mobilesdk_app_id": "1:163196167654:android:f65636d28ed2c77501a227",
         "android_client_info": {
-          "package_name": "com.example.budgeting_app"
+          "package_name": "ro.ase.csie.degree"
         }
       },
       "oauth_client": [
         {
-          "client_id": "163196167654-c3mvb6ccse5jmdu2a7pt7voindfsr856.apps.googleusercontent.com",
+          "client_id": "163196167654-07pvqfjcfi914pivvv4abp7okbfo1a7f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.budgeting_app",
+            "package_name": "ro.ase.csie.degree",
             "certificate_hash": "b8c6402c2e63c57e19c223626926c18f12842e51"
           }
         },

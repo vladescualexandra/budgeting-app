@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TotalFragment">
+    tools:context="ro.ase.csie.degree.fragments.TotalFragment">
 
     <TextView
         android:textSize="20dp"

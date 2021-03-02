@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="ro.ase.csie.degree.MainActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tabs"
