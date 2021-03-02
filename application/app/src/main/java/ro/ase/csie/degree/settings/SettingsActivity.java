@@ -68,15 +68,22 @@ public class SettingsActivity extends AppCompatActivity {
         String user_name = user_info.getString(User.USER_NAME, null);
         String user_email = user_info.getString(User.USER_EMAIL, null);
 
-        user = new User(user_key, user_name, user_email);
+        if (user_key != null && user_name != null && user_email != null) {
+            user = new User(user_key, user_name, user_email);
 
-        tv_user_name.setText(user.getName());
-        tv_user_email.setText(user.getEmail());
+            tv_user_name.setText(user.getName());
+            tv_user_email.setText(user.getEmail());
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Something is null.", Toast.LENGTH_LONG).show();
+        }
+
+
     }
-    
+
     private void initEventListeners() {
         btn_back.setOnClickListener(v -> finish());
-        
+
         btn_balances.setOnClickListener(balancesEventListener());
         btn_categories.setOnClickListener(categoriesEventListener());
         btn_templates.setOnClickListener(templatesEventListener());
@@ -84,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_language.setOnClickListener(languageEventListener());
         btn_reminders.setOnClickListener(remindersEventListener());
         btn_contact.setOnClickListener(contactEventListener());
-        
+
         btn_sign_out.setOnClickListener(v -> {
             SharedPreferences.Editor editor = user_info.edit();
             editor.remove(User.USER_KEY);
@@ -101,44 +108,44 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private View.OnClickListener balancesEventListener() {
-        return v-> {
+        return v -> {
 
         };
     }
 
     private View.OnClickListener categoriesEventListener() {
-        return v-> {
+        return v -> {
             Intent intent = new Intent(getApplicationContext(), CategoriesActivity.class);
             startActivity(intent);
         };
     }
 
     private View.OnClickListener templatesEventListener() {
-        return v-> {
+        return v -> {
 
         };
     }
 
     private View.OnClickListener themeEventListener() {
-        return v-> {
+        return v -> {
 
         };
     }
 
     private View.OnClickListener languageEventListener() {
-        return v-> {
+        return v -> {
 
         };
     }
 
     private View.OnClickListener remindersEventListener() {
-        return v-> {
+        return v -> {
 
         };
     }
 
     private View.OnClickListener contactEventListener() {
-        return v-> {
+        return v -> {
 
         };
     }

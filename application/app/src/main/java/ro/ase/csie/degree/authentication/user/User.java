@@ -49,12 +49,21 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public void setAccount(Context context, User user) {
+    @Override
+    public String toString() {
+        return "User{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public void setAccount(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(User.USER_KEY, user.getKey());
-        editor.putString(User.USER_NAME, user.getName());
-        editor.putString(User.USER_EMAIL, user.getEmail());
+        editor.putString(User.USER_KEY, this.key);
+        editor.putString(User.USER_NAME, this.name);
+        editor.putString(User.USER_EMAIL, this.email);
         editor.apply();
     }
 }

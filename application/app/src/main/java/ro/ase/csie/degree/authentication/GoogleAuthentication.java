@@ -60,7 +60,7 @@ public class GoogleAuthentication {
 
     private void setAccount(GoogleSignInAccount account) {
         User user = new User(account.getId(), account.getDisplayName(), account.getEmail());
-        user.setAccount(context, user);
+        user.setAccount(context);
     }
 
     public void signOut() {
