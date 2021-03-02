@@ -43,5 +43,6 @@
     <string name="default_category_name">default category name</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_save">Save</string>
+    <string name="category_name">Category name</string>
 
 </resources>

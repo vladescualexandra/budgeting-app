@@ -2,6 +2,8 @@ package com.example.budgeting_app.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,51 +19,58 @@ import com.example.budgeting_app.R;
 import com.example.budgeting_app.model.Category;
 
 import java.util.List;
+import android.graphics.Color;;
 
-public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder> {
+public class IconAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private int resource;
     private List<String> iconList;
     private LayoutInflater layoutInflater;
 
-    public IconAdapter(@NonNull List<String> iconList) {
+    private int selectedIndex = 0;
+
+    public IconAdapter(@NonNull Context context,
+                       int resource,
+                       @NonNull List<String> iconList,
+                       LayoutInflater layoutInflater) {
+        super(context, resource, iconList);
+        this.context = context;
+        this.resource = resource;
         this.iconList = iconList;
+        this.layoutInflater = layoutInflater;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_item_icon, parent, false);
-        return new ViewHolder(view);
-    }
+    public View getView(int position, @Nullable View convertView,
+                        @NonNull ViewGroup parent) {
+        @SuppressLint("ViewHolder")
+        View view = layoutInflater.inflate(resource, parent, false);
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (iconList.size() > 0) {
             if (position < iconList.size()) {
                 String icon = iconList.get(position);
                 if (icon != null) {
-                    int resID = context.getResources().getIdentifier(context.getPackageName() + ":drawable/" + icon, null, null);
-                    holder.iv_category_icon.setImageResource(resID);
+                    buildIcon(view, icon);
+                }
+
+                if (position == selectedIndex) {
+                    view.setBackgroundColor(Color.WHITE);
                 }
             }
         }
+        return view;
     }
 
-    @Override
-    public int getItemCount() {
-        return iconList.size();
+    private void buildIcon(View view, String icon) {
+        ImageView iv_category_icon = view.findViewById(R.id.row_item_icon);
+
+        int resID = context.getResources().getIdentifier(context.getPackageName() + ":drawable/" + icon, null, null);
+        iv_category_icon.setImageResource(resID);
     }
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_category_icon;
-
-        ViewHolder(View view) {
-            super(view);
-            iv_category_icon = view.findViewById(R.id.row_item_category_icon);
-        }
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex;
     }
 }

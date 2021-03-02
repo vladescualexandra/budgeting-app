@@ -1,6 +1,7 @@
 package com.example.budgeting_app.settings;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,8 @@ import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity {
 
+    public static final String CATEGORY_TYPE = "category_type";
+    private static final int REQUEST_CODE_ADD_CATEGORY = 201;
     private BottomNavigationView menu_categories;
     private FloatingActionButton fab_add;
     private ListView lv_categories;
@@ -36,19 +40,15 @@ public class CategoriesActivity extends AppCompatActivity {
     private List<Category> expenses_categories;
     private List<Category> income_categories;
 
-    private List<String> icons = new ArrayList<>();
+
+    private boolean isExpense = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        icons.add("ic_baseline_add_circle_24");
-        icons.add("ic_baseline_add_circle_24");
-        icons.add("ic_baseline_add_circle_24");
-        icons.add("ic_baseline_add_circle_24");
-        icons.add("ic_baseline_add_circle_24");
-        icons.add("ic_baseline_add_circle_24");
+
 
         Category c_ex1 = new Category("", "ex1");
         Category c_ex2 = new Category("", "ex2");
@@ -112,38 +112,27 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private View.OnClickListener addCategoryEventListener() {
         return v -> {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext(),
-                    R.style.Widget_AppCompat_Button_ButtonBar_AlertDialog);
+            Intent intent = new Intent(getApplicationContext(), AddCategoryActivity.class);
+            isExpense = menu_categories.getSelectedItemId() == R.id.menu_categories_expenses;
 
-            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-            View view = layoutInflater.inflate(R.layout.dialog_add_category, null);
-
-            RecyclerView rv_icons = view.findViewById(R.id.add_category_select_icon);
-            IconAdapter adapter = new IconAdapter(icons);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            rv_icons.setLayoutManager(linearLayoutManager);
-            rv_icons.setItemAnimator(new DefaultItemAnimator());
-            rv_icons.setAdapter(adapter);
-
-
-            alertDialogBuilder.setView(view);
-
-            ListView lv_icons = findViewById(R.id.add_category_select_icon);
-            EditText tiet_name = findViewById(R.id.add_category_select_name);
-
-            alertDialogBuilder.setPositiveButton(R.string.dialog_save, (dialog, which) -> {
-                Category category = new Category((String) lv_icons.getSelectedItem(), tiet_name.getText().toString().trim());
-                if (menu_categories.getSelectedItemId() == R.id.menu_categories_expenses) {
-                    expenses_categories.add(category);
-                } else if (menu_categories.getSelectedItemId() == R.id.menu_categories_income) {
-                    income_categories.add(category);
-                }
-                notifyAdapter();
-            });
-
-            alertDialogBuilder.setNegativeButton(R.string.dialog_cancel, null);
-            alertDialogBuilder.show();
+            intent.putExtra(CATEGORY_TYPE, isExpense);
+            startActivityForResult(intent, REQUEST_CODE_ADD_CATEGORY);
         };
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ADD_CATEGORY
+                && data != null
+                && resultCode == RESULT_OK) {
+            Category category = (Category) data.getSerializableExtra("new_category");
+            if (isExpense) {
+                expenses_categories.add(category);
+            } else {
+                income_categories.add(category);
+            }
+            notifyAdapter();
+        }
     }
 }
