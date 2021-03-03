@@ -11,12 +11,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16sp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_category_select_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/rally_white"
             android:hint="@string/category_name"/>
     </com.google.android.material.textfield.TextInputLayout>
 

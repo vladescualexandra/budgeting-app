@@ -51,7 +51,7 @@ public class IconAdapter extends ArrayAdapter<String> {
                 }
 
                 if (position == selectedIndex) {
-                    view.setBackgroundColor(Color.WHITE);
+                    view.setBackgroundColor(Color.BLUE);
                 }
             }
         }
@@ -61,7 +61,7 @@ public class IconAdapter extends ArrayAdapter<String> {
     private void buildIcon(View view, String icon) {
         ImageView iv_category_icon = view.findViewById(R.id.row_item_icon);
 
-        int resID = context.getResources().getIdentifier(context.getPackageName() + ":drawable/" + icon, null, null);
+        int resID = context.getResources().getIdentifier(icon, "drawable", context.getPackageName());
         iv_category_icon.setImageResource(resID);
     }
 
