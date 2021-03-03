@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.settings;
+package ro.ase.csie.degree.settings.categories;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
-    private final String NEW_CATEGORY = "new_category";
+    public static final String NEW_CATEGORY = "new_category";
     private List<String> icons = new ArrayList<>();
 
     private TextInputEditText tiet_name;

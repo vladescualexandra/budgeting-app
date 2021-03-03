@@ -64,14 +64,11 @@ public class EmailAuthentication {
                 Toast.makeText(context,
                         user.toString(),
                         Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, LoginActivity.class);
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
             });
     }
 
     private void saveData() {
-        FirebaseService firebaseService = FirebaseService.getInstance(context);
+        FirebaseService firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_USERS);
         firebaseService.insertUserData(user);
     }
 

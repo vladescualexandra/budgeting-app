@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App">
-        <activity android:name="ro.ase.csie.degree.settings.AddCategoryActivity"></activity>
-        <activity android:name="ro.ase.csie.degree.settings.CategoriesActivity" />
+        <activity android:name="ro.ase.csie.degree.settings.categories.AddCategoryActivity"></activity>
+        <activity android:name="ro.ase.csie.degree.settings.categories.CategoriesActivity" />
         <activity android:name="ro.ase.csie.degree.settings.SettingsActivity" />
         <activity android:name="ro.ase.csie.degree.MainActivity" />
         <activity android:name="ro.ase.csie.degree.authentication.LoginActivity" />

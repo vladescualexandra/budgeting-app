@@ -16,6 +16,7 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.settings.categories.CategoriesActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 

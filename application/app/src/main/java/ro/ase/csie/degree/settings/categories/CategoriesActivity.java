@@ -1,15 +1,19 @@
-package ro.ase.csie.degree.settings;
+package ro.ase.csie.degree.settings.categories;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import ro.ase.csie.degree.R;
 
+import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.util.CategoryAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,9 +30,10 @@ public class CategoriesActivity extends AppCompatActivity {
     private FloatingActionButton fab_add;
     private ListView lv_categories;
 
-    private List<Category> expenses_categories;
-    private List<Category> income_categories;
+    private List<Category> expenses_categories = new ArrayList<>();
+    private List<Category> income_categories = new ArrayList<>();
 
+    private FirebaseService firebaseService;
 
     private boolean isExpense = true;
 
@@ -37,26 +42,8 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-
-
-        Category c_ex1 = new Category("", "ex1");
-        Category c_ex2 = new Category("", "ex2");
-        Category c_ex3 = new Category("", "ex3");
-
-        Category c_inc1 = new Category("", "inc1");
-        Category c_inc2 = new Category("", "inc2");
-        Category c_inc3 = new Category("", "inc3");
-
-        expenses_categories = new ArrayList<>();
-        expenses_categories.add(c_ex1);
-        expenses_categories.add(c_ex2);
-        expenses_categories.add(c_ex3);
-        income_categories = new ArrayList<>();
-        income_categories.add(c_inc1);
-        income_categories.add(c_inc2);
-        income_categories.add(c_inc3);
-
         initMenu();
+        getCategoriesFromFirebase();
     }
 
     private void initMenu() {
@@ -71,8 +58,29 @@ public class CategoriesActivity extends AppCompatActivity {
         fab_add.setOnClickListener(addCategoryEventListener());
     }
 
-    private void setAdapter(List<Category> list) {
+    private void getCategoriesFromFirebase() {
+        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES);
+        firebaseService.updateCategoriesUI(updateCategoriesCallback());
+    }
 
+    private Callback<List<Category>> updateCategoriesCallback() {
+        return result -> {
+            if (result != null) {
+                expenses_categories.clear();
+                income_categories.clear();
+                for (Category category : result) {
+                    if (category.getType().equals(Category.TYPE_EXPENSE)) {
+                        expenses_categories.add(category);
+                    } else if (category.getType().equals(Category.TYPE_INCOME)){
+                        income_categories.add(category);
+                    }
+                }
+                notifyAdapter();
+            }
+        };
+    }
+
+    private void setAdapter(List<Category> list) {
         CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(),
                 R.layout.row_item_category,
                 list,
@@ -115,13 +123,17 @@ public class CategoriesActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_ADD_CATEGORY
                 && data != null
                 && resultCode == RESULT_OK) {
-            Category category = (Category) data.getSerializableExtra("new_category");
-            if (isExpense) {
-                expenses_categories.add(category);
-            } else {
-                income_categories.add(category);
-            }
+            Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
+            category.setType(isExpense ? Category.TYPE_EXPENSE : Category.TYPE_INCOME);
+            category.setUser(getUID());
+            firebaseService.insertCategory(category);
             notifyAdapter();
         }
     }
+
+    private String getUID() {
+        return getSharedPreferences(User.USER_PREFS, MODE_PRIVATE)
+                .getString(User.USER_KEY, null);
+    }
+
 }
