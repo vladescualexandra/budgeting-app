@@ -21,7 +21,7 @@ import java.util.Objects;
 
 import android.graphics.Color;;
 
-public class IconAdapter extends ArrayAdapter<String> {
+public class IconAdapter extends ArrayAdapter<String> { // TO DO <<<<
 
     private Context context;
     private int resource;
