@@ -60,7 +60,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private void getCategoriesFromFirebase() {
         firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES);
-        firebaseService.updateCategoriesUI(updateCategoriesCallback());
+        firebaseService.updateCategoriesUI(updateCategoriesCallback(), getUID());
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {

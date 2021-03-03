@@ -1,9 +1,6 @@
 package ro.ase.csie.degree.firebase;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -23,12 +21,13 @@ public class FirebaseService {
 
     public static final String TABLE_CATEGORIES = "categories";
     public static final String TABLE_USERS = "users";
+    public static final String ATTRIBUTE_USER = "user";
 
     private DatabaseReference database;
     private static FirebaseService firebaseService;
 
     private FirebaseService(String table) {
-            database = FirebaseDatabase.getInstance().getReference(table);
+        database = FirebaseDatabase.getInstance().getReference(table);
     }
 
     public static FirebaseService getInstance(String table) {
@@ -62,8 +61,12 @@ public class FirebaseService {
         }
     }
 
-    public void updateCategoriesUI(final Callback<List<Category>> callback) {
-        database.addValueEventListener(new ValueEventListener() {
+    public void updateCategoriesUI(final Callback<List<Category>> callback, String user) {
+        Query userCategories = database
+                .orderByChild(ATTRIBUTE_USER)
+                .equalTo(user);
+
+        userCategories.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Category> categories = new ArrayList<>();
