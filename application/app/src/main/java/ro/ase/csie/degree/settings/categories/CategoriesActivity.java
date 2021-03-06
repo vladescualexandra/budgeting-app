@@ -80,6 +80,7 @@ public class CategoriesActivity extends AppCompatActivity {
         };
     }
 
+
     private void setAdapter(List<Category> list) {
         CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(),
                 R.layout.row_item_category,

@@ -1,5 +1,7 @@
 package ro.ase.csie.degree.model;
 
+import android.graphics.BitmapFactory;
+
 import java.io.Serializable;
 
 public class Category implements Serializable {

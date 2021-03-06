@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.Objects;
 
 import android.graphics.Color;;
 
-public class IconAdapter extends ArrayAdapter<String> { // TO DO <<<<
+public class IconAdapter extends ArrayAdapter<Bitmap> { // TO DO <<<<
 
     private Context context;
     private int resource;
@@ -34,7 +35,7 @@ public class IconAdapter extends ArrayAdapter<String> { // TO DO <<<<
                        int resource,
                        @NonNull List<Bitmap> iconList,
                        LayoutInflater layoutInflater) {
-        super(context, resource);
+        super(context, resource, iconList);
         this.context = context;
         this.resource = resource;
         this.iconList = iconList;
@@ -56,7 +57,7 @@ public class IconAdapter extends ArrayAdapter<String> { // TO DO <<<<
                 }
 
                 if (position == selectedIndex) {
-                    view.setBackgroundColor(Color.BLUE);
+                    view.setBackgroundColor(Color.argb(20, 238,238,238));
                 }
             }
         }

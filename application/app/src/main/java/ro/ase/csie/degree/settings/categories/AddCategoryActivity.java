@@ -33,9 +33,14 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddCategoryActivity extends AppCompatActivity {
+
+    private final String GREEN_ICONS = "greens";
+    private final String RED_ICONS = "reds";
 
     public static final String NEW_CATEGORY = "new_category";
     private List<Bitmap> icons = new ArrayList<>();
@@ -45,7 +50,10 @@ public class AddCategoryActivity extends AppCompatActivity {
     private Button btn_save;
 
     private Intent intent;
-    final long ONE_MEGABYTE = 1024 * 1024 * 1024;
+    final long ONE_MEGABYTE = 1024 * 1024;
+
+    private List<String> paths = new ArrayList<>();
+    Category category = new Category();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,29 +65,44 @@ public class AddCategoryActivity extends AppCompatActivity {
         initComponents();
         setAdapter();
 
-        ImageView iv_test = findViewById(R.id.iv_test);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference().child("greens").child("green_1.png");
+        StorageReference storageReference;
 
-        storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        intent = getIntent();
+        boolean isExpense = intent.getBooleanExtra(CategoriesActivity.CATEGORY_TYPE, false);
+        if (isExpense) {
+            storageReference = storage.getReference().child(RED_ICONS);
+        } else {
+            storageReference = storage.getReference().child(GREEN_ICONS);
+        }
+
+        final int[] count = {0};
+
+        storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                Log.e("onSuccess", bmp.toString());
-                iv_test.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "No Such file or Path found!!", Toast.LENGTH_LONG).show();
+            public void onSuccess(ListResult listResult) {
+                for (StorageReference ref : listResult.getItems()) {
+                    Task<byte[]> task = ref.getBytes(ONE_MEGABYTE);
+                    task.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            icons.add(bmp);
+                            paths.add(ref.getPath());
+                            notifyAdapter();
+                        }
+                    });
+                }
+                setAdapter();
             }
         });
+
+
 
     }
 
     private void initComponents() {
-        intent = getIntent();
         tiet_name = findViewById(R.id.add_category_select_name);
         gv_icons = findViewById(R.id.add_category_select_icon);
         btn_save = findViewById(R.id.add_category_save);
@@ -95,15 +118,20 @@ public class AddCategoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapter.setSelectedIndex(position);
                 adapter.notifyDataSetChanged();
+                category.setIcon(paths.get(position));
             }
         });
     }
 
+    private void notifyAdapter() {
+        IconAdapter adapter = (IconAdapter) gv_icons.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
 
 
     private View.OnClickListener saveCategoryEventListener() {
         return v -> {
-            Category category = new Category((String) gv_icons.getSelectedItem(), tiet_name.getText().toString().trim());
+            category.setName(tiet_name.getText().toString().trim());
             intent.putExtra(NEW_CATEGORY, category);
             setResult(RESULT_OK, intent);
             finish();

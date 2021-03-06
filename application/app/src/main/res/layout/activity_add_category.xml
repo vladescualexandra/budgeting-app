@@ -9,11 +9,11 @@
     android:layout_margin="16sp"
     >
 
-    <ImageView
-        android:id="@+id/iv_test"
+    <Button
+        android:id="@+id/add_category_save"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
-        android:padding="16sp"/>
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_save"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -37,9 +37,5 @@
         android:numColumns="3"
         android:layout_margin="16sp" />
 
-    <Button
-        android:id="@+id/add_category_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_save"/>
+
 </LinearLayout>

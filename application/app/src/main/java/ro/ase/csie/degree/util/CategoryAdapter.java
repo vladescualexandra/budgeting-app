@@ -2,6 +2,8 @@ package ro.ase.csie.degree.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import ro.ase.csie.degree.R;
 
@@ -60,9 +66,20 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         ImageView iv_category_icon = view.findViewById(R.id.row_item_category_icon);
         TextView tv_category_name = view.findViewById(R.id.row_item_category_name);
 
-        int resID = context.getResources().getIdentifier(context.getPackageName() + ":drawable/" + category.getIcon(), null, null);
-        iv_category_icon.setImageResource(resID);
+        setIcon(category, iv_category_icon);
 
         tv_category_name.setText(category.getName());
+    }
+
+    private void setIcon(Category category, ImageView iv_category_icon) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference(category.getIcon());
+        storageReference.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                iv_category_icon.setImageBitmap(bmp);
+            }
+        });
     }
 }
