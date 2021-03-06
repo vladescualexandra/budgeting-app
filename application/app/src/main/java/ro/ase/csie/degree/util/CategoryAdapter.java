@@ -73,7 +73,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
     private void setIcon(Category category, ImageView iv_category_icon) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference(category.getIcon());
+        StorageReference storageReference = storage.getReference().child(category.getIcon());
         storageReference.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {

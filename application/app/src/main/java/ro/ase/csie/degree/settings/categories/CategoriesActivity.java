@@ -34,7 +34,6 @@ public class CategoriesActivity extends AppCompatActivity {
     private List<Category> income_categories = new ArrayList<>();
 
     private FirebaseService firebaseService;
-
     private boolean isExpense = true;
 
     @Override
