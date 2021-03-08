@@ -52,4 +52,14 @@ public class InputValidation {
     public boolean registerValidation(TextInputEditText name, TextInputEditText email, TextInputEditText password) {
         return nameValidation(name) && emailValidation(email) && passwordValidation(password);
     }
+
+    public boolean categoryNameValidation(TextInputEditText name) {
+        if (name.getText().toString().trim().length() < 3) {
+            name.setError(context.getString(R.string.invalid_category_name));
+            return false;
+        } else {
+            name.setError(null);
+            return true;
+        }
+    }
 }

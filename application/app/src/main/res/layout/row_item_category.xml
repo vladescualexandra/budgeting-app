@@ -8,8 +8,8 @@
     <ImageView
         android:id="@+id/row_item_category_icon"
         android:src="@drawable/common_full_open_on_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
         android:paddingLeft="16sp"
         android:paddingRight="16sp"/>
 
@@ -20,6 +20,5 @@
         android:text="@string/default_category_name"
         android:textSize="20sp"
         android:textColor="@color/rally_white"
-        android:textAlignment="center"
-        android:gravity="center" />
+        android:gravity="left|center" />
 </LinearLayout>

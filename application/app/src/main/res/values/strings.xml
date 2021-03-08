@@ -44,5 +44,6 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_save">Save</string>
     <string name="category_name">Category name</string>
+    <string name="invalid_category_name">Category name must have at least 3 characters!</string>
 
 </resources>

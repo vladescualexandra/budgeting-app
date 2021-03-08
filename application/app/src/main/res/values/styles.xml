@@ -27,7 +27,7 @@
         <item name="backgroundTint">@color/rally_grey</item>
         <item name="colorButtonNormal">@color/rally_grey</item>
         <item name="android:colorBackground">@color/rally_grey</item>
-        <item name="android:paddingLeft">16sp</item>
+        <item name="android:padding">16sp</item>
     </style>
 
 </resources>

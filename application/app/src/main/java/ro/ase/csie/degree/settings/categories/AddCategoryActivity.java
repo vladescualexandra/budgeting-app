@@ -20,6 +20,7 @@ import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.util.IconAdapter;
+import ro.ase.csie.degree.util.InputValidation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -131,10 +132,14 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private View.OnClickListener saveCategoryEventListener() {
         return v -> {
-            category.setName(tiet_name.getText().toString().trim());
-            intent.putExtra(NEW_CATEGORY, category);
-            setResult(RESULT_OK, intent);
-            finish();
+            InputValidation validation = new InputValidation(getApplicationContext());
+            if (validation.categoryNameValidation(tiet_name)) {
+                category.setName(tiet_name.getText().toString().trim());
+                intent.putExtra(NEW_CATEGORY, category);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+
         };
     }
 }
