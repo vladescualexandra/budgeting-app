@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -15,7 +14,7 @@ import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.util.CategoryAdapter;
+import ro.ase.csie.degree.util.adapters.CategoryAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

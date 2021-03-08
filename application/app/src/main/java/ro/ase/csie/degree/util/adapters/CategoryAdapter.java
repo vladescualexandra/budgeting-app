@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util;
+package ro.ase.csie.degree.util.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

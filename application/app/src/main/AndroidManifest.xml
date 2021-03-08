@@ -11,13 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App">
-        <activity android:name="ro.ase.csie.degree.settings.categories.AddCategoryActivity"></activity>
-        <activity android:name="ro.ase.csie.degree.settings.categories.CategoriesActivity" />
-        <activity android:name="ro.ase.csie.degree.settings.SettingsActivity" />
-        <activity android:name="ro.ase.csie.degree.MainActivity" />
-        <activity android:name="ro.ase.csie.degree.authentication.LoginActivity" />
-        <activity android:name="ro.ase.csie.degree.authentication.RegisterActivity" />
-        <activity android:name="ro.ase.csie.degree.SplashActivity">
+        <activity android:name=".settings.balances.AddBalanceActivity"></activity>
+        <activity android:name=".settings.balances.BalancesActivity" />
+        <activity android:name=".settings.categories.AddCategoryActivity" />
+        <activity android:name=".settings.categories.CategoriesActivity" />
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".authentication.LoginActivity" />
+        <activity android:name=".authentication.RegisterActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

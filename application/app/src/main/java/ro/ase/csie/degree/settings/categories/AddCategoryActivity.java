@@ -1,29 +1,22 @@
 package ro.ase.csie.degree.settings.categories;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.util.IconAdapter;
+import ro.ase.csie.degree.util.adapters.IconAdapter;
 import ro.ase.csie.degree.util.InputValidation;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,12 +24,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AddCategoryActivity extends AppCompatActivity {
 

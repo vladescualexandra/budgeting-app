@@ -30,4 +30,10 @@
         <item name="android:padding">16sp</item>
     </style>
 
+    <style name="total_balance_text" >
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/rally_white</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>
