@@ -27,6 +27,7 @@ import java.util.List;
 public class CategoryAdapter extends ArrayAdapter<Category> {
 
 
+    public static final int MAX_DOWNLOAD_SIZE_BYTES = 1024 * 1024;
     private Context context;
     private int resource;
     private List<Category> categoryList;
@@ -74,7 +75,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     private void setIcon(Category category, ImageView iv_category_icon) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child(category.getIcon());
-        storageReference.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageReference.getBytes(MAX_DOWNLOAD_SIZE_BYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

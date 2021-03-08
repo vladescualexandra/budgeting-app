@@ -67,15 +67,15 @@
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
-        android:id="@+id/main_fragment_graph"
+        android:id="@+id/main_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_row="3"
         android:layout_column="0" />
 
 
-    <FrameLayout
-        android:id="@+id/main_fragment_list"
+    <ListView
+        android:id="@+id/main_list_transactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_row="4"

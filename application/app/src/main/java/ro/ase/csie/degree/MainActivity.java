@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.fragments.DayFragment;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btn_settings;
     private ImageButton btn_add;
     private TabLayout tabLayout;
+    private ListView lv_transactions;
 
 
     @Override
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.main_tabs);
         tabLayout.addOnTabSelectedListener(changeTabEventListener());
 
+        lv_transactions = findViewById(R.id.main_list_transactions);
+        setAdapter();
+
+
         USER_KEY = new User().getUID(getApplicationContext());
     }
 
@@ -68,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         };
+    }
+
+    private void setAdapter() {
+
+    }
+
+    private void notifyAdapter() {
+
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {
@@ -90,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 show(fragment);
+                notifyAdapter();
             }
 
             @Override
@@ -109,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.main_fragment_list, fragment)
+                    .replace(R.id.main_fragment, fragment)
                     .addToBackStack(null)
                     .commit();
         }
