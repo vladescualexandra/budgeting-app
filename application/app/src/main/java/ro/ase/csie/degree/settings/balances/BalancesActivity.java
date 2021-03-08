@@ -14,6 +14,7 @@ import java.util.List;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Balance;
+import ro.ase.csie.degree.util.adapters.BalanceAdapter;
 
 public class BalancesActivity extends AppCompatActivity {
 
@@ -60,10 +61,15 @@ public class BalancesActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-
+        BalanceAdapter adapter = new BalanceAdapter(getApplicationContext(),
+                R.layout.row_item_balance,
+                balanceList,
+                getLayoutInflater());
+        lv_balances.setAdapter(adapter);
     }
 
     private void notifyAdapter() {
-
+        BalanceAdapter adapter = (BalanceAdapter) lv_balances.getAdapter();
+        adapter.notifyDataSetChanged();
     }
 }

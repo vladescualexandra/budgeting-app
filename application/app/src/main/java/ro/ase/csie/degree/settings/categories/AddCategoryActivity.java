@@ -122,7 +122,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     private View.OnClickListener saveCategoryEventListener() {
         return v -> {
             InputValidation validation = new InputValidation(getApplicationContext());
-            if (validation.categoryNameValidation(tiet_name)) {
+            if (validation.nameValidation(tiet_name)) {
                 category.setName(tiet_name.getText().toString().trim());
                 intent.putExtra(NEW_CATEGORY, category);
                 setResult(RESULT_OK, intent);

@@ -53,13 +53,14 @@ public class InputValidation {
         return nameValidation(name) && emailValidation(email) && passwordValidation(password);
     }
 
-    public boolean categoryNameValidation(TextInputEditText name) {
-        if (name.getText().toString().trim().length() < 3) {
-            name.setError(context.getString(R.string.invalid_category_name));
-            return false;
-        } else {
-            name.setError(null);
+    public boolean availableAmountValidation(TextInputEditText available_amount) {
+        if (Double.parseDouble(available_amount.getText().toString()) >= 0.0) {
+            available_amount.setError(null);
             return true;
+        } else {
+            available_amount.setError(context.getString(R.string.invalid_available_amount));
+            return false;
         }
+
     }
 }

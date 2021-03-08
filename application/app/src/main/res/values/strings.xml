@@ -49,5 +49,8 @@
     <string name="default_total_balance">Total balance: 0.00$</string>
     <string name="default_balance_name">Balance name</string>
     <string name="default_amount">0.00$</string>
+    <string name="balance_name">Balance name</string>
+    <string name="available_amount">Available amount</string>
+    <string name="invalid_available_amount">Available amount must be a positive number.</string>
 
 </resources>

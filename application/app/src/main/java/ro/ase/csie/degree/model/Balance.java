@@ -1,6 +1,8 @@
 package ro.ase.csie.degree.model;
 
-public class Balance {
+import java.io.Serializable;
+
+public class Balance implements Serializable {
 
     private String name;
     private double available_amount;
