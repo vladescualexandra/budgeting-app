@@ -33,7 +33,7 @@ public class BalancesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_balances);
 
         initComponents();
-        total = new Balance("TOTAL", 0.0);
+
     }
 
     private void initComponents() {

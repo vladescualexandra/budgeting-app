@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 
 public class FirebaseService {
@@ -84,5 +85,15 @@ public class FirebaseService {
                 Log.e("updateCategoriesUI", error.getMessage());
             }
         });
+    }
+
+    public void upsertBalance(Balance balance) {
+        if (balance == null) {
+            return;
+        } else {
+            String id = database.push().getKey();
+            balance.setId(id);
+            database.child(balance.getId()).setValue(balance);
+        }
     }
 }

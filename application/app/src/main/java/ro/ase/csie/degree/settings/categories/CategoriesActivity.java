@@ -58,7 +58,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private void getCategoriesFromFirebase() {
         firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES);
-        firebaseService.updateCategoriesUI(updateCategoriesCallback(), getUID());
+        firebaseService.updateCategoriesUI(updateCategoriesCallback(), new User().getUID(getApplicationContext()));
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {
@@ -124,15 +124,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 && resultCode == RESULT_OK) {
             Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
             category.setType(isExpense ? Category.TYPE_EXPENSE : Category.TYPE_INCOME);
-            category.setUser(getUID());
+            category.setUser(new User().getUID(getApplicationContext()));
             firebaseService.insertCategory(category);
             notifyAdapter();
         }
     }
-
-    private String getUID() {
-        return getSharedPreferences(User.USER_PREFS, MODE_PRIVATE)
-                .getString(User.USER_KEY, null);
-    }
-
 }

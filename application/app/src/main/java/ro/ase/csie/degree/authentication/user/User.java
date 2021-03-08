@@ -19,12 +19,8 @@ public class User implements Serializable {
     private String name;
     private String email;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public User() {
     }
 
     public User(String key, String name, String email) {
@@ -49,6 +45,15 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -65,5 +70,10 @@ public class User implements Serializable {
         editor.putString(User.USER_NAME, this.name);
         editor.putString(User.USER_EMAIL, this.email);
         editor.apply();
+    }
+
+    public String getUID(Context context) {
+        return context.getSharedPreferences(User.USER_PREFS, MODE_PRIVATE)
+                .getString(User.USER_KEY, null);
     }
 }
