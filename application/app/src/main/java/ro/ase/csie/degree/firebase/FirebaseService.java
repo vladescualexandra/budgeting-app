@@ -21,6 +21,7 @@ import ro.ase.csie.degree.model.Category;
 public class FirebaseService {
 
     public static final String TABLE_CATEGORIES = "categories";
+    public static final String TABLE_BALANCES = "balances";
     public static final String TABLE_USERS = "users";
     public static final String ATTRIBUTE_USER = "user";
 
@@ -95,5 +96,30 @@ public class FirebaseService {
             balance.setId(id);
             database.child(balance.getId()).setValue(balance);
         }
+    }
+
+    public void updateBalancesUI(final Callback<List<Balance>> callback, String user) {
+        Query userBalances = database
+                .orderByChild(ATTRIBUTE_USER)
+                .equalTo(user);
+
+        userBalances.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Balance> balances = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Balance balance = data.getValue(Balance.class);
+                    if (balance != null) {
+                        balances.add(balance);
+                    }
+                }
+                callback.updateUI(balances);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("updateBalancesUI", error.getMessage());
+            }
+        });
     }
 }

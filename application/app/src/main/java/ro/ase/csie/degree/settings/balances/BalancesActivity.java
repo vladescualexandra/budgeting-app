@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Balance;
+import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.util.adapters.BalanceAdapter;
 
 public class BalancesActivity extends AppCompatActivity {
@@ -26,6 +30,7 @@ public class BalancesActivity extends AppCompatActivity {
 
     private List<Balance> balanceList = new ArrayList<>();
     private Balance total;
+    private FirebaseService firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +38,25 @@ public class BalancesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_balances);
 
         initComponents();
+        getBalancesFromFirebase();
+    }
+
+    private void getBalancesFromFirebase() {
+        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_BALANCES);
+        firebaseService.updateBalancesUI(updateBalancesCallback(), new User().getUID(getApplicationContext()));
 
     }
+
+    private Callback<List<Balance>> updateBalancesCallback() {
+        return result -> {
+            if (result != null) {
+                balanceList.clear();
+                balanceList.addAll(result);
+                notifyAdapter();
+            }
+        };
+    }
+
 
     private void initComponents() {
         tv_total_text = findViewById(R.id.balances_total);
@@ -56,6 +78,7 @@ public class BalancesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_BALANCE & data != null) {
             Balance balance = (Balance) data.getSerializableExtra(AddBalanceActivity.NEW_BALANCE);
+            balance.setUser(new User().getUID(getApplicationContext()));
             balanceList.add(balance);
         }
     }
@@ -71,5 +94,18 @@ public class BalancesActivity extends AppCompatActivity {
     private void notifyAdapter() {
         BalanceAdapter adapter = (BalanceAdapter) lv_balances.getAdapter();
         adapter.notifyDataSetChanged();
+        setTotal(tv_total_text, getTotalAmount());
+    }
+
+    private double getTotalAmount() {
+        double total = 0.0;
+        for (Balance balance : balanceList) {
+            total += balance.getAvailable_amount();
+        }
+        return total;
+    }
+
+    private void setTotal(TextView tv_total_text, double totalAmount) {
+        tv_total_text.setText("Total balance: " + totalAmount + "$");
     }
 }
