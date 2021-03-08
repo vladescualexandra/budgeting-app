@@ -16,6 +16,7 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -110,7 +111,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private View.OnClickListener balancesEventListener() {
         return v -> {
-
+            Intent intent = new Intent(getApplicationContext(), BalancesActivity.class);
+            startActivity(intent);
         };
     }
 

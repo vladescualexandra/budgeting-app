@@ -46,6 +46,7 @@ public class AddBalanceActivity extends AppCompatActivity {
         return v -> {
             InputValidation validation = new InputValidation(getApplicationContext());
             if (validation.nameValidation(tiet_name)) {
+                balance = new Balance();
                 balance.setName(tiet_name.getText().toString().trim());
                 if (validation.availableAmountValidation(tiet_available_amount)) {
                     balance.setAvailable_amount(Double.parseDouble(tiet_available_amount.getText().toString().trim()));

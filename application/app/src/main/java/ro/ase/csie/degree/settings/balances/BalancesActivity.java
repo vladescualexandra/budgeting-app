@@ -61,7 +61,9 @@ public class BalancesActivity extends AppCompatActivity {
     private void initComponents() {
         tv_total_text = findViewById(R.id.balances_total);
         tv_add_balance = findViewById(R.id.balances_add);
+
         lv_balances = findViewById(R.id.balances_list);
+        setAdapter();
 
         tv_add_balance.setOnClickListener(addBalanceEventListener());
     }
@@ -79,7 +81,7 @@ public class BalancesActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_BALANCE & data != null) {
             Balance balance = (Balance) data.getSerializableExtra(AddBalanceActivity.NEW_BALANCE);
             balance.setUser(new User().getUID(getApplicationContext()));
-            balanceList.add(balance);
+            firebaseService.upsertBalance(balance);
         }
     }
 
