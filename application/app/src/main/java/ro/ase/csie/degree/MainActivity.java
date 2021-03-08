@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.fragments.DayFragment;
@@ -24,10 +24,11 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
     private String USER_KEY;
 
-    private Button btn_settings;
-
+    private ImageButton btn_settings;
+    private ImageButton btn_add;
     private TabLayout tabLayout;
 
 
@@ -40,25 +41,33 @@ public class MainActivity extends AppCompatActivity {
         initComponents();
 
 
-        btn_settings = findViewById(R.id.menu_settings);
-        btn_settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initComponents() {
+        btn_add = findViewById(R.id.main_add_transaction);
+        btn_settings = findViewById(R.id.main_settings);
+
+        btn_add.setOnClickListener(addEventListener());
+        btn_settings.setOnClickListener(settingsEventListener());
+
         tabLayout = findViewById(R.id.main_tabs);
         tabLayout.addOnTabSelectedListener(changeTabEventListener());
 
-        SharedPreferences prefs = getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
-        USER_KEY = prefs.getString(User.USER_KEY, null);
+        USER_KEY = new User().getUID(getApplicationContext());
+    }
 
-        TodayFragment fragment = new TodayFragment();
-        show(fragment);
+    private View.OnClickListener addEventListener() {
+        return v -> {
+            Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_ADD_TRANSACTION);
+        };
+    }
+
+    private View.OnClickListener settingsEventListener() {
+        return v -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        };
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {
@@ -67,23 +76,17 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment;
                 switch (tab.getPosition()) {
-                    case 1:
-                        fragment = new DayFragment();
-                        break;
                     case 2:
-                        fragment = new WeekFragment();
-                        break;
-                    case 3:
                         fragment = new MonthFragment();
                         break;
-                    case 4:
+                    case 3:
                         fragment = new YearFragment();
                         break;
-                    case 5:
+                    case 4:
                         fragment = new TotalFragment();
                         break;
                     default:
-                        fragment = new TodayFragment();
+                        fragment = new DayFragment();
                         break;
                 }
                 show(fragment);
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.main_fragment, fragment)
+                    .replace(R.id.main_fragment_list, fragment)
                     .addToBackStack(null)
                     .commit();
         }

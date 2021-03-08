@@ -29,7 +29,6 @@ public class BalancesActivity extends AppCompatActivity {
     private ListView lv_balances;
 
     private List<Balance> balanceList = new ArrayList<>();
-    private Balance total;
     private FirebaseService firebaseService;
 
     @Override
