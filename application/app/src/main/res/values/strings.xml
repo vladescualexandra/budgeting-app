@@ -53,5 +53,8 @@
     <string name="available_amount">Available amount</string>
     <string name="invalid_available_amount">Available amount must be a positive number.</string>
     <string name="default_transaction_details">Transaction details</string>
+    <string name="add_transaction_amount">Amount</string>
+    <string name="today">TODAY</string>
+    <string name="transaction_details_optional">Details (optional)</string>
 
 </resources>

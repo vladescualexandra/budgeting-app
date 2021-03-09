@@ -16,6 +16,7 @@ import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.adapters.CategoryAdapter;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -68,10 +69,14 @@ public class CategoriesActivity extends AppCompatActivity {
                 expenses_categories.clear();
                 income_categories.clear();
                 for (Category category : result) {
-                    if (category.getType().equals(TransactionType.EXPENSE)) {
-                        expenses_categories.add(category);
-                    } else if (category.getType().equals(TransactionType.INCOME)){
-                        income_categories.add(category);
+                    if (category != null) {
+                        if (category.getType() != null) {
+                            if (category.getType().equals(TransactionType.EXPENSE)) {
+                                expenses_categories.add(category);
+                            } else if (category.getType().equals(TransactionType.INCOME)) {
+                                income_categories.add(category);
+                            }
+                        }
                     }
                 }
                 notifyAdapter();
