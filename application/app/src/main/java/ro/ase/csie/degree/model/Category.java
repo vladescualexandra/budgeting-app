@@ -1,7 +1,5 @@
 package ro.ase.csie.degree.model;
 
-import android.graphics.BitmapFactory;
-
 import java.io.Serializable;
 
 public class Category implements Serializable {
@@ -12,7 +10,7 @@ public class Category implements Serializable {
 
     private String id;
     private String user;
-    private String type;
+    private TransactionType type;
     private String icon;
     private String name;
 
@@ -20,7 +18,7 @@ public class Category implements Serializable {
 
     }
 
-    public Category(String id, String user, String type, String icon, String name) {
+    public Category(String id, String user, TransactionType type, String icon, String name) {
         this.id = id;
         this.user = user;
         this.type = type;
@@ -28,7 +26,7 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public Category(String user, String type, String icon, String name) {
+    public Category(String user, TransactionType type, String icon, String name) {
         this.user = user;
         this.type = type;
         this.icon = icon;
@@ -40,13 +38,6 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getIcon() {
         return icon;
@@ -64,12 +55,12 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public TransactionType getType() {
+        return type;
     }
 
     public String getUser() {
@@ -80,14 +71,11 @@ public class Category implements Serializable {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id='" + id + '\'' +
-                ", user='" + user + '\'' +
-                ", type='" + type + '\'' +
-                ", icon='" + icon + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

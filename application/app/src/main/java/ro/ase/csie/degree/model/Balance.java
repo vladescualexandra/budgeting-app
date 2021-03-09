@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Balance implements Serializable {
 
+    public final String TABLE_BALANCES = "balances";
+
     private String id;
     private String name;
     private String user;
@@ -27,14 +29,6 @@ public class Balance implements Serializable {
         this.user = user;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -49,5 +43,13 @@ public class Balance implements Serializable {
 
     public void setAvailable_amount(double available_amount) {
         this.available_amount = available_amount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

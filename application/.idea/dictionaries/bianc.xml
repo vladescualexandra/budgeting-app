@@ -3,6 +3,8 @@
     <words>
       <w>csie</w>
       <w>tiet</w>
+      <w>transactionable</w>
+      <w>upsert</w>
     </words>
   </dictionary>
 </component>

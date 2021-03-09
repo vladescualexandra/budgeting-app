@@ -1,34 +1,29 @@
 package ro.ase.csie.degree.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Serializable, Transactionable {
 
     private String id;
-    private TransactionType type;
-
     private Category category;
-
     private Balance balance;
     private Double amount;
-
     private Date date;
 
     Transaction() {
 
     }
 
-    public Transaction(TransactionType type, Category category, Balance balance, Double amount, Date date) {
-        this.type = type;
+    public Transaction(Category category, Balance balance, Double amount, Date date) {
         this.category = category;
         this.balance = balance;
         this.amount = amount;
         this.date = date;
     }
 
-    public Transaction(String id, TransactionType type, Category category, Balance balance, Double amount, Date date) {
+    public Transaction(String id,  Category category, Balance balance, Double amount, Date date) {
         this.id = id;
-        this.type = type;
         this.category = category;
         this.balance = balance;
         this.amount = amount;
@@ -43,13 +38,6 @@ public class Transaction {
         this.id = id;
     }
 
-    public TransactionType getType() {
-        return type;
-    }
-
-    public void setType(TransactionType type) {
-        this.type = type;
-    }
 
     public Category getCategory() {
         return category;

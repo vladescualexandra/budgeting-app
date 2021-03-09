@@ -14,6 +14,7 @@ import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Category;
+import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.adapters.CategoryAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,8 +58,8 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES);
-        firebaseService.updateCategoriesUI(updateCategoriesCallback(), new User().getUID(getApplicationContext()));
+        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES, getApplicationContext());
+        firebaseService.updateCategoriesUI(updateCategoriesCallback());
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {
@@ -67,9 +68,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 expenses_categories.clear();
                 income_categories.clear();
                 for (Category category : result) {
-                    if (category.getType().equals(Category.TYPE_EXPENSE)) {
+                    if (category.getType().equals(TransactionType.EXPENSE)) {
                         expenses_categories.add(category);
-                    } else if (category.getType().equals(Category.TYPE_INCOME)){
+                    } else if (category.getType().equals(TransactionType.INCOME)){
                         income_categories.add(category);
                     }
                 }
@@ -123,7 +124,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 && data != null
                 && resultCode == RESULT_OK) {
             Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
-            category.setType(isExpense ? Category.TYPE_EXPENSE : Category.TYPE_INCOME);
+            category.setType(isExpense ? TransactionType.EXPENSE : TransactionType.INCOME);
             category.setUser(new User().getUID(getApplicationContext()));
             firebaseService.insertCategory(category);
             notifyAdapter();

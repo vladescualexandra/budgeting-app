@@ -1,5 +1,6 @@
 package ro.ase.csie.degree.firebase;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,22 +28,28 @@ public class FirebaseService {
 
     private DatabaseReference database;
     private static FirebaseService firebaseService;
+    private String user_key;
+    private Query query;
 
-    private FirebaseService(String table) {
-        database = FirebaseDatabase.getInstance().getReference(table);
+
+    private FirebaseService(String tableName, Context context) {
+        database = FirebaseDatabase.getInstance().getReference(tableName);
+        user_key = context.getSharedPreferences(User.USER_PREFS, Context.MODE_PRIVATE).getString(User.USER_KEY, null);
+        query = database
+                .orderByChild(ATTRIBUTE_USER)
+                .equalTo(user_key);
     }
 
-    public static FirebaseService getInstance(String table) {
+    public static FirebaseService getInstance(String tableName, Context context) {
         if (firebaseService == null) {
             synchronized (FirebaseService.class) {
                 if (firebaseService == null) {
-                    firebaseService = new FirebaseService(table);
+                    firebaseService = new FirebaseService(tableName, context);
                 }
             }
         }
         return firebaseService;
     }
-
 
     public void insertUserData(User user) {
         if (user == null) {
@@ -63,12 +70,9 @@ public class FirebaseService {
         }
     }
 
-    public void updateCategoriesUI(final Callback<List<Category>> callback, String user) {
-        Query userCategories = database
-                .orderByChild(ATTRIBUTE_USER)
-                .equalTo(user);
 
-        userCategories.addValueEventListener(new ValueEventListener() {
+    public void updateCategoriesUI(final Callback<List<Category>> callback) {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Category> categories = new ArrayList<>();

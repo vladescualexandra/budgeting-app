@@ -67,29 +67,29 @@ public class AddCategoryActivity extends AppCompatActivity {
             storageReference = storage.getReference().child(GREEN_ICONS);
         }
 
-        final int[] count = {0};
 
-        storageReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-            @Override
-            public void onSuccess(ListResult listResult) {
-                for (StorageReference ref : listResult.getItems()) {
-                    Task<byte[]> task = ref.getBytes(ONE_MEGABYTE);
-                    task.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                        @Override
-                        public void onSuccess(byte[] bytes) {
-                            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            icons.add(bmp);
-                            paths.add(ref.getPath());
-                            notifyAdapter();
-                        }
-                    });
-                }
-                setAdapter();
+        storageReference.listAll().addOnSuccessListener(listIconBitmaps());
+
+
+
+    }
+
+    private OnSuccessListener<ListResult> listIconBitmaps() {
+        return listResult -> {
+            for (StorageReference ref : listResult.getItems()) {
+                Task<byte[]> task = ref.getBytes(ONE_MEGABYTE);
+                task.addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        icons.add(bmp);
+                        paths.add(ref.getPath());
+                        notifyAdapter();
+                    }
+                });
             }
-        });
-
-
-
+            setAdapter();
+        };
     }
 
     private void initComponents() {
