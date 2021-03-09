@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util.adapters;
+package ro.ase.csie.degree.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,9 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.model.TransactionType;
 
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 

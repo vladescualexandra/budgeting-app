@@ -1,12 +1,10 @@
 package ro.ase.csie.degree.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Category implements Serializable {
-
-    public static final String TYPE_EXPENSE = "expense";
-    public static final String TYPE_INCOME = "income";
-
 
     private String id;
     private String user;
@@ -77,5 +75,11 @@ public class Category implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

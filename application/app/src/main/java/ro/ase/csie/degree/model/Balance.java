@@ -1,5 +1,7 @@
 package ro.ase.csie.degree.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Balance implements Serializable {
@@ -51,5 +53,11 @@ public class Balance implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name + " - " + this.available_amount;
     }
 }

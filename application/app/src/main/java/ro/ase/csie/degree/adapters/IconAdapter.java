@@ -1,10 +1,8 @@
-package ro.ase.csie.degree.util.adapters;
+package ro.ase.csie.degree.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import ro.ase.csie.degree.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import android.graphics.Color;;
 

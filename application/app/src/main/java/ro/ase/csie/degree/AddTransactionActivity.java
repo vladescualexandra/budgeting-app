@@ -1,14 +1,34 @@
 package ro.ase.csie.degree;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.model.Balance;
+import ro.ase.csie.degree.model.Category;
+import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.util.DateConverter;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
@@ -22,7 +42,18 @@ public class AddTransactionActivity extends AppCompatActivity {
     private Button btn_save;
 
 
+    private Transaction transaction;
 
+    private List<Category> expenseCategories;
+    private List<Category> incomeCategories;
+    private List<Balance> balances;
+
+
+    int year;
+    int month;
+    int day;
+
+    private FirebaseService firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +61,76 @@ public class AddTransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_transaction);
 
         initComponents();
+
+
+        initDefaults();
+
+        expenseCategories = new ArrayList<>();
+        incomeCategories = new ArrayList<>();
+
+        getCategoriesFromFirebase();
+        getBalancesFromFirebase();
+    }
+
+    private void getCategoriesFromFirebase() {
+        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES, getApplicationContext());
+        firebaseService.updateCategoriesUI(updateCategoriesCallback());
+    }
+
+    private void getBalancesFromFirebase() {
+        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_BALANCES, getApplicationContext());
+        firebaseService.updateBalancesUI(updateBalancesCallback());
+    }
+
+    private Callback<List<Category>> updateCategoriesCallback() {
+        return new Callback<List<Category>>() {
+            @Override
+            public void updateUI(List<Category> result) {
+                if (result != null) {
+                    for (Category category : result) {
+                        if (category != null) {
+                            if (category.getType() != null) {
+                                if (category.getType().equals(TransactionType.EXPENSE)) {
+                                    expenseCategories.add(category);
+                                } else if (category.getType().equals(TransactionType.INCOME)) {
+                                    incomeCategories.add(category);
+                                }
+                            }
+                        }
+                    }
+                    setCategoryAdapter();
+                }
+            }
+        };
+    }
+
+    private Callback<List<Balance>> updateBalancesCallback() {
+        return new Callback<List<Balance>>() {
+            @Override
+            public void updateUI(List<Balance> result) {
+                if (result != null) {
+                    for (Balance balance : result) {
+                        balances.add(balance);
+                    }
+                }
+                setBalanceAdapter();
+            }
+        };
+    }
+
+
+    private void initDefaults() {
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        transaction = new Transaction();
+        transaction.setDate(DateConverter.toDate(day, month, year));
+
+        transaction.getCategory().setType(rg_type.getCheckedRadioButtonId()
+                == R.id.add_transaction_type_expense
+                ? TransactionType.EXPENSE : TransactionType.INCOME);
     }
 
     private void initComponents() {
@@ -41,18 +142,41 @@ public class AddTransactionActivity extends AppCompatActivity {
         btn_date = findViewById(R.id.add_transaction_date);
         btn_save = findViewById(R.id.add_transaction_save);
 
+        rg_type.setOnCheckedChangeListener(changeTypeEventListener());
         btn_date.setOnClickListener(dateDialogEventListener());
-
         btn_save.setOnClickListener(saveTransactionEventListener());
 
         setCategoryAdapter();
         setBalanceAdapter();
+    }
 
+    private RadioGroup.OnCheckedChangeListener changeTypeEventListener() {
+        return new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.add_transaction_type_expense) {
+                    transaction.getCategory().setType(TransactionType.EXPENSE);
+                } else {
+                    transaction.getCategory().setType(TransactionType.INCOME);
+                }
+            }
+        };
     }
 
     private View.OnClickListener dateDialogEventListener() {
         return v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getApplicationContext(),
+                    setDateEventListener(),
+                    year, month, day);
+            datePickerDialog.show();
+        };
+    }
 
+    private DatePickerDialog.OnDateSetListener setDateEventListener() {
+        return (view, year, month, dayOfMonth) -> {
+            transaction.setDate(DateConverter.toDate(day, month, year));
+            btn_date.setText(DateConverter.format(day, month, year));
         };
     }
 
@@ -63,8 +187,28 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void setCategoryAdapter() {
+        ArrayAdapter<Category> adapter =
+                new ArrayAdapter<>
+                        (getApplicationContext(),
+                                android.R.layout.simple_spinner_item,
+                                getCategoriesByType());
+        spn_category.setAdapter(adapter);
     }
 
     private void setBalanceAdapter() {
+        ArrayAdapter<Balance> adapter =
+                new ArrayAdapter<>
+                        (getApplicationContext(),
+                                android.R.layout.simple_spinner_item,
+                                balances);
+        spn_category.setAdapter(adapter);
+    }
+
+    private List<Category> getCategoriesByType() {
+        if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_expense) {
+            return expenseCategories;
+        } else {
+            return incomeCategories;
+        }
     }
 }

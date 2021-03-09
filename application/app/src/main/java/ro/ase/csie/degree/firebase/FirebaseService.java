@@ -102,12 +102,8 @@ public class FirebaseService {
         }
     }
 
-    public void updateBalancesUI(final Callback<List<Balance>> callback, String user) {
-        Query userBalances = database
-                .orderByChild(ATTRIBUTE_USER)
-                .equalTo(user);
-
-        userBalances.addValueEventListener(new ValueEventListener() {
+    public void updateBalancesUI(final Callback<List<Balance>> callback) {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Balance> balances = new ArrayList<>();

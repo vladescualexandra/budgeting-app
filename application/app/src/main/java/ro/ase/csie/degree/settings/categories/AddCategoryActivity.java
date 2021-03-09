@@ -14,7 +14,7 @@ import android.widget.GridView;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.util.adapters.IconAdapter;
+import ro.ase.csie.degree.adapters.IconAdapter;
 import ro.ase.csie.degree.util.InputValidation;
 
 import com.google.android.gms.tasks.OnSuccessListener;

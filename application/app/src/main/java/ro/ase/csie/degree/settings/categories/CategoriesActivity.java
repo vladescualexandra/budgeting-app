@@ -15,7 +15,7 @@ import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
-import ro.ase.csie.degree.util.adapters.CategoryAdapter;
+import ro.ase.csie.degree.adapters.CategoryAdapter;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

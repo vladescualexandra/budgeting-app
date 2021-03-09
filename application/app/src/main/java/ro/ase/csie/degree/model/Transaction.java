@@ -8,21 +8,22 @@ public class Transaction implements Serializable, Transactionable {
     private String id;
     private Category category;
     private Balance balance;
-    private Double amount;
+    private double amount;
     private Date date;
 
-    Transaction() {
-
+    public Transaction() {
+        this.category = new Category();
+        this.balance = new Balance();
     }
 
-    public Transaction(Category category, Balance balance, Double amount, Date date) {
+    public Transaction(Category category, Balance balance, double amount, Date date) {
         this.category = category;
         this.balance = balance;
         this.amount = amount;
         this.date = date;
     }
 
-    public Transaction(String id,  Category category, Balance balance, Double amount, Date date) {
+    public Transaction(String id,  Category category, Balance balance, double amount, Date date) {
         this.id = id;
         this.category = category;
         this.balance = balance;
@@ -55,11 +56,11 @@ public class Transaction implements Serializable, Transactionable {
         this.balance = balance;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

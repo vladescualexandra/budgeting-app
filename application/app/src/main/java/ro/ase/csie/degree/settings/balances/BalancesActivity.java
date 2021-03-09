@@ -17,8 +17,7 @@ import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Balance;
-import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.util.adapters.BalanceAdapter;
+import ro.ase.csie.degree.adapters.BalanceAdapter;
 
 public class BalancesActivity extends AppCompatActivity {
 
@@ -42,7 +41,7 @@ public class BalancesActivity extends AppCompatActivity {
 
     private void getBalancesFromFirebase() {
         firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_BALANCES, getApplicationContext());
-        firebaseService.updateBalancesUI(updateBalancesCallback(), new User().getUID(getApplicationContext()));
+        firebaseService.updateBalancesUI(updateBalancesCallback());
 
     }
 
