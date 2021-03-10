@@ -86,7 +86,8 @@ public class FirebaseService {
 
 
     public void updateCategoriesUI(final Callback<List<Category>> callback) {
-        query = database.child(TABLE_CATEGORIES)
+        query = database
+                .child(TABLE_CATEGORIES)
                 .orderByChild(ATTRIBUTE_USER)
                 .equalTo(user_key);
         query.addValueEventListener(new ValueEventListener() {

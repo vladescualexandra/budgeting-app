@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -64,23 +65,20 @@ public class AddTransactionActivity extends AppCompatActivity {
 
 
         initDefaults();
+        retrieveDataFromFirebase();
 
-        getCategoriesFromFirebase();
-        getBalancesFromFirebase();
     }
 
-    private void getCategoriesFromFirebase() {
+    private void retrieveDataFromFirebase() {
         firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
-    }
-
-    private void getBalancesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateBalancesUI(updateBalancesCallback());
+
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {
         return result -> {
+
             if (result != null) {
                 for (Category category : result) {
                     if (category != null) {
@@ -92,21 +90,17 @@ public class AddTransactionActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    setCategoryAdapter();
                 }
-                setCategoryAdapter();
             }
         };
     }
 
     private Callback<List<Balance>> updateBalancesCallback() {
-        return new Callback<List<Balance>>() {
-            @Override
-            public void updateUI(List<Balance> result) {
-                if (result != null) {
-                    for (Balance balance : result) {
-                        balances.add(balance);
-                    }
-                }
+        return result -> {
+
+            if (result != null) {
+                balances.addAll(result);
                 setBalanceAdapter();
             }
         };
@@ -139,20 +133,14 @@ public class AddTransactionActivity extends AppCompatActivity {
         rg_type.setOnCheckedChangeListener(changeTypeEventListener());
         btn_date.setOnClickListener(dateDialogEventListener());
         btn_save.setOnClickListener(saveTransactionEventListener());
-
-        setCategoryAdapter();
-        setBalanceAdapter();
     }
 
     private RadioGroup.OnCheckedChangeListener changeTypeEventListener() {
-        return new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.add_transaction_type_expense) {
-                    transaction.getCategory().setType(TransactionType.EXPENSE);
-                } else {
-                    transaction.getCategory().setType(TransactionType.INCOME);
-                }
+        return (group, checkedId) -> {
+            if (checkedId == R.id.add_transaction_type_expense) {
+                transaction.getCategory().setType(TransactionType.EXPENSE);
+            } else {
+                transaction.getCategory().setType(TransactionType.INCOME);
             }
         };
     }
@@ -195,7 +183,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                         (getApplicationContext(),
                                 android.R.layout.simple_spinner_item,
                                 balances);
-        spn_category.setAdapter(adapter);
+        spn_balances.setAdapter(adapter);
     }
 
     private List<Category> getCategoriesByType() {
