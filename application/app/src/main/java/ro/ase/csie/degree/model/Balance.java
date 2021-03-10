@@ -58,4 +58,30 @@ public class Balance implements Serializable {
     public String toString() {
         return this.name + " - " + this.available_amount;
     }
+
+    public boolean operation(TransactionType type, double amount) {
+        if (type.equals(TransactionType.EXPENSE)) {
+            return withdraw(amount);
+        } else {
+            return deposit(amount);
+        }
+    }
+
+    public boolean deposit(double amount) {
+        if (amount <= 0) {
+            return false;
+        } else {
+            this.available_amount += amount;
+            return true;
+        }
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount <= 0 || amount >= this.available_amount) {
+            return false;
+        } else {
+            this.available_amount -= amount;
+            return true;
+        }
+    }
 }

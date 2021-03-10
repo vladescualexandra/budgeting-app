@@ -158,10 +158,11 @@ public class FirebaseService {
         if (balance == null) {
             return;
         } else {
-            String id = database.push().getKey();
-            balance.setId(id);
+            if (balance.getId() == null || balance.getId().trim().isEmpty()) {
+                String id = database.push().getKey();
+                balance.setId(id);
+            }
             database.child(TABLE_BALANCES).child(balance.getId()).setValue(balance);
-
         }
     }
 

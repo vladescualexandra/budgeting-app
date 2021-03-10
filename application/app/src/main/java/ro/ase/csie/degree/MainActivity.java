@@ -22,7 +22,9 @@ import ro.ase.csie.degree.fragments.TodayFragment;
 import ro.ase.csie.degree.fragments.TotalFragment;
 import ro.ase.csie.degree.fragments.WeekFragment;
 import ro.ase.csie.degree.fragments.YearFragment;
+import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.settings.SettingsActivity;
 
 
@@ -124,7 +126,13 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
             Transaction transaction = (Transaction) data.getSerializableExtra(MainActivity.NEW_TRANSACTION);
             transaction.setUser(USER_KEY);
-            firebaseService.insertTransaction(transaction);
+
+            if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
+                Balance balance = transaction.getBalance();
+                firebaseService.upsertBalance(balance);
+                firebaseService.insertTransaction(transaction);
+            }
+
         }
     }
 
