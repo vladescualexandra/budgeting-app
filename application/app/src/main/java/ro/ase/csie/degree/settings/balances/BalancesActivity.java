@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -61,8 +62,17 @@ public class BalancesActivity extends AppCompatActivity {
 
         lv_balances = findViewById(R.id.balances_list);
         setAdapter();
+        lv_balances.setOnItemLongClickListener(deleteBalanceEventListener());
 
         tv_add_balance.setOnClickListener(addBalanceEventListener());
+    }
+
+    private AdapterView.OnItemLongClickListener deleteBalanceEventListener() {
+        return (parent, view, position, id) -> {
+            firebaseService.deleteBalance(balanceList.get(position));
+            notifyAdapter();
+            return true;
+        };
     }
 
     private View.OnClickListener addBalanceEventListener() {
