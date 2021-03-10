@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 public class Balance implements Serializable {
 
-    public final String TABLE_BALANCES = "balances";
-
     private String id;
     private String name;
     private String user;

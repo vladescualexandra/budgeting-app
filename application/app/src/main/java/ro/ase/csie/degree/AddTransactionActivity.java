@@ -44,9 +44,9 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private Transaction transaction;
 
-    private List<Category> expenseCategories;
-    private List<Category> incomeCategories;
-    private List<Balance> balances;
+    private List<Category> expenseCategories = new ArrayList<>();
+    private List<Category> incomeCategories = new ArrayList<>();
+    private List<Balance> balances = new ArrayList<>();
 
 
     int year;
@@ -63,22 +63,19 @@ public class AddTransactionActivity extends AppCompatActivity {
         initComponents();
 
 
-        initDefaults();
-
-        expenseCategories = new ArrayList<>();
-        incomeCategories = new ArrayList<>();
-
-        getCategoriesFromFirebase();
-        getBalancesFromFirebase();
+//        initDefaults();
+//
+//        getCategoriesFromFirebase();
+//        getBalancesFromFirebase();
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES, getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
     }
 
     private void getBalancesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_BALANCES, getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateBalancesUI(updateBalancesCallback());
     }
 

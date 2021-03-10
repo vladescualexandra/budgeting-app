@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -59,7 +60,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(FirebaseService.TABLE_CATEGORIES, getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
     }
 

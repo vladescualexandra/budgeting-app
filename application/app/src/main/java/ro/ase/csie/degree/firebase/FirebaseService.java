@@ -2,6 +2,7 @@ package ro.ase.csie.degree.firebase;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -25,6 +26,7 @@ public class FirebaseService {
     public static final String TABLE_BALANCES = "balances";
     public static final String TABLE_USERS = "users";
     public static final String ATTRIBUTE_USER = "user";
+    public static final String TABLE_BUDGET = "budget";
 
     private DatabaseReference database;
     private static FirebaseService firebaseService;
@@ -32,19 +34,18 @@ public class FirebaseService {
     private Query query;
 
 
-    private FirebaseService(String tableName, Context context) {
-        database = FirebaseDatabase.getInstance().getReference(tableName);
+    private FirebaseService(Context context) {
+    database = FirebaseDatabase.getInstance().getReference(TABLE_BUDGET);
         user_key = context.getSharedPreferences(User.USER_PREFS, Context.MODE_PRIVATE).getString(User.USER_KEY, null);
-        query = database
-                .orderByChild(ATTRIBUTE_USER)
-                .equalTo(user_key);
+
+
     }
 
-    public static FirebaseService getInstance(String tableName, Context context) {
+    public static FirebaseService getInstance(Context context) {
         if (firebaseService == null) {
             synchronized (FirebaseService.class) {
                 if (firebaseService == null) {
-                    firebaseService = new FirebaseService(tableName, context);
+                    firebaseService = new FirebaseService(context);
                 }
             }
         }
@@ -66,12 +67,15 @@ public class FirebaseService {
         } else {
             String id = database.push().getKey();
             category.setId(id);
-            database.child(category.getId()).setValue(category);
+            database.child(TABLE_CATEGORIES).child(category.getId()).setValue(category);
         }
     }
 
 
     public void updateCategoriesUI(final Callback<List<Category>> callback) {
+        query = database.child(TABLE_CATEGORIES)
+                .orderByChild(ATTRIBUTE_USER)
+                .equalTo(user_key);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -98,11 +102,16 @@ public class FirebaseService {
         } else {
             String id = database.push().getKey();
             balance.setId(id);
-            database.child(balance.getId()).setValue(balance);
+            database.child(TABLE_BALANCES).child(balance.getId()).setValue(balance);
+
         }
     }
 
     public void updateBalancesUI(final Callback<List<Balance>> callback) {
+        query = database
+                .child(TABLE_BALANCES)
+                .orderByChild(ATTRIBUTE_USER)
+                .equalTo(user_key);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
