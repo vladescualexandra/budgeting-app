@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import ro.ase.csie.degree.R;
 
@@ -54,9 +56,28 @@ public class CategoriesActivity extends AppCompatActivity {
         lv_categories = findViewById(R.id.categories_list);
         menu_categories.getMenu().getItem(0).setChecked(true); // Expenses
         setAdapter(expenses_categories);
+        lv_categories.setOnItemLongClickListener(deleteCategoryEventListener());
 
         fab_add = findViewById(R.id.setting_categories_add_new);
         fab_add.setOnClickListener(addCategoryEventListener());
+    }
+
+    private AdapterView.OnItemLongClickListener deleteCategoryEventListener() {
+        return new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (menu_categories.getMenu().getItem(0).isChecked()) {
+                    firebaseService.deleteCategory(expenses_categories.get(position));
+                    Toast.makeText(getApplicationContext(), expenses_categories.get(position).toString(), Toast.LENGTH_LONG).show();
+
+                } else {
+                    firebaseService.deleteCategory(income_categories.get(position));
+                    Toast.makeText(getApplicationContext(), income_categories.get(position).toString(), Toast.LENGTH_LONG).show();
+                }
+                notifyAdapter();
+                return true;
+            }
+        };
     }
 
     private void getCategoriesFromFirebase() {

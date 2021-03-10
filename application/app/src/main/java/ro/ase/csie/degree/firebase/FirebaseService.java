@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,18 @@ public class FirebaseService {
         }
     }
 
+    public void deleteCategory(Category category) {
+        if (category == null || category.getId() == null || category.getId().trim().isEmpty()) {
+            return;
+        } else {
+            database
+                    .child(TABLE_CATEGORIES)
+                    .child(category.getId())
+                    .removeValue();
+
+        }
+    }
+
 
     public void updateCategoriesUI(final Callback<List<Category>> callback) {
         query = database.child(TABLE_CATEGORIES)
@@ -104,6 +117,17 @@ public class FirebaseService {
             balance.setId(id);
             database.child(TABLE_BALANCES).child(balance.getId()).setValue(balance);
 
+        }
+    }
+
+    public void deleteBalance(Balance balance) {
+        if (balance == null || balance.getId() == null || balance.getId().trim().isEmpty()) {
+            return;
+        } else {
+            database
+                    .child(TABLE_BALANCES)
+                    .child(balance.getId())
+                    .removeValue();
         }
     }
 
