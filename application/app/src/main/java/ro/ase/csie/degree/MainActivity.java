@@ -1,5 +1,6 @@
 package ro.ase.csie.degree;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.fragments.DayFragment;
 import ro.ase.csie.degree.fragments.MonthFragment;
@@ -18,13 +20,18 @@ import ro.ase.csie.degree.fragments.TodayFragment;
 import ro.ase.csie.degree.fragments.TotalFragment;
 import ro.ase.csie.degree.fragments.WeekFragment;
 import ro.ase.csie.degree.fragments.YearFragment;
+import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.settings.SettingsActivity;
 
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    public static final String NEW_TRANSACTION = "new_transaction";
     public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
     private String USER_KEY;
 
@@ -33,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ListView lv_transactions;
 
+    private List<Transaction> transactionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +85,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
+        TransactionAdapter adapter = new TransactionAdapter
+                (getApplicationContext(),
+                        R.layout.row_item_transaction,
+                        transactionList,
+                        getLayoutInflater());
+        lv_transactions.setAdapter(adapter);
 
     }
 
     private void notifyAdapter() {
+        TransactionAdapter adapter = (TransactionAdapter) lv_transactions.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
+            Transaction transaction = (Transaction) data.getSerializableExtra(MainActivity.NEW_TRANSACTION);
+            transactionList.add(transaction);
+            notifyAdapter();
+        }
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {

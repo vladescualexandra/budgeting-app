@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -191,7 +192,10 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void saveTransaction() {
-        Log.e("saveTransaction", transaction.toString());
+        Intent intent = getIntent();
+        intent.putExtra(MainActivity.NEW_TRANSACTION, transaction);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void setCategoryAdapter() {

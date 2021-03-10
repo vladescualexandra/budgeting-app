@@ -45,7 +45,8 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = getView(position, convertView, parent);
+        View view = layoutInflater.inflate(resource, parent, false);
+
         if (transactionList != null) {
             if (transactionList.size() > 0 ) {
                 if (position < transactionList.size()) {
@@ -83,7 +84,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     }
 
     private void setCategoryIcon(View view, Transaction transaction) {
-        ImageView iv_icon = view.findViewById(R.id.row_transaction_category);
+        ImageView iv_icon = view.findViewById(R.id.row_transaction_icon);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference().child(transaction.getCategory().getIcon());
         storageReference.getBytes(MAX_DOWNLOAD_SIZE_BYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
