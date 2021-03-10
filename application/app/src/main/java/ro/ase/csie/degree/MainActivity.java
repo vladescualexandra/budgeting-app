@@ -14,6 +14,8 @@ import android.widget.ListView;
 
 import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.fragments.DayFragment;
 import ro.ase.csie.degree.fragments.MonthFragment;
 import ro.ase.csie.degree.fragments.TodayFragment;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Transaction> transactionList = new ArrayList<>();
 
+    private FirebaseService firebaseService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         initComponents();
-
+        getTransactionsFromFirebase();
 
     }
 
@@ -68,6 +72,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         USER_KEY = new User().getUID(getApplicationContext());
+    }
+
+    private void getTransactionsFromFirebase() {
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService.updateTransactionsUI(updateTransactionsCallback());
+    }
+
+    private Callback<List<Transaction>> updateTransactionsCallback() {
+        return result -> {
+            if (result != null) {
+                transactionList.clear();
+                transactionList.addAll(result);
+                notifyAdapter();
+            }
+        };
     }
 
     private View.OnClickListener addEventListener() {
@@ -104,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
             Transaction transaction = (Transaction) data.getSerializableExtra(MainActivity.NEW_TRANSACTION);
-            transactionList.add(transaction);
-            notifyAdapter();
+            transaction.setUser(USER_KEY);
+            firebaseService.insertTransaction(transaction);
         }
     }
 
