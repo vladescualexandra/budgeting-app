@@ -1,11 +1,16 @@
 package ro.ase.csie.degree.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Date;
+
+import ro.ase.csie.degree.util.DateConverter;
 
 public class Transaction implements Serializable, Transactionable {
 
     private String id;
+    private String details;
     private Category category;
     private Balance balance;
     private double amount;
@@ -23,7 +28,7 @@ public class Transaction implements Serializable, Transactionable {
         this.date = date;
     }
 
-    public Transaction(String id,  Category category, Balance balance, double amount, Date date) {
+    public Transaction(String id, Category category, Balance balance, double amount, Date date) {
         this.id = id;
         this.category = category;
         this.balance = balance;
@@ -70,5 +75,25 @@ public class Transaction implements Serializable, Transactionable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id='" + id + '\'' +
+                ", details='" + details + '\'' +
+                ", category=" + category +
+                ", balance=" + balance +
+                ", amount=" + amount +
+                ", date=" + date +
+                '}';
     }
 }

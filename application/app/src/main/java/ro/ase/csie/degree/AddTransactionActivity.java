@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -30,6 +32,7 @@ import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.DateConverter;
+import ro.ase.csie.degree.util.InputValidation;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
@@ -158,15 +161,37 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener setDateEventListener() {
         return (view, year, month, dayOfMonth) -> {
-            transaction.setDate(DateConverter.toDate(day, month, year));
-            btn_date.setText(DateConverter.format(day, month, year));
+            transaction.setDate(DateConverter.toDate(dayOfMonth, month, year));
+            btn_date.setText(DateConverter.format(dayOfMonth, month, year));
         };
     }
 
     private View.OnClickListener saveTransactionEventListener() {
         return v -> {
 
+            if (!tiet_details.getText().toString().trim().isEmpty()) {
+                transaction.setDetails(tiet_details.getText().toString().trim());
+            }
+
+            InputValidation validation = new InputValidation(getApplicationContext());
+
+            TransactionType type = transaction.getCategory().getType();
+            double available_amount = transaction.getBalance().getAvailable_amount();
+            double amount = Double.parseDouble(tiet_amount.getText().toString());
+
+            if (validation.amountValidation(type, available_amount, amount)) {
+                transaction.setAmount(amount);
+                saveTransaction();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        available_amount + " / " + amount, Toast.LENGTH_LONG).show();
+            }
+
         };
+    }
+
+    private void saveTransaction() {
+        Log.e("saveTransaction", transaction.toString());
     }
 
     private void setCategoryAdapter() {
@@ -176,6 +201,22 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item,
                                 getCategoriesByType());
         spn_category.setAdapter(adapter);
+        transaction.setCategory(getCategoriesByType().get(0));
+        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+                    transaction.setCategory(expenseCategories.get(position));
+                } else {
+                    transaction.setCategory(incomeCategories.get(position));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setBalanceAdapter() {
@@ -185,6 +226,19 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item,
                                 balances);
         spn_balances.setAdapter(adapter);
+        transaction.setBalance(balances.get(0));
+        spn_balances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                transaction.setBalance(balances.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     private List<Category> getCategoriesByType() {

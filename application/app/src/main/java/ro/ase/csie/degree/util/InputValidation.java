@@ -1,8 +1,12 @@
 package ro.ase.csie.degree.util;
 
 import android.content.Context;
+import android.text.Editable;
 import android.util.Patterns;
+
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.model.Balance;
+import ro.ase.csie.degree.model.TransactionType;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -14,6 +18,7 @@ public class InputValidation {
     public InputValidation(Context context) {
         this.context = context;
     }
+
 
     public boolean nameValidation(TextInputEditText tiet) {
         if (tiet.getText().toString().trim().length() < 3) {
@@ -62,5 +67,13 @@ public class InputValidation {
             return false;
         }
 
+    }
+
+    public boolean amountValidation(TransactionType type, double available_amount, double amount) {
+        if (type.equals(TransactionType.INCOME)) {
+            return amount > 0;
+        } else {
+            return available_amount >= amount && amount > 0;
+        }
     }
 }
