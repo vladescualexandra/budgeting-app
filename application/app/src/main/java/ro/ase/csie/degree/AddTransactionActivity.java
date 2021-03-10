@@ -142,13 +142,14 @@ public class AddTransactionActivity extends AppCompatActivity {
             } else {
                 transaction.getCategory().setType(TransactionType.INCOME);
             }
+            setCategoryAdapter();
         };
     }
 
     private View.OnClickListener dateDialogEventListener() {
         return v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    getApplicationContext(),
+                    AddTransactionActivity.this,
                     setDateEventListener(),
                     year, month, day);
             datePickerDialog.show();
