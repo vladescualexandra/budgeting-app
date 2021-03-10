@@ -63,10 +63,10 @@ public class AddTransactionActivity extends AppCompatActivity {
         initComponents();
 
 
-//        initDefaults();
-//
-//        getCategoriesFromFirebase();
-//        getBalancesFromFirebase();
+        initDefaults();
+
+        getCategoriesFromFirebase();
+        getBalancesFromFirebase();
     }
 
     private void getCategoriesFromFirebase() {
@@ -80,23 +80,20 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {
-        return new Callback<List<Category>>() {
-            @Override
-            public void updateUI(List<Category> result) {
-                if (result != null) {
-                    for (Category category : result) {
-                        if (category != null) {
-                            if (category.getType() != null) {
-                                if (category.getType().equals(TransactionType.EXPENSE)) {
-                                    expenseCategories.add(category);
-                                } else if (category.getType().equals(TransactionType.INCOME)) {
-                                    incomeCategories.add(category);
-                                }
+        return result -> {
+            if (result != null) {
+                for (Category category : result) {
+                    if (category != null) {
+                        if (category.getType() != null) {
+                            if (category.getType().equals(TransactionType.EXPENSE)) {
+                                expenseCategories.add(category);
+                            } else if (category.getType().equals(TransactionType.INCOME)) {
+                                incomeCategories.add(category);
                             }
                         }
                     }
-                    setCategoryAdapter();
                 }
+                setCategoryAdapter();
             }
         };
     }
