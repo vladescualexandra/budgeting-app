@@ -20,6 +20,7 @@ import java.util.List;
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
+import ro.ase.csie.degree.model.Transaction;
 
 public class FirebaseService {
 
@@ -28,6 +29,7 @@ public class FirebaseService {
     public static final String TABLE_USERS = "users";
     public static final String ATTRIBUTE_USER = "user";
     public static final String TABLE_BUDGET = "budget";
+    public static final String TABLE_TRANSACTIONS = "transactions";
 
     private DatabaseReference database;
     private static FirebaseService firebaseService;
@@ -72,6 +74,22 @@ public class FirebaseService {
         }
     }
 
+    public void insertTransaction(Transaction transaction) {
+        if (transaction == null) {
+            return;
+        } else {
+            String id = database
+                    .child(TABLE_TRANSACTIONS)
+                    .push()
+                    .getKey();
+            transaction.setId(id);
+            database
+                    .child(TABLE_TRANSACTIONS)
+                    .child(transaction.getId())
+                    .setValue(transaction);
+        }
+    }
+
     public void deleteCategory(Category category) {
         if (category == null || category.getId() == null || category.getId().trim().isEmpty()) {
             return;
@@ -82,6 +100,32 @@ public class FirebaseService {
                     .removeValue();
 
         }
+    }
+
+    public void updateTransactionsUI(final Callback<List<Transaction>> callback) {
+        query = database
+                .child(TABLE_TRANSACTIONS)
+                .orderByChild(ATTRIBUTE_USER)
+                .equalTo(user_key);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Transaction> transactions = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Transaction transaction = data.getValue(Transaction.class);
+                    if (transaction != null) {
+                        transactions.add(transaction);
+                    }
+                }
+                callback.updateUI(transactions);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

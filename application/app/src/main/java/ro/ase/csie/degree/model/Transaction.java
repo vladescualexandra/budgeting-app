@@ -10,6 +10,7 @@ import ro.ase.csie.degree.util.DateConverter;
 public class Transaction implements Serializable, Transactionable {
 
     private String id;
+    private String user;
     private String details;
     private Category category;
     private Balance balance;
@@ -44,6 +45,13 @@ public class Transaction implements Serializable, Transactionable {
         this.id = id;
     }
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public Category getCategory() {
         return category;
