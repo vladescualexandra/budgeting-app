@@ -33,7 +33,30 @@
     <style name="total_balance_text" >
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/rally_white</item>
-        <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="row_transaction_category">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/rally_white</item>
+    </style>
+
+    <style name="row_transaction_details">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/rally_white</item>
+    </style>
+
+    <style name="row_transaction_amount">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="row_transaction_balance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/rally_white</item>
+    </style>
+
+
+
 
 </resources>

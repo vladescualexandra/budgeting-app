@@ -71,6 +71,11 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         String amount = String.valueOf(transaction.getAmount());
         setText(tv_amount, amount);
+        if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+            tv_amount.setTextColor(context.getResources().getColor(R.color.rally_dark_red));
+        } else {
+            tv_amount.setTextColor(context.getResources().getColor(R.color.rally_dark_green));
+        }
 
         setText(tv_balance, transaction.getBalance().getName());
     }
