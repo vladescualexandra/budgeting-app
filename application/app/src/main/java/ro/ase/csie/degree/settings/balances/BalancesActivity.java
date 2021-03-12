@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.adapters.BalanceAdapter;
 
@@ -29,7 +32,7 @@ public class BalancesActivity extends AppCompatActivity {
     private ListView lv_balances;
 
     private List<Balance> balanceList = new ArrayList<>();
-    private FirebaseService firebaseService;
+    private FirebaseService<Balance> firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class BalancesActivity extends AppCompatActivity {
     }
 
     private void getBalancesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
         firebaseService.updateBalancesUI(updateBalancesCallback());
     }
 
@@ -69,7 +72,7 @@ public class BalancesActivity extends AppCompatActivity {
 
     private AdapterView.OnItemLongClickListener deleteBalanceEventListener() {
         return (parent, view, position, id) -> {
-            firebaseService.deleteBalance(balanceList.get(position));
+            firebaseService.delete(balanceList.get(position));
             notifyAdapter();
             return true;
         };
@@ -87,8 +90,7 @@ public class BalancesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_BALANCE & data != null) {
             Balance balance = (Balance) data.getSerializableExtra(AddBalanceActivity.NEW_BALANCE);
-            balance.setUser(new User().getUID(getApplicationContext()));
-            firebaseService.upsertBalance(balance);
+            firebaseService.upsert(balance);
         }
     }
 

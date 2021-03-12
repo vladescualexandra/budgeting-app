@@ -23,14 +23,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        SharedPreferences preferences = getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
-        String key = preferences.getString(User.USER_KEY, null);
-        String username = preferences.getString(User.USER_NAME, null);
+        String key = User.getUID(getApplicationContext());
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (key == null &&  username == null) {
+                if (key == null) {
                     intent = new Intent(getApplicationContext(), LoginActivity.class);
                 } else {
                     intent = new Intent(getApplicationContext(), MainActivity.class);

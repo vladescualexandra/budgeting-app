@@ -60,17 +60,17 @@ public class EmailAuthentication {
         currentUser.updateProfile(profileUpdate)
             .addOnCompleteListener(task -> {
                 setAccount();
-                saveData();
+//                saveData();
                 Toast.makeText(context,
                         user.toString(),
                         Toast.LENGTH_SHORT).show();
             });
     }
 
-    private void saveData() {
-        FirebaseService firebaseService = FirebaseService.getInstance(context);
-        firebaseService.insertUserData(user);
-    }
+//    private void saveData() {
+//        FirebaseService firebaseService = FirebaseService.getInstance(context);
+//        firebaseService.insertUserData(user);
+//    }
 
     public void loginAccount(TextInputEditText email, TextInputEditText password) {
         mAuth.signInWithEmailAndPassword(email.getText().toString().trim(),
@@ -91,7 +91,9 @@ public class EmailAuthentication {
 
     private User getUser() {
         currentUser = mAuth.getCurrentUser();
-        return new User(currentUser.getUid(), currentUser.getDisplayName(), currentUser.getEmail());
+        user = new User(currentUser.getDisplayName(), currentUser.getEmail());
+        user.setId(currentUser.getUid());
+        return user;
     }
 
     public void setAccount() {

@@ -5,11 +5,12 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 import java.util.Date;
 
+import ro.ase.csie.degree.firebase.FirebaseObject;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.util.DateConverter;
 
-public class Transaction implements Serializable, Transactionable {
+public class Transaction extends FirebaseObject implements Serializable{
 
-    private String id;
     private String user;
     private String details;
     private Category category;
@@ -18,32 +19,11 @@ public class Transaction implements Serializable, Transactionable {
     private Date date;
 
     public Transaction() {
+        super();
         this.category = new Category();
         this.balance = new Balance();
     }
 
-    public Transaction(Category category, Balance balance, double amount, Date date) {
-        this.category = category;
-        this.balance = balance;
-        this.amount = amount;
-        this.date = date;
-    }
-
-    public Transaction(String id, Category category, Balance balance, double amount, Date date) {
-        this.id = id;
-        this.category = category;
-        this.balance = balance;
-        this.amount = amount;
-        this.date = date;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUser() {
         return user;
@@ -93,15 +73,4 @@ public class Transaction implements Serializable, Transactionable {
         this.details = details;
     }
 
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "id='" + id + '\'' +
-                ", details='" + details + '\'' +
-                ", category=" + category +
-                ", balance=" + balance +
-                ", amount=" + amount +
-                ", date=" + date +
-                '}';
-    }
 }

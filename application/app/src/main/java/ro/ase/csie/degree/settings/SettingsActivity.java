@@ -67,20 +67,18 @@ public class SettingsActivity extends AppCompatActivity {
         user_info = getSharedPreferences(User.USER_PREFS, MODE_PRIVATE);
 
         String user_key = user_info.getString(User.USER_KEY, null);
-        String user_name = user_info.getString(User.USER_NAME, null);
-        String user_email = user_info.getString(User.USER_EMAIL, null);
-
-        if (user_key != null && user_name != null && user_email != null) {
-            user = new User(user_key, user_name, user_email);
-
-            tv_user_name.setText(user.getName());
-            tv_user_email.setText(user.getEmail());
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "Something is null.", Toast.LENGTH_LONG).show();
-        }
-
-
+//        String user_name = user_info.getString(User.USER_NAME, null);
+//        String user_email = user_info.getString(User.USER_EMAIL, null);
+//
+//        if (user_key != null && user_name != null && user_email != null) {
+//            user = new User(user_key, user_name, user_email);
+//
+//            tv_user_name.setText(user.getName());
+//            tv_user_email.setText(user.getEmail());
+//        } else {
+//            Toast.makeText(getApplicationContext(),
+//                    "Something is null.", Toast.LENGTH_LONG).show();
+//        }
     }
 
     private void initEventListeners() {
@@ -97,8 +95,6 @@ public class SettingsActivity extends AppCompatActivity {
         btn_sign_out.setOnClickListener(v -> {
             SharedPreferences.Editor editor = user_info.edit();
             editor.remove(User.USER_KEY);
-            editor.remove(User.USER_NAME);
-            editor.remove(User.USER_EMAIL);
             editor.apply();
 
             GoogleAuthentication googleAuthentication = new GoogleAuthentication(getApplicationContext());

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import ro.ase.csie.degree.authentication.user.User;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -59,7 +60,8 @@ public class GoogleAuthentication {
     }
 
     private void setAccount(GoogleSignInAccount account) {
-        User user = new User(account.getId(), account.getDisplayName(), account.getEmail());
+        User user = new User(account.getDisplayName(), account.getEmail());
+        user.setId(account.getId());
         user.setAccount(context);
     }
 

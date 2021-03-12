@@ -16,6 +16,7 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
@@ -37,7 +38,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private List<Category> expenses_categories = new ArrayList<>();
     private List<Category> income_categories = new ArrayList<>();
 
-    private FirebaseService firebaseService;
+    private FirebaseService<Category> firebaseService;
     private boolean isExpense = true;
 
     @Override
@@ -67,12 +68,9 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (menu_categories.getMenu().getItem(0).isChecked()) {
-                    firebaseService.deleteCategory(expenses_categories.get(position));
-                    Toast.makeText(getApplicationContext(), expenses_categories.get(position).toString(), Toast.LENGTH_LONG).show();
-
+                    firebaseService.delete(expenses_categories.get(position));
                 } else {
-                    firebaseService.deleteCategory(income_categories.get(position));
-                    Toast.makeText(getApplicationContext(), income_categories.get(position).toString(), Toast.LENGTH_LONG).show();
+                    firebaseService.delete(income_categories.get(position));
                 }
                 notifyAdapter();
                 return true;
@@ -81,7 +79,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
     }
 
@@ -152,8 +150,8 @@ public class CategoriesActivity extends AppCompatActivity {
                 && resultCode == RESULT_OK) {
             Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
             category.setType(isExpense ? TransactionType.EXPENSE : TransactionType.INCOME);
-            category.setUser(new User().getUID(getApplicationContext()));
-            firebaseService.insertCategory(category);
+            category.setUser(User.getUID(getApplicationContext()));
+            firebaseService.upsert(category);
             notifyAdapter();
         }
     }

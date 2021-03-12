@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,15 +15,13 @@ import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.fragments.DayFragment;
 import ro.ase.csie.degree.fragments.MonthFragment;
-import ro.ase.csie.degree.fragments.TodayFragment;
 import ro.ase.csie.degree.fragments.TotalFragment;
-import ro.ase.csie.degree.fragments.WeekFragment;
 import ro.ase.csie.degree.fragments.YearFragment;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.settings.SettingsActivity;
 
 
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Transaction> transactionList = new ArrayList<>();
 
-    private FirebaseService firebaseService;
+    private FirebaseService<Transaction> firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +69,11 @@ public class MainActivity extends AppCompatActivity {
         lv_transactions = findViewById(R.id.main_list_transactions);
         setAdapter();
 
-
-        USER_KEY = new User().getUID(getApplicationContext());
+        USER_KEY = User.getUID(getApplicationContext());
     }
 
     private void getTransactionsFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
         firebaseService.updateTransactionsUI(updateTransactionsCallback());
     }
 
@@ -112,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                         transactionList,
                         getLayoutInflater());
         lv_transactions.setAdapter(adapter);
-
     }
 
     private void notifyAdapter() {
@@ -129,11 +124,16 @@ public class MainActivity extends AppCompatActivity {
 
             if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
                 Balance balance = transaction.getBalance();
-                firebaseService.upsertBalance(balance);
-                firebaseService.insertTransaction(transaction);
+                updateBalance(balance);
+                firebaseService.upsert(transaction);
             }
 
         }
+    }
+
+    private void updateBalance(Balance balance) {
+        FirebaseService<Balance> balanceFirebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
+        balanceFirebaseService.upsert(balance);
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {
@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 show(fragment);
-                notifyAdapter();
             }
 
             @Override

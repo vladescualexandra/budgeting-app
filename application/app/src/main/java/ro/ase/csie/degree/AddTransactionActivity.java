@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
@@ -74,7 +76,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void retrieveDataFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
         firebaseService.updateBalancesUI(updateBalancesCallback());
 
@@ -205,7 +207,9 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item,
                                 getCategoriesByType());
         spn_category.setAdapter(adapter);
-        transaction.setCategory(getCategoriesByType().get(0));
+        if (getCategoriesByType().size() > 0) {
+            transaction.setCategory(getCategoriesByType().get(0));
+        }
         spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -230,7 +234,9 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item,
                                 balances);
         spn_balances.setAdapter(adapter);
-        transaction.setBalance(balances.get(0));
+//        if (balances.size() > 0) {
+//            transaction.setBalance(balances.get(0));
+//        }
         spn_balances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
