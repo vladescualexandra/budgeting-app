@@ -7,9 +7,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.authentication.user.User;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String NEW_TRANSACTION = "new_transaction";
     public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
-    private String USER_KEY;
 
     private ImageButton btn_settings;
     private ImageButton btn_add;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         initComponents();
         getTransactionsFromFirebase();
+        show(new DayFragment());
 
     }
 
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         lv_transactions = findViewById(R.id.main_list_transactions);
         setAdapter();
 
-        USER_KEY = User.getUID(getApplicationContext());
+        String USER_KEY = User.getUID(getApplicationContext());
     }
 
     private void getTransactionsFromFirebase() {
@@ -119,19 +121,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
-            Transaction transaction = (Transaction) data.getSerializableExtra(MainActivity.NEW_TRANSACTION);
-            transaction.setUser(USER_KEY);
 
-            if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
-                Balance balance = transaction.getBalance();
-                updateBalance(balance);
-                firebaseService.upsert(transaction);
-            }
+            Transaction transaction = (Transaction) data.getSerializableExtra(MainActivity.NEW_TRANSACTION);
+
+            Log.e("onAR", transaction.toString());
+
+//            if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
+//                updateBalance(transaction);
+//                firebaseService.upsert(transaction);
+//            }
 
         }
     }
 
-    private void updateBalance(Balance balance) {
+    private void updateBalance(Transaction transaction) {
+        Balance balance = transaction.getBalance();
         FirebaseService<Balance> balanceFirebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
         balanceFirebaseService.upsert(balance);
     }
@@ -142,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment;
                 switch (tab.getPosition()) {
-                    case 2:
+                    case 1:
                         fragment = new MonthFragment();
                         break;
-                    case 3:
+                    case 2:
                         fragment = new YearFragment();
                         break;
-                    case 4:
+                    case 3:
                         fragment = new TotalFragment();
                         break;
                     default:

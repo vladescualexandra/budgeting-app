@@ -9,13 +9,13 @@ import ro.ase.csie.degree.firebase.Table;
 
 public class Category extends FirebaseObject implements Serializable {
 
-    private String user;
     private TransactionType type;
     private String icon;
     private String name;
 
     public Category() {
-        super();
+        super(null, null);
+
     }
 
     public String getIcon() {
@@ -42,15 +42,6 @@ public class Category extends FirebaseObject implements Serializable {
         return type;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    @NonNull
     @Override
     public String toString() {
         return this.name;

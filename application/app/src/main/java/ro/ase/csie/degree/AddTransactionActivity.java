@@ -49,7 +49,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private Button btn_save;
 
 
-    private Transaction transaction;
+    private Transaction transaction = new Transaction();
 
     private List<Category> expenseCategories = new ArrayList<>();
     private List<Category> incomeCategories = new ArrayList<>();
@@ -119,7 +119,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        transaction = new Transaction();
         transaction.setDate(DateConverter.toDate(day, month, year));
 
         transaction.getCategory().setType(rg_type.getCheckedRadioButtonId()
@@ -184,10 +183,15 @@ public class AddTransactionActivity extends AppCompatActivity {
 
             if (validation.amountValidation(type, available_amount, amount)) {
                 transaction.setAmount(amount);
+
+                Balance balance = (Balance) spn_balances.getSelectedItem();
+                Category category = (Category) spn_category.getSelectedItem();
+
+                transaction.setBalance(balance);
+                transaction.setCategory(category);
+
+
                 saveTransaction();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        available_amount + " / " + amount, Toast.LENGTH_LONG).show();
             }
 
         };
@@ -234,13 +238,15 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item,
                                 balances);
         spn_balances.setAdapter(adapter);
-//        if (balances.size() > 0) {
-//            transaction.setBalance(balances.get(0));
-//        }
+        if (balances.size() > 0) {
+            transaction.setBalance(balances.get(0));
+        }
+
         spn_balances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 transaction.setBalance(balances.get(position));
+                Log.e("setBalanceAdapter", transaction.getBalance().getId());
             }
 
             @Override

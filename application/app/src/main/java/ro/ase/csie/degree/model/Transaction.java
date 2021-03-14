@@ -11,7 +11,6 @@ import ro.ase.csie.degree.util.DateConverter;
 
 public class Transaction extends FirebaseObject implements Serializable{
 
-    private String user;
     private String details;
     private Category category;
     private Balance balance;
@@ -19,18 +18,9 @@ public class Transaction extends FirebaseObject implements Serializable{
     private Date date;
 
     public Transaction() {
-        super();
+        super(null, null);
         this.category = new Category();
         this.balance = new Balance();
-    }
-
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public Category getCategory() {
@@ -73,4 +63,14 @@ public class Transaction extends FirebaseObject implements Serializable{
         this.details = details;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "details='" + details + '\'' +
+                ", category=" + category +
+                ", balance=" + balance +
+                ", amount=" + amount +
+                ", date=" + date +
+                '}';
+    }
 }

@@ -13,14 +13,9 @@ public class Balance extends FirebaseObject implements Serializable {
     private double available_amount;
 
     public Balance() {
-        super();
+        super(null, null);
     }
 
-    public Balance(String name, double available_amount) {
-        super();
-        this.name = name;
-        this.available_amount = available_amount;
-    }
 
     public String getName() {
         return name;
@@ -38,12 +33,6 @@ public class Balance extends FirebaseObject implements Serializable {
         this.available_amount = available_amount;
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        return this.name + " - " + this.available_amount;
-    }
 
     public boolean operation(TransactionType type, double amount) {
         if (type.equals(TransactionType.EXPENSE)) {
@@ -69,5 +58,10 @@ public class Balance extends FirebaseObject implements Serializable {
             this.available_amount -= amount;
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.name + " : " + this.available_amount;
     }
 }

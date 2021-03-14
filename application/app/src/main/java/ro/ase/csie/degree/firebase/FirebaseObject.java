@@ -5,9 +5,6 @@ public class FirebaseObject {
     private String id;
     private String user;
 
-    public FirebaseObject() {
-
-    }
 
     public FirebaseObject(String id, String user) {
         this.id = id;

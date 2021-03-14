@@ -18,7 +18,7 @@ public class User extends FirebaseObject implements Serializable {
     private String email;
 
     public User(String name, String email) {
-        super();
+        super(null, null);
         this.name = name;
         this.email = email;
     }
