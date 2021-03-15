@@ -24,6 +24,7 @@ import android.widget.Toast;
 import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.fragments.DayFragment;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String NEW_TRANSACTION = "new_transaction";
     public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
 
+    private ImageButton ib_refresh;
     private TextView tv_date_filter;
     private ImageButton btn_settings;
     private ImageButton btn_add;
@@ -68,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         initComponents();
-        getTransactionsFromFirebase();
+        setDefaultDate();
+        getTransactionsFromFirebase(DateDisplayType.DAY_MONTH_YEAR);
         show(new DayFragment());
 
-        setDefaultDate();
 
     }
 
@@ -81,10 +83,18 @@ public class MainActivity extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        filter(0);
+        filter(DateDisplayType.DAY_MONTH_YEAR);
     }
 
     private void initComponents() {
+        ib_refresh = findViewById(R.id.main_refresh);
+        ib_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDefaultDate();
+            }
+        });
+
         tv_date_filter = findViewById(R.id.main_date_filter);
         tv_date_filter.setOnClickListener(filterEventListener());
 
@@ -108,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
                     buildDayMonthYearPicker();
                     break;
                 case 1:
-                    buildMonthYearPicker(1);
+                    buildMonthYearPicker(DateDisplayType.MONTH_YEAR);
                     break;
                 case 2:
-                    buildMonthYearPicker(2);
+                    buildMonthYearPicker(DateDisplayType.YEAR);
                     break;
                 default:
-                    filter(3);
+                    filter(DateDisplayType.TOTAL);
                     break;
             }
         };
@@ -127,18 +137,18 @@ public class MainActivity extends AppCompatActivity {
                     day = selectedDay;
                     month = selectedMonth;
                     year = selectedYear;
-                    filter(0);
+                    filter(DateDisplayType.DAY_MONTH_YEAR);
                 },
                 year, month, day);
         datePicker.show();
     }
 
-    private void buildMonthYearPicker(int option) {
+    private void buildMonthYearPicker(DateDisplayType type) {
         MonthPickerDialog.Builder picker = new MonthPickerDialog.Builder(MainActivity.this,
                 (selectedMonth, selectedYear) -> {
                     month = selectedMonth;
                     year = selectedYear;
-                    filter(option);
+                    filter(type);
                 }
                 , year, month);
 
@@ -148,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 .setActivatedYear(year)
                 .setMaxYear(2099);
 
-        if (option == 2) {
+        if (type.equals(DateDisplayType.YEAR)) {
             picker.showYearOnly();
         }
 
@@ -163,9 +173,10 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private void getTransactionsFromFirebase() {
+    private void getTransactionsFromFirebase(DateDisplayType type) {
+        Date date = DateConverter.toDate(day, month, year);
         firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
-        firebaseService.updateTransactionsUI(updateTransactionsCallback());
+        firebaseService.updateTransactionsUI(updateTransactionsCallback(), type, date);
     }
 
     private Callback<List<Transaction>> updateTransactionsCallback() {
@@ -233,20 +244,23 @@ public class MainActivity extends AppCompatActivity {
                 switch (tab.getPosition()) {
                     case 0:
                         fragment = new DayFragment();
+                        filter(DateDisplayType.DAY_MONTH_YEAR);
                         break;
                     case 1:
                         fragment = new MonthFragment();
+                        filter(DateDisplayType.MONTH_YEAR);
                         break;
                     case 2:
                         fragment = new YearFragment();
+                        filter(DateDisplayType.YEAR);
                         break;
                     default:
                         fragment = new TotalFragment();
+                        filter(DateDisplayType.TOTAL);
                         tv_date_filter.setText("");
                         break;
 
                 }
-                filter(tab.getPosition());
                 show(fragment);
             }
 
@@ -262,25 +276,22 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private void filter(int position) {
-        switch (position) {
-            case 0:
-                //TODO day filter
+    private void filter(DateDisplayType type) {
+        switch (type) {
+            case DAY_MONTH_YEAR:
                 tv_date_filter.setText(DateConverter.toDisplayDate(day, month, year));
                 break;
-            case 1:
-                //TODO month filter
+            case MONTH_YEAR:
                 tv_date_filter.setText(DateConverter.toMonthYear(month, year));
                 break;
-            case 2:
-                //TODO year filter
+            case YEAR:
                 tv_date_filter.setText(DateConverter.toYear(year));
                 break;
             default:
-                //TODO total filter
                 tv_date_filter.setText("");
                 break;
         }
+        getTransactionsFromFirebase(type);
     }
 
     private void show(Fragment fragment) {

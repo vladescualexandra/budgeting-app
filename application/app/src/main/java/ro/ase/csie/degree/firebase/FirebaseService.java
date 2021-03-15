@@ -17,12 +17,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.util.DateConverter;
 
 public class FirebaseService<T extends FirebaseObject> {
 
@@ -140,16 +142,18 @@ public class FirebaseService<T extends FirebaseObject> {
         });
     }
 
-    public void updateTransactionsUI(final Callback<List<Transaction>> callback) {
+    public void updateTransactionsUI(final Callback<List<Transaction>> callback, DateDisplayType type, Date filter) {
         query = getQuery(Table.TRANSACTIONS);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Transaction> list = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Transaction object = data.getValue(Transaction.class);
-                    if (object != null) {
-                        list.add(object);
+                    Transaction transaction = data.getValue(Transaction.class);
+                    if (transaction != null) {
+                        if (DateConverter.filter(type, transaction.getDate(), filter)) {
+                            list.add(transaction);
+                        }
                     }
                 }
                 callback.updateUI(list);
@@ -161,6 +165,7 @@ public class FirebaseService<T extends FirebaseObject> {
             }
         });
     }
+
 
 
 

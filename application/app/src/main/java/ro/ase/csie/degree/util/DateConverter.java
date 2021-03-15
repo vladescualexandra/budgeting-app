@@ -12,6 +12,8 @@ import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.Locale;
 
+import ro.ase.csie.degree.firebase.DateDisplayType;
+
 public class DateConverter {
 
     private static final String DATE_FORMAT = "dd/MM/yyyy";
@@ -66,5 +68,38 @@ public class DateConverter {
     public static String toDisplayDate(int day, int month, int year) {
         return day + " " + new DateFormatSymbols().getMonths()[month] + " " + year;
 
+    }
+
+    public static int[] toPieces(Date date) {
+        String[] piecesString = toString(date).split("/");
+        int[] pieces = new int[3];
+        for (int i = 0; i < pieces.length; i++) {
+            pieces[i] = Integer.parseInt(piecesString[i]);
+        }
+        return pieces;
+    }
+
+    public static boolean filterMonthYear(Date date, Date filter) {
+        int[] pieces = toPieces(date);
+        int[] filters = toPieces(filter);
+
+        for (int i=1; i<pieces.length; i++) {
+            if (pieces[i] != filters[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean filter(DateDisplayType type, Date date, Date filter) {
+        int[] pieces = toPieces(date);
+        int[] filters = toPieces(filter);
+
+        for (int i=type.getType(); i<pieces.length; i++) {
+            if (pieces[i] != filters[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
