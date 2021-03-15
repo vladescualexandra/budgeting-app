@@ -56,7 +56,7 @@ public class BalanceAdapter extends ArrayAdapter<Balance> {
         TextView tv_name = view.findViewById(R.id.balances_row_name);
         setText(tv_name, balance.getName());
         TextView tv_available_amount = view.findViewById(R.id.balances_row_available_amount);
-        setText(tv_available_amount, String.valueOf(balance.getAvailable_amount()));
+        setText(tv_available_amount, String.format("%.2f", balance.getAvailable_amount()));
     }
 
     private void setText(TextView tv, String text) {
