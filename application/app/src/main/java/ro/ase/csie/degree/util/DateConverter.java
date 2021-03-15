@@ -1,8 +1,16 @@
 package ro.ase.csie.degree.util;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateConverter {
 
@@ -45,5 +53,18 @@ public class DateConverter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String toMonthYear(int month, int year) {
+        return new DateFormatSymbols().getMonths()[month] + " " + year;
+    }
+
+    public static String toYear(int selectedYear) {
+        return "Year " + selectedYear;
+    }
+
+    public static String toDisplayDate(int day, int month, int year) {
+        return day + " " + new DateFormatSymbols().getMonths()[month] + " " + year;
+
     }
 }

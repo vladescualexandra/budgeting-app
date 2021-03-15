@@ -212,21 +212,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         if (getCategoriesByType().size() > 0) {
             transaction.setCategory(getCategoriesByType().get(0));
         }
-//        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
-//                    transaction.setCategory(expenseCategories.get(position));
-//                } else {
-//                    transaction.setCategory(incomeCategories.get(position));
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
     }
 
     private void setBalanceAdapter() {
@@ -239,20 +224,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         if (balances.size() > 0) {
             transaction.setBalance(balances.get(0));
         }
-//
-//        spn_balances.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                transaction.setBalance(balances.get(position));
-//                Log.e("setBalanceAdapter", transaction.getBalance().getId());
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
     }
 
     private List<Category> getCategoriesByType() {

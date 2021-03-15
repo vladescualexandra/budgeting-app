@@ -17,6 +17,7 @@ import java.util.List;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.util.DateConverter;
 
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
@@ -54,19 +55,15 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     private void buildTransaction(View view, Transaction transaction) {
         TextView tv_category = view.findViewById(R.id.row_transaction_category);
         TextView tv_amount = view.findViewById(R.id.row_transaction_amount);
+        TextView tv_date =  view.findViewById(R.id.row_transaction_date);
         TextView tv_balance = view.findViewById(R.id.row_transaction_balance);
         ImageButton ib_bar = view.findViewById(R.id.row_transaction_bar);
 
         setText(tv_category, transaction.getCategory().getName());
+        setText(tv_date, DateConverter.toString(transaction.getDate()));
         setText(tv_balance, transaction.getBalance().getName());
 
-        String sign = null;
-
-        if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
-            sign = "-";
-        } else {
-            sign = "+";
-        }
+        String sign = transaction.getCategory().getType().equals(TransactionType.EXPENSE) ? "-" : "+";
         setText(tv_amount, sign + transaction.getAmount());
 
         ib_bar.setBackgroundColor(context.getResources().getColor(transaction.getCategory().getColor()));

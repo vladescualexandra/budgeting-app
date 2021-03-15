@@ -57,5 +57,7 @@
     <string name="today">TODAY</string>
     <string name="transaction_details_optional">Details (optional)</string>
     <string name="invalid_amount">Amount not available.</string>
+    <string name="date_month_year_selector">date/month/year selector</string>
+    <string name="default_date">Default date</string>
 
 </resources>
