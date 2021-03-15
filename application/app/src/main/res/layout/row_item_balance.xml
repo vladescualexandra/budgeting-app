@@ -3,15 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16sp">
+    android:gravity="center"
+    android:weightSum="2"
+    android:layout_marginLeft="16sp"
+    android:padding="8sp">
 
     <TextView
         android:id="@+id/balances_row_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_balance_name"
-        style="@style/total_balance_text"
+        style="@style/row_balance_text"
         android:layout_weight="1"
+        android:layout_gravity="start"
         />
 
     <TextView
@@ -19,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_amount"
-        style="@style/total_balance_text"
+        style="@style/row_balance_text"
         android:layout_gravity="center"
         android:layout_weight="1"/>
 </LinearLayout>

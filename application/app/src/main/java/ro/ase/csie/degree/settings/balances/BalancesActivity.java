@@ -7,16 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
@@ -28,7 +27,7 @@ public class BalancesActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_ADD_BALANCE = 201;
     private TextView tv_total_text;
-    private TextView tv_add_balance;
+    private ImageButton iv_balance_add;
     private ListView lv_balances;
 
     private List<Balance> balanceList = new ArrayList<>();
@@ -61,13 +60,13 @@ public class BalancesActivity extends AppCompatActivity {
 
     private void initComponents() {
         tv_total_text = findViewById(R.id.balances_total);
-        tv_add_balance = findViewById(R.id.balances_add);
+        iv_balance_add = findViewById(R.id.balances_add);
 
         lv_balances = findViewById(R.id.balances_list);
         setAdapter();
         lv_balances.setOnItemLongClickListener(deleteBalanceEventListener());
 
-        tv_add_balance.setOnClickListener(addBalanceEventListener());
+        iv_balance_add.setOnClickListener(addBalanceEventListener());
     }
 
     private AdapterView.OnItemLongClickListener deleteBalanceEventListener() {
@@ -117,6 +116,6 @@ public class BalancesActivity extends AppCompatActivity {
     }
 
     private void setTotal(TextView tv_total_text, double totalAmount) {
-        tv_total_text.setText("Total balance: " + totalAmount + "$");
+        tv_total_text.setText("Total balance: " + String.format("%.2f", totalAmount) + "$");
     }
 }
