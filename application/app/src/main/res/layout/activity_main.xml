@@ -1,77 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ro.ase.csie.degree.MainActivity"
-    android:columnCount="3">
+    android:orientation="vertical"
+    >
 
-
-    <ImageButton
-        android:id="@+id/main_add_transaction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="0"
-        android:layout_column="0"
-        android:background="@color/rally_grey"
-        android:padding="10sp"
-        android:layout_columnSpan="1"
-        android:src="@drawable/ic_baseline_add_24" />
-
-    <ImageButton
-        android:id="@+id/main_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:background="@color/rally_grey"
-        android:padding="10sp"
-        android:layout_columnSpan="1"
-        android:src="@drawable/ic_baseline_settings_24" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/main_tabs"
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="2"
-        android:layout_column="0"
-        app:tabMode="fixed"
-        app:tabTextColor="@color/rally_white">
+        android:background="@color/rally_dark_grey"
+        >
 
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/main_tab_day"
+        <ImageButton
+            android:id="@+id/main_add_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab_day" />
+            android:layout_row="0"
+            android:layout_column="2"
+            android:background="@color/rally_dark_grey"
+            android:padding="10sp"
+            android:layout_columnSpan="1"
+            android:src="@drawable/ic_baseline_add_24"
+            />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/main_tab_month"
+        <ImageButton
+            android:id="@+id/main_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tab_month" />
+            android:layout_row="0"
+            android:layout_column="3"
+            android:background="@color/rally_dark_grey"
+            android:padding="10sp"
+            android:layout_columnSpan="1"
+            android:src="@drawable/ic_baseline_settings_24" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/main_tab_year"
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/main_tabs"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tab_year" />
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="4"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/rally_white">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/main_tab_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_total" />
 
-    </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/main_tab_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_day" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/main_tab_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_month" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/main_tab_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_year" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/main_tab_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_total" />
+
+        </com.google.android.material.tabs.TabLayout>
+    </GridLayout>
+
 
     <FrameLayout
         android:id="@+id/main_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_row="3"
-        android:layout_column="0" />
+/>
 
 
     <ListView
@@ -79,7 +88,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8sp"
-        android:layout_row="4"
-        android:layout_column="0" />
+ />
 
-</GridLayout>
+</LinearLayout>
