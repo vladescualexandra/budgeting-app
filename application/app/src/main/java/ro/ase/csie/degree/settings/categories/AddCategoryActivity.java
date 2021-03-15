@@ -121,11 +121,10 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private View.OnClickListener saveCategoryEventListener() {
         return v -> {
-            InputValidation validation = new InputValidation(getApplicationContext());
             if (category.getIcon() == null || category.getIcon().isEmpty()) {
                 category.setIcon(paths.get(0));
             }
-            if (validation.nameValidation(tiet_name)) {
+            if (InputValidation.nameValidation(getApplicationContext(), tiet_name)) {
                 category.setName(tiet_name.getText().toString().trim());
                 intent.putExtra(NEW_CATEGORY, category);
                 setResult(RESULT_OK, intent);

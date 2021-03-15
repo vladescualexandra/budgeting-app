@@ -175,13 +175,12 @@ public class AddTransactionActivity extends AppCompatActivity {
                 transaction.setDetails(tiet_details.getText().toString().trim());
             }
 
-            InputValidation validation = new InputValidation(getApplicationContext());
 
             TransactionType type = transaction.getCategory().getType();
             double available_amount = transaction.getBalance().getAvailable_amount();
             double amount = Double.parseDouble(tiet_amount.getText().toString());
 
-            if (validation.amountValidation(type, available_amount, amount)) {
+            if (InputValidation.amountValidation(getApplicationContext(), type, available_amount, amount)) {
                 transaction.setAmount(amount);
 
                 Balance balance = (Balance) spn_balances.getSelectedItem();

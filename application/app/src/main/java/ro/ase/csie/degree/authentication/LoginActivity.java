@@ -96,8 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private boolean validate() {
-        InputValidation validation = new InputValidation(getApplicationContext());
-        return validation.loginValidation(tiet_email, tiet_password);
+        return InputValidation.loginValidation(getApplicationContext(), tiet_email, tiet_password);
     }
 
     @Override

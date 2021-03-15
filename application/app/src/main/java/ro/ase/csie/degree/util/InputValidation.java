@@ -13,14 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class InputValidation {
 
-    private final Context context;
-
-    public InputValidation(Context context) {
-        this.context = context;
-    }
-
-
-    public boolean nameValidation(TextInputEditText tiet) {
+    public static boolean nameValidation(Context context, TextInputEditText tiet) {
         if (tiet.getText().toString().trim().length() < 3) {
             tiet.setError(context.getString(R.string.error_invalid_name));
             return false;
@@ -30,7 +23,7 @@ public class InputValidation {
         }
     }
 
-    public boolean emailValidation(TextInputEditText tiet) {
+    public static boolean emailValidation(Context context, TextInputEditText tiet) {
         if (!Patterns.EMAIL_ADDRESS.matcher(tiet.getText().toString().trim()).matches()) {
             tiet.setError(context.getString(R.string.error_invalid_email));
             return false;
@@ -40,7 +33,7 @@ public class InputValidation {
         }
     }
 
-    public boolean passwordValidation(TextInputEditText tiet) {
+    public static boolean passwordValidation(Context context, TextInputEditText tiet) {
         if (tiet.getText().toString().trim().length() < 8) {
             tiet.setError(context.getString(R.string.error_invalid_password));
             return false;
@@ -50,15 +43,16 @@ public class InputValidation {
         }
     }
 
-    public boolean loginValidation(TextInputEditText email, TextInputEditText password) {
-        return emailValidation(email) && passwordValidation(password);
+    public static boolean loginValidation(Context context, TextInputEditText email, TextInputEditText password) {
+        return emailValidation(context, email) && passwordValidation(context, password);
     }
 
-    public boolean registerValidation(TextInputEditText name, TextInputEditText email, TextInputEditText password) {
-        return nameValidation(name) && emailValidation(email) && passwordValidation(password);
+
+    public static boolean registerValidation(Context context, TextInputEditText name, TextInputEditText email, TextInputEditText password) {
+        return nameValidation(context, name) && emailValidation(context, email) && passwordValidation(context, password);
     }
 
-    public boolean availableAmountValidation(TextInputEditText available_amount) {
+    public static boolean availableAmountValidation(Context context, TextInputEditText available_amount) {
         if (Double.parseDouble(available_amount.getText().toString()) >= 0.0) {
             available_amount.setError(null);
             return true;
@@ -69,7 +63,7 @@ public class InputValidation {
 
     }
 
-    public boolean amountValidation(TransactionType type, double available_amount, double amount) {
+    public static boolean amountValidation(Context context, TransactionType type, double available_amount, double amount) {
         if (type.equals(TransactionType.INCOME)) {
             return amount > 0;
         } else {
