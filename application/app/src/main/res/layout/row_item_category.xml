@@ -5,11 +5,12 @@
     android:layout_height="wrap_content"
     android:padding="16sp">
 
-    <ImageView
-        android:id="@+id/row_item_category_icon"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/row_item_category_color"
         android:src="@drawable/common_full_open_on_phone"
-        android:layout_width="70sp"
-        android:layout_height="70sp"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginRight="16sp"
         android:paddingLeft="16sp"
         android:paddingRight="16sp"/>
 

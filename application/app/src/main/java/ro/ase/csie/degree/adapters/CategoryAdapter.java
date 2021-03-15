@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -63,24 +64,11 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     }
 
     private void buildCategory(View view, Category category) {
-
-        ImageView iv_category_icon = view.findViewById(R.id.row_item_category_icon);
+        CardView cv_category_color = view.findViewById(R.id.row_item_category_color);
         TextView tv_category_name = view.findViewById(R.id.row_item_category_name);
 
-        setIcon(category, iv_category_icon);
-
+        cv_category_color.setCardBackgroundColor(context.getResources().getColor(category.getColor()));
         tv_category_name.setText(category.getName());
     }
 
-    private void setIcon(Category category, ImageView iv_category_icon) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference().child(category.getIcon());
-        storageReference.getBytes(MAX_DOWNLOAD_SIZE_BYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                iv_category_icon.setImageBitmap(bmp);
-            }
-        });
-    }
 }

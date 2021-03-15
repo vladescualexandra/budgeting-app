@@ -3,6 +3,7 @@ package ro.ase.csie.degree.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+
 import ro.ase.csie.degree.R;
 
 
@@ -19,23 +22,23 @@ import java.util.List;
 
 import android.graphics.Color;;
 
-public class IconAdapter extends ArrayAdapter<Bitmap> { // TO DO <<<<
+public class ColorAdapter extends ArrayAdapter<Integer> { // TO DO <<<<
 
     private Context context;
     private int resource;
-    private List<Bitmap> iconList = new ArrayList<Bitmap>();
+    private List<Integer> colors;
     private LayoutInflater layoutInflater;
 
     private int selectedIndex = 0;
 
-    public IconAdapter(@NonNull Context context,
-                       int resource,
-                       @NonNull List<Bitmap> iconList,
-                       LayoutInflater layoutInflater) {
-        super(context, resource, iconList);
+    public ColorAdapter(@NonNull Context context,
+                        int resource,
+                        @NonNull List<Integer> colors,
+                        LayoutInflater layoutInflater) {
+        super(context, resource, colors);
         this.context = context;
         this.resource = resource;
-        this.iconList = iconList;
+        this.colors = colors;
         this.layoutInflater = layoutInflater;
     }
 
@@ -46,24 +49,20 @@ public class IconAdapter extends ArrayAdapter<Bitmap> { // TO DO <<<<
         @SuppressLint("ViewHolder")
         View view = layoutInflater.inflate(resource, parent, false);
 
-        if (iconList.size() > 0) {
-            if (position < iconList.size()) {
-                Bitmap icon = iconList.get(position);
-                if (icon != null) {
-                    buildIcon(view, icon);
-                }
-
+        if (colors.size() > 0) {
+            if (position < colors.size()) {
+                buildColor(view, colors.get(position));
                 if (position == selectedIndex) {
-                    view.setBackgroundColor(Color.argb(20, 238,238,238));
+                    view.setBackgroundColor(Color.argb(20, 238, 238, 238));
                 }
             }
         }
         return view;
     }
 
-    private void buildIcon(View view, Bitmap icon) {
-        ImageView iv_category_icon = view.findViewById(R.id.row_item_icon);
-        iv_category_icon.setImageBitmap(icon);
+    private void buildColor(View view, int color) {
+        CardView cv_color = view.findViewById(R.id.row_item_color_view);
+        cv_color.setCardBackgroundColor(context.getResources().getColor(color));
     }
 
     public void setSelectedIndex(int selectedIndex) {

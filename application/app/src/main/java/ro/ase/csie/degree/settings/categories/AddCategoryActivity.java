@@ -4,33 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.adapters.IconAdapter;
+import ro.ase.csie.degree.adapters.ColorAdapter;
 import ro.ase.csie.degree.util.InputValidation;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
-    private final String GREEN_ICONS = "greens";
-    private final String RED_ICONS = "reds";
 
     public static final String NEW_CATEGORY = "new_category";
     private List<Bitmap> icons = new ArrayList<>();
@@ -40,57 +31,24 @@ public class AddCategoryActivity extends AppCompatActivity {
     private Button btn_save;
 
     private Intent intent;
-    final long ONE_MEGABYTE = 1024 * 1024;
 
-    private List<String> paths = new ArrayList<>();
     Category category = new Category();
+
+    private List<Integer> colors = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
 
-
-
         initComponents();
+
         setAdapter();
 
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference;
-
         intent = getIntent();
-        boolean isExpense = intent.getBooleanExtra(CategoriesActivity.CATEGORY_TYPE, false);
-        if (isExpense) {
-            storageReference = storage.getReference().child(RED_ICONS);
-        } else {
-            storageReference = storage.getReference().child(GREEN_ICONS);
-        }
-
-
-        storageReference.listAll().addOnSuccessListener(listIconBitmaps());
-
-
 
     }
 
-    private OnSuccessListener<ListResult> listIconBitmaps() {
-        return listResult -> {
-            for (StorageReference ref : listResult.getItems()) {
-                Task<byte[]> task = ref.getBytes(ONE_MEGABYTE);
-                task.addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        icons.add(bmp);
-                        paths.add(ref.getPath());
-                        notifyAdapter();
-                    }
-                });
-            }
-            setAdapter();
-        };
-    }
 
     private void initComponents() {
         tiet_name = findViewById(R.id.add_category_select_name);
@@ -100,30 +58,21 @@ public class AddCategoryActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        IconAdapter adapter = new IconAdapter(getApplicationContext(),
-                R.layout.row_item_icon, icons, getLayoutInflater());
-        gv_icons.setAdapter(adapter);
-        gv_icons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.setSelectedIndex(position);
-                adapter.notifyDataSetChanged();
-                category.setIcon(paths.get(position));
-            }
-        });
-    }
+        getColors();
 
-    private void notifyAdapter() {
-        IconAdapter adapter = (IconAdapter) gv_icons.getAdapter();
-        adapter.notifyDataSetChanged();
+        ColorAdapter adapter = new ColorAdapter(getApplicationContext(),
+                R.layout.row_item_color, colors, getLayoutInflater());
+        gv_icons.setAdapter(adapter);
+        gv_icons.setOnItemClickListener((parent, view, position, id) -> {
+            adapter.setSelectedIndex(position);
+            adapter.notifyDataSetChanged();
+            category.setColor(colors.get(position));
+        });
     }
 
 
     private View.OnClickListener saveCategoryEventListener() {
         return v -> {
-            if (category.getIcon() == null || category.getIcon().isEmpty()) {
-                category.setIcon(paths.get(0));
-            }
             if (InputValidation.nameValidation(getApplicationContext(), tiet_name)) {
                 category.setName(tiet_name.getText().toString().trim());
                 intent.putExtra(NEW_CATEGORY, category);
@@ -132,5 +81,38 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
 
         };
+    }
+
+
+    private void getColors() {
+        colors = new ArrayList<>();
+        colors.add(R.color.color_0);
+        colors.add(R.color.color_1);
+        colors.add(R.color.color_2);
+        colors.add(R.color.color_3);
+        colors.add(R.color.color_4);
+        colors.add(R.color.color_5);
+        colors.add(R.color.color_6);
+        colors.add(R.color.color_7);
+        colors.add(R.color.color_8);
+        colors.add(R.color.color_9);
+        colors.add(R.color.color_10);
+        colors.add(R.color.color_11);
+        colors.add(R.color.color_12);
+        colors.add(R.color.color_13);
+        colors.add(R.color.color_14);
+        colors.add(R.color.color_15);
+        colors.add(R.color.color_16);
+        colors.add(R.color.color_17);
+        colors.add(R.color.color_18);
+        colors.add(R.color.color_19);
+        colors.add(R.color.color_20);
+        colors.add(R.color.color_21);
+        colors.add(R.color.color_22);
+        colors.add(R.color.color_23);
+        colors.add(R.color.color_24);
+        colors.add(R.color.color_25);
+        colors.add(R.color.color_26);
+        colors.add(R.color.color_27);
     }
 }
