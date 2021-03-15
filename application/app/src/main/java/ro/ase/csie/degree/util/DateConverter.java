@@ -37,4 +37,13 @@ public class DateConverter {
         }
         return null;
     }
+
+    public static Date toDate(String dateString) {
+        try {
+            return sdf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

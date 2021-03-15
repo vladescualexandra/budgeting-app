@@ -72,15 +72,12 @@ public class FirebaseService<T extends FirebaseObject> {
             return;
         }
 
-        Log.e("upsert", object.getId());
-
         if (object.getId() == null || object.getId().trim().isEmpty()) {
             String id = database.push().getKey();
             object.setId(id);
         }
 
         object.setUser(user_key);
-
 
         database
                 .child(getPath(object))

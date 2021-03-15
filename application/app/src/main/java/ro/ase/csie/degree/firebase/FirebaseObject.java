@@ -1,15 +1,22 @@
 package ro.ase.csie.degree.firebase;
 
-public class FirebaseObject {
+import java.io.Serializable;
 
-    private String id;
-    private String user;
+public class FirebaseObject implements Serializable {
+
+    protected String id;
+    protected String user;
 
 
     public FirebaseObject(String id, String user) {
         this.id = id;
         this.user = user;
     }
+
+    public FirebaseObject() {
+
+    }
+
 
     public String getId() {
         return id;
@@ -26,4 +33,6 @@ public class FirebaseObject {
     public void setUser(String user) {
         this.user = user;
     }
+
+
 }

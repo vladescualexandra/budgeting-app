@@ -1,5 +1,7 @@
 package ro.ase.csie.degree.model;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
@@ -15,7 +17,6 @@ public class Category extends FirebaseObject implements Serializable {
 
     public Category() {
         super(null, null);
-
     }
 
     public String getIcon() {
@@ -44,6 +45,13 @@ public class Category extends FirebaseObject implements Serializable {
 
     @Override
     public String toString() {
-        return this.name;
+        return "Category{" +
+                "type=" + type +
+                ", icon='" + icon + '\'' +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", user='" + user + '\'' +
+                '}';
     }
+
 }

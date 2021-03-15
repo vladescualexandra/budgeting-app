@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -104,7 +105,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private Callback<List<Balance>> updateBalancesCallback() {
         return result -> {
-
             if (result != null) {
                 balances.addAll(result);
                 setBalanceAdapter();
@@ -190,7 +190,6 @@ public class AddTransactionActivity extends AppCompatActivity {
                 transaction.setBalance(balance);
                 transaction.setCategory(category);
 
-
                 saveTransaction();
             }
 
@@ -199,7 +198,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void saveTransaction() {
         Intent intent = getIntent();
-        intent.putExtra(MainActivity.NEW_TRANSACTION, transaction);
+        intent.putExtra(MainActivity.NEW_TRANSACTION, (Parcelable) transaction);
         setResult(RESULT_OK, intent);
         finish();
     }

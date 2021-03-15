@@ -1,5 +1,7 @@
 package ro.ase.csie.degree.model;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
@@ -62,6 +64,11 @@ public class Balance extends FirebaseObject implements Serializable {
 
     @Override
     public String toString() {
-        return this.name + " : " + this.available_amount;
+        return "Balance{" +
+                "name='" + name + '\'' +
+                ", available_amount=" + available_amount +
+                ", id='" + id + '\'' +
+                ", user='" + user + '\'' +
+                '}';
     }
 }

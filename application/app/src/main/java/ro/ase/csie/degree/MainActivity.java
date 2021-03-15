@@ -122,14 +122,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
 
-            Transaction transaction = (Transaction) data.getSerializableExtra(MainActivity.NEW_TRANSACTION);
+            Transaction transaction = (Transaction) data.getParcelableExtra(MainActivity.NEW_TRANSACTION);
 
-            Log.e("onAR", transaction.toString());
-
-//            if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
-//                updateBalance(transaction);
-//                firebaseService.upsert(transaction);
-//            }
+            if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
+                updateBalance(transaction);
+                firebaseService.upsert(transaction);
+            }
 
         }
     }
