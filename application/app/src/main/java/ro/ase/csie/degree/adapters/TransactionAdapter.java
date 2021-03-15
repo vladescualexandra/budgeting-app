@@ -1,5 +1,6 @@
 package ro.ase.csie.degree.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,10 @@ import ro.ase.csie.degree.model.TransactionType;
 
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
-    private Context context;
-    private int resource;
-    private List<Transaction> transactionList;
-    private LayoutInflater layoutInflater;
+    private final Context context;
+    private final int resource;
+    private final List<Transaction> transactionList;
+    private final LayoutInflater layoutInflater;
 
     public TransactionAdapter(@NonNull Context context,
                               int resource,
@@ -38,7 +39,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = layoutInflater.inflate(resource, parent, false);
+        @SuppressLint("ViewHolder") View view = layoutInflater.inflate(resource, parent, false);
 
         if (transactionList != null) {
             if (transactionList.size() > 0 ) {
@@ -58,7 +59,15 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         setText(tv_category, transaction.getCategory().getName());
         setText(tv_balance, transaction.getBalance().getName());
-        setText(tv_amount, String.valueOf(transaction.getAmount()));
+
+        String sign = null;
+
+        if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+            sign = "-";
+        } else {
+            sign = "+";
+        }
+        setText(tv_amount, sign + transaction.getAmount());
 
         ib_bar.setBackgroundColor(context.getResources().getColor(transaction.getCategory().getColor()));
         tv_amount.setTextColor(context.getResources().getColor(transaction.getCategory().getColor()));

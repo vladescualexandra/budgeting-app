@@ -24,16 +24,13 @@ public class AddCategoryActivity extends AppCompatActivity {
 
 
     public static final String NEW_CATEGORY = "new_category";
-    private List<Bitmap> icons = new ArrayList<>();
 
     private TextInputEditText tiet_name;
     private GridView gv_icons;
     private Button btn_save;
 
     private Intent intent;
-
-    Category category = new Category();
-
+    private Category category = new Category();
     private List<Integer> colors = new ArrayList<>();
 
     @Override
@@ -42,24 +39,23 @@ public class AddCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_category);
 
         initComponents();
-
-        setAdapter();
-
-        intent = getIntent();
-
     }
 
 
     private void initComponents() {
+        intent = getIntent();
         tiet_name = findViewById(R.id.add_category_select_name);
         gv_icons = findViewById(R.id.add_category_select_icon);
         btn_save = findViewById(R.id.add_category_save);
         btn_save.setOnClickListener(saveCategoryEventListener());
+
+        getColors();
+        setAdapter();
+
+        category.setColor(colors.get(0));
     }
 
     private void setAdapter() {
-        getColors();
-
         ColorAdapter adapter = new ColorAdapter(getApplicationContext(),
                 R.layout.row_item_color, colors, getLayoutInflater());
         gv_icons.setAdapter(adapter);

@@ -20,14 +20,14 @@ import ro.ase.csie.degree.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Color;;
+import android.graphics.Color;
 
-public class ColorAdapter extends ArrayAdapter<Integer> { // TO DO <<<<
+public class ColorAdapter extends ArrayAdapter<Integer> {
 
-    private Context context;
-    private int resource;
-    private List<Integer> colors;
-    private LayoutInflater layoutInflater;
+    private final Context context;
+    private final int resource;
+    private final List<Integer> colors;
+    private final LayoutInflater layoutInflater;
 
     private int selectedIndex = 0;
 

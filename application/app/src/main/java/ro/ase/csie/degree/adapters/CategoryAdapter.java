@@ -27,12 +27,10 @@ import java.util.List;
 
 public class CategoryAdapter extends ArrayAdapter<Category> {
 
-
-    public static final int MAX_DOWNLOAD_SIZE_BYTES = 1024 * 1024;
-    private Context context;
-    private int resource;
-    private List<Category> categoryList;
-    private LayoutInflater layoutInflater;
+    private final Context context;
+    private final int resource;
+    private final List<Category> categoryList;
+    private final LayoutInflater layoutInflater;
 
     public CategoryAdapter(@NonNull Context context,
                            int resource,
@@ -49,8 +47,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     @Override
     public View getView(int position, @Nullable View convertView,
                         @NonNull ViewGroup parent) {
-        @SuppressLint("ViewHolder")
-        View view = layoutInflater.inflate(resource, parent, false);
+        @SuppressLint("ViewHolder") View view = layoutInflater.inflate(resource, parent, false);
 
         if (categoryList.size() > 0) {
             if (position < categoryList.size()) {

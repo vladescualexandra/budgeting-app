@@ -90,11 +90,6 @@ public class Transaction extends FirebaseObject implements Parcelable {
 
         String dateString = in.readString();
         this.date = DateConverter.toDate(dateString);
-
-        Log.e("readParcel", category.toString());
-        Log.e("readParcel", balance.toString());
-
-
     }
 
     public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
@@ -119,14 +114,8 @@ public class Transaction extends FirebaseObject implements Parcelable {
         dest.writeString(id);
         dest.writeString(user);
         dest.writeString(details);
-
         dest.writeSerializable(category);
-        Log.e("writeToParcel", category.toString());
-
         dest.writeSerializable(balance);
-        Log.e("writeToParcel", balance.toString());
-
-
         dest.writeDouble(amount);
 
         String dateString = DateConverter.toString(date);

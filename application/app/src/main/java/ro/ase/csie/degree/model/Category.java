@@ -43,12 +43,6 @@ public class Category extends FirebaseObject implements Serializable {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "type=" + type +
-                ", color=" + color +
-                ", name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", user='" + user + '\'' +
-                '}';
+        return this.name;
     }
 }
