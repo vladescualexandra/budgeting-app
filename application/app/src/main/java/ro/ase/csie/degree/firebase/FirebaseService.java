@@ -1,9 +1,12 @@
 package ro.ase.csie.degree.firebase;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +36,7 @@ public class FirebaseService<T extends FirebaseObject> {
 
 
     private FirebaseService(Context context, Table table) {
-        database = FirebaseDatabase.getInstance().getReference(table.toString());
+        database = FirebaseDatabase.getInstance().getReference();
         user_key = getUID(context);
     }
 
@@ -57,8 +60,10 @@ public class FirebaseService<T extends FirebaseObject> {
             return Table.BALANCES.toString();
         } else if (object instanceof Category) {
             return Table.CATEGORIES.toString();
-        }else if (object instanceof Transaction) {
+        } else if (object instanceof Transaction) {
             return Table.TRANSACTIONS.toString();
+        } else if (object instanceof Account) {
+            return Table.USERS.toString();
         }
         return null;
     }
@@ -91,6 +96,27 @@ public class FirebaseService<T extends FirebaseObject> {
                 .child(getPath(object))
                 .child(object.getId())
                 .removeValue();
+    }
+
+    public void getAccount(final Callback<Account> callback) {
+        final Account[] account = new Account[1];
+        query = database
+                .child(Table.USERS.toString());
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    account[0] = item.getValue(Account.class);
+                }
+                callback.updateUI(account[0]);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("cancel", error.getMessage());
+            }
+        });
     }
 
     public void updateBalancesUI(final Callback<List<Balance>> callback) {
@@ -160,8 +186,6 @@ public class FirebaseService<T extends FirebaseObject> {
             }
         });
     }
-
-
 
 
     private Query getQuery(Table table) {

@@ -18,10 +18,15 @@ public class Account extends FirebaseObject implements Serializable {
     private String email;
     private Currency currency;
 
+    public Account() {
+        super(null, null);
+    }
+
     public Account(String name, String email) {
         super(null, null);
         this.name = name;
         this.email = email;
+        this.currency = new Currency();
     }
 
     public String getName() {

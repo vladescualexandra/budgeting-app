@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import ro.ase.csie.degree.MainActivity;
+import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Account;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,17 +57,17 @@ public class EmailAuthentication {
         currentUser.updateProfile(profileUpdate)
             .addOnCompleteListener(task -> {
                 setAccount();
-//                saveData();
+                saveData();
                 Toast.makeText(context,
                         account.toString(),
                         Toast.LENGTH_SHORT).show();
             });
     }
 
-//    private void saveData() {
-//        FirebaseService firebaseService = FirebaseService.getInstance(context);
-//        firebaseService.insertUserData(user);
-//    }
+    private void saveData() {
+        FirebaseService firebaseService = FirebaseService.getInstance(context, Table.USERS);
+        firebaseService.upsert(account);
+    }
 
     public void loginAccount(TextInputEditText email, TextInputEditText password) {
         mAuth.signInWithEmailAndPassword(email.getText().toString().trim(),

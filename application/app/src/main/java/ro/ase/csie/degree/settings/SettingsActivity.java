@@ -21,6 +21,9 @@ import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
+import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Currency;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
@@ -45,6 +48,9 @@ public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences user_info;
     private Account account;
 
+    FirebaseService firebaseService;
+    private String USER_KEY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         initComponents();
-        initUser();
+        getAccount();
         initEventListeners();
         setCurrencyAdapter();
 
@@ -74,22 +80,12 @@ public class SettingsActivity extends AppCompatActivity {
         btn_sign_out = findViewById(R.id.settings_sign_out);
     }
 
-    private void initUser() {
-        user_info = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE);
-
-        String user_key = user_info.getString(Account.USER_KEY, null);
-//        String user_name = user_info.getString(User.USER_NAME, null);
-//        String user_email = user_info.getString(User.USER_EMAIL, null);
-//
-//        if (user_key != null && user_name != null && user_email != null) {
-//            user = new User(user_key, user_name, user_email);
-//
-//            tv_user_name.setText(user.getName());
-//            tv_user_email.setText(user.getEmail());
-//        } else {
-//            Toast.makeText(getApplicationContext(),
-//                    "Something is null.", Toast.LENGTH_LONG).show();
-//        }
+    private void setAccount() {
+        Toast.makeText(getApplicationContext(),
+                "setAccount()",
+                Toast.LENGTH_SHORT).show();
+        tv_user_name.setText(account.getName());
+        tv_user_email.setText(account.getEmail());
     }
 
     private void initEventListeners() {
@@ -104,9 +100,12 @@ public class SettingsActivity extends AppCompatActivity {
         btn_contact.setOnClickListener(contactEventListener());
 
         btn_sign_out.setOnClickListener(v -> {
+            SharedPreferences user_info = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE);
             SharedPreferences.Editor editor = user_info.edit();
             editor.remove(Account.USER_KEY);
             editor.apply();
+
+            account = null;
 
             GoogleAuthentication googleAuthentication = new GoogleAuthentication(getApplicationContext());
             googleAuthentication.signOut();
@@ -114,6 +113,27 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void getAccount() {
+        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.USERS);
+        firebaseService.getAccount(getAccountCallback());
+        Toast.makeText(getApplicationContext(),
+                "getAccount()",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private Callback<Account> getAccountCallback() {
+        return result -> {
+            if (result != null) {
+                account = result;
+                setAccount();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Result is null",
+                        Toast.LENGTH_LONG).show();
+            }
+        };
     }
 
     private void setCurrencyAdapter() {
