@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
-            Transaction transaction = (Transaction) data.getParcelableExtra(MainActivity.NEW_TRANSACTION);
+            Transaction transaction = data.getParcelableExtra(MainActivity.NEW_TRANSACTION);
             if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
                 updateBalance(transaction);
                 firebaseService.upsert(transaction);

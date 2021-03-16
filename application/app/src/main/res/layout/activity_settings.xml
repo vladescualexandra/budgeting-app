@@ -69,8 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_row="3"
-            android:layout_column="0"
-            android:padding="16sp" />
+            android:layout_column="0" />
 
         <Button
             android:id="@+id/settings_categories"

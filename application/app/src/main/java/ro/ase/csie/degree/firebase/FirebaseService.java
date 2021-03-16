@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.LongFunction;
 
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Balance;
@@ -80,7 +81,6 @@ public class FirebaseService<T extends FirebaseObject> {
         }
 
         object.setUser(user_key);
-
         database
                 .child(getPath(object))
                 .child(object.getId())

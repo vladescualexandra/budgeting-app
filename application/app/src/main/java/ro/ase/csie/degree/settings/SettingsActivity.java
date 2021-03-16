@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Account account = new Account();
 
-    private FirebaseService firebaseService;
+    private FirebaseService<Account> firebaseService;
     private List<Currency> currencyList;
 
     @Override
@@ -57,10 +57,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         initComponents();
-        setCurrencyAdapter();
         getAccount();
         initEventListeners();
-        setCurrencyAdapter();
     }
 
     private void initComponents() {
@@ -82,9 +80,6 @@ public class SettingsActivity extends AppCompatActivity {
     private void setAccount() {
         tv_user_name.setText(account.getName());
         tv_user_email.setText(account.getEmail());
-        if (account.getCurrency() != null) {
-            spn_currency.setSelection(account.getCurrency().getPosition());
-        }
     }
 
     private void initEventListeners() {
@@ -121,6 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
         return result -> {
             if (result != null) {
                 account = result;
+                setCurrencyAdapter();
                 setAccount();
             }
         };
@@ -128,7 +124,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setCurrencyAdapter() {
         currencyList = CurrencyJSONParser.getCurrencies();
-        account.setCurrency(currencyList.get(0));
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
                         R.layout.support_simple_spinner_dropdown_item,
@@ -139,6 +134,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 account.setCurrency(currencyList.get(position));
                 firebaseService.upsert(account);
+                //TODO doesn't work, it's fucked up
             }
 
             @Override
@@ -191,6 +187,4 @@ public class SettingsActivity extends AppCompatActivity {
 
         };
     }
-
-
 }
