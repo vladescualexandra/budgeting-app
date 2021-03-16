@@ -3,15 +3,12 @@ package ro.ase.csie.degree;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
-import ro.ase.csie.degree.R;
-
 
 import ro.ase.csie.degree.authentication.LoginActivity;
-import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.model.Account;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -23,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        String key = User.getUID(getApplicationContext());
+        String key = Account.getUID(getApplicationContext());
 
         new Handler().postDelayed(new Runnable() {
             @Override

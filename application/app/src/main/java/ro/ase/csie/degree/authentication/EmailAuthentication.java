@@ -4,14 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import ro.ase.csie.degree.MainActivity;
-import ro.ase.csie.degree.authentication.user.User;
-import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.model.Account;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,14 +15,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.content.Intent.makeMainActivity;
 
 public class EmailAuthentication {
 
     private final Context context;
     private final FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private User user;
+    private Account account;
 
     public EmailAuthentication(Context context) {
         this.context = context;
@@ -62,7 +57,7 @@ public class EmailAuthentication {
                 setAccount();
 //                saveData();
                 Toast.makeText(context,
-                        user.toString(),
+                        account.toString(),
                         Toast.LENGTH_SHORT).show();
             });
     }
@@ -89,16 +84,16 @@ public class EmailAuthentication {
         };
     }
 
-    private User getUser() {
+    private Account getAccount() {
         currentUser = mAuth.getCurrentUser();
-        user = new User(currentUser.getDisplayName(), currentUser.getEmail());
-        user.setId(currentUser.getUid());
-        return user;
+        account = new Account(currentUser.getDisplayName(), currentUser.getEmail());
+        account.setId(currentUser.getUid());
+        return account;
     }
 
     public void setAccount() {
-        user = getUser();
-        user.setAccount(context);
+        account = getAccount();
+        account.setAccount(context);
     }
 
 }

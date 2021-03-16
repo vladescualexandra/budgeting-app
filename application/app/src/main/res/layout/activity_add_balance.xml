@@ -33,12 +33,11 @@
             style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="@string/available_amount" />
+            android:hint="@string/available_amount"
+            android:inputType="numberDecimal" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <Button
         android:id="@+id/add_balance_save"

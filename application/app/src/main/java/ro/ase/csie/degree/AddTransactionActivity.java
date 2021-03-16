@@ -1,31 +1,22 @@
 package ro.ase.csie.degree;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import ro.ase.csie.degree.firebase.Callback;
@@ -44,8 +35,8 @@ public class AddTransactionActivity extends AppCompatActivity {
     private RadioGroup rg_type;
     private TextInputEditText tiet_details;
     private TextInputEditText tiet_amount;
-    private Spinner spn_category;
-    private Spinner spn_balances;
+    private SearchableSpinner spn_category;
+    private SearchableSpinner spn_balances;
     private Button btn_date;
     private Button btn_save;
 
@@ -69,8 +60,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_transaction);
 
         initComponents();
-
-
         initDefaults();
         retrieveDataFromFirebase();
 
@@ -131,7 +120,9 @@ public class AddTransactionActivity extends AppCompatActivity {
         tiet_details = findViewById(R.id.add_transaction_details);
         tiet_amount = findViewById(R.id.add_transaction_amount);
         spn_category = findViewById(R.id.add_transaction_category);
+        spn_category.setTitle(getString(R.string.select_category));
         spn_balances = findViewById(R.id.add_transaction_balance);
+        spn_balances.setTitle(getString(R.string.select_balance));
         btn_date = findViewById(R.id.add_transaction_date);
         btn_save = findViewById(R.id.add_transaction_save);
 
@@ -180,18 +171,17 @@ public class AddTransactionActivity extends AppCompatActivity {
             double available_amount = transaction.getBalance().getAvailable_amount();
             double amount = Double.parseDouble(tiet_amount.getText().toString());
 
+            Balance balance = (Balance) spn_balances.getSelectedItem();
+            Category category = (Category) spn_category.getSelectedItem();
+
+            transaction.setBalance(balance);
+            transaction.setCategory(category);
+
+
             if (InputValidation.amountValidation(getApplicationContext(), type, available_amount, amount)) {
                 transaction.setAmount(amount);
-
-                Balance balance = (Balance) spn_balances.getSelectedItem();
-                Category category = (Category) spn_category.getSelectedItem();
-
-                transaction.setBalance(balance);
-                transaction.setCategory(category);
-
                 saveTransaction();
             }
-
         };
     }
 

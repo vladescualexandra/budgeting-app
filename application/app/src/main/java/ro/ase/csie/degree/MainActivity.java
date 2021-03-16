@@ -1,28 +1,19 @@
 package ro.ase.csie.degree;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.text.DateFormatSymbols;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ro.ase.csie.degree.adapters.TransactionAdapter;
-import ro.ase.csie.degree.authentication.user.User;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;

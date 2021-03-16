@@ -27,7 +27,7 @@
             android:text="@string/categories_income" />
     </RadioGroup>
 
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/add_transaction_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/add_transaction_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

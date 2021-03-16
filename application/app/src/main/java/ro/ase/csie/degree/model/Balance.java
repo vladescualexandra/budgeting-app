@@ -1,13 +1,8 @@
 package ro.ase.csie.degree.model;
 
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
-import ro.ase.csie.degree.firebase.Table;
 
 public class Balance extends FirebaseObject implements Serializable {
 
@@ -17,7 +12,6 @@ public class Balance extends FirebaseObject implements Serializable {
     public Balance() {
         super(null, null);
     }
-
 
     public String getName() {
         return name;
@@ -34,7 +28,6 @@ public class Balance extends FirebaseObject implements Serializable {
     public void setAvailable_amount(double available_amount) {
         this.available_amount = available_amount;
     }
-
 
     public boolean operation(TransactionType type, double amount) {
         if (type.equals(TransactionType.EXPENSE)) {

@@ -1,26 +1,21 @@
 package ro.ase.csie.degree.firebase;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
@@ -43,7 +38,7 @@ public class FirebaseService<T extends FirebaseObject> {
     }
 
     private String getUID(Context context) {
-        return User.getUID(context);
+        return Account.getUID(context);
     }
 
     public static FirebaseService getInstance(Context context, Table table) {

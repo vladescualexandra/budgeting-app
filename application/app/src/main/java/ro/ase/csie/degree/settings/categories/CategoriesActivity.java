@@ -5,15 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import ro.ase.csie.degree.R;
 
-import ro.ase.csie.degree.authentication.user.User;
+import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
@@ -150,7 +148,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 && resultCode == RESULT_OK) {
             Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
             category.setType(isExpense ? TransactionType.EXPENSE : TransactionType.INCOME);
-            category.setUser(User.getUID(getApplicationContext()));
+            category.setUser(Account.getUID(getApplicationContext()));
             firebaseService.upsert(category);
             notifyAdapter();
         }
