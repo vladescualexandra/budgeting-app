@@ -65,7 +65,7 @@ public class EmailAuthentication {
     }
 
     private void saveData() {
-        FirebaseService firebaseService = FirebaseService.getInstance(context, Table.USERS);
+        FirebaseService firebaseService = FirebaseService.getInstance(context);
         firebaseService.upsert(account);
     }
 

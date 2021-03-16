@@ -22,7 +22,7 @@ public class CurrencyJSONParser {
                 String symbol = currency.getString(CURRENCY_SYMBOL);
                 String name = currency.getString(CURRENCY_NAME);
 
-                list.add(new Currency(code, symbol, name));
+                list.add(new Currency(i, code, symbol, name));
             }
         } catch (JSONException e) {
             e.printStackTrace();

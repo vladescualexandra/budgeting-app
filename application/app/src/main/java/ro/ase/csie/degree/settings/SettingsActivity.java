@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,23 +46,21 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_contact;
     private Button btn_sign_out;
 
-    private SharedPreferences user_info;
-    private Account account;
+    private Account account = new Account();
 
-    FirebaseService firebaseService;
-    private String USER_KEY;
+    private FirebaseService firebaseService;
+    private List<Currency> currencyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
         initComponents();
+        setCurrencyAdapter();
         getAccount();
         initEventListeners();
         setCurrencyAdapter();
-
     }
 
     private void initComponents() {
@@ -81,11 +80,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setAccount() {
-        Toast.makeText(getApplicationContext(),
-                "setAccount()",
-                Toast.LENGTH_SHORT).show();
         tv_user_name.setText(account.getName());
         tv_user_email.setText(account.getEmail());
+        if (account.getCurrency() != null) {
+            spn_currency.setSelection(account.getCurrency().getPosition());
+        }
     }
 
     private void initEventListeners() {
@@ -105,8 +104,6 @@ public class SettingsActivity extends AppCompatActivity {
             editor.remove(Account.USER_KEY);
             editor.apply();
 
-            account = null;
-
             GoogleAuthentication googleAuthentication = new GoogleAuthentication(getApplicationContext());
             googleAuthentication.signOut();
 
@@ -116,11 +113,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void getAccount() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.USERS);
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.getAccount(getAccountCallback());
-        Toast.makeText(getApplicationContext(),
-                "getAccount()",
-                Toast.LENGTH_SHORT).show();
     }
 
     private Callback<Account> getAccountCallback() {
@@ -128,16 +122,13 @@ public class SettingsActivity extends AppCompatActivity {
             if (result != null) {
                 account = result;
                 setAccount();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Result is null",
-                        Toast.LENGTH_LONG).show();
             }
         };
     }
 
     private void setCurrencyAdapter() {
-        List<Currency> currencyList = CurrencyJSONParser.getCurrencies();
+        currencyList = CurrencyJSONParser.getCurrencies();
+        account.setCurrency(currencyList.get(0));
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
                         R.layout.support_simple_spinner_dropdown_item,
@@ -146,9 +137,8 @@ public class SettingsActivity extends AppCompatActivity {
         spn_currency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        currencyList.get(position).toString(),
-                        Toast.LENGTH_LONG).show();
+                account.setCurrency(currencyList.get(position));
+                firebaseService.upsert(account);
             }
 
             @Override

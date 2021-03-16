@@ -66,7 +66,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void retrieveDataFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
         firebaseService.updateBalancesUI(updateBalancesCallback());
 

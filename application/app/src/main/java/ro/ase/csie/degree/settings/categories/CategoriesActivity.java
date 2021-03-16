@@ -77,7 +77,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
     }
 

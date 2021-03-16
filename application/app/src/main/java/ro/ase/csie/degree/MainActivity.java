@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTransactionsFromFirebase(DateDisplayType type) {
         Date date = DateConverter.toDate(day, month, year);
-        firebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateTransactionsUI(updateTransactionsCallback(), type, date);
     }
 
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateBalance(Transaction transaction) {
         Balance balance = transaction.getBalance();
-        FirebaseService<Balance> balanceFirebaseService = FirebaseService.getInstance(getApplicationContext(), Table.BUDGET);
+        FirebaseService<Balance> balanceFirebaseService = FirebaseService.getInstance(getApplicationContext());
         balanceFirebaseService.upsert(balance);
     }
 

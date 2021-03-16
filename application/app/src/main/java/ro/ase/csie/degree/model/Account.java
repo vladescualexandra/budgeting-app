@@ -65,4 +65,13 @@ public class Account extends FirebaseObject implements Serializable {
                 .getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
                 .getString(Account.USER_KEY, null);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", currency=" + currency +
+                '}';
+    }
 }

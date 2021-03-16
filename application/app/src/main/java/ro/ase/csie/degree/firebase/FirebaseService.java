@@ -35,7 +35,7 @@ public class FirebaseService<T extends FirebaseObject> {
     private Query query;
 
 
-    private FirebaseService(Context context, Table table) {
+    private FirebaseService(Context context) {
         database = FirebaseDatabase.getInstance().getReference();
         user_key = getUID(context);
     }
@@ -44,11 +44,11 @@ public class FirebaseService<T extends FirebaseObject> {
         return Account.getUID(context);
     }
 
-    public static FirebaseService getInstance(Context context, Table table) {
+    public static FirebaseService getInstance(Context context) {
         if (firebaseService == null) {
             synchronized (FirebaseService.class) {
                 if (firebaseService == null) {
-                    firebaseService = new FirebaseService(context, table);
+                    firebaseService = new FirebaseService(context);
                 }
             }
         }
