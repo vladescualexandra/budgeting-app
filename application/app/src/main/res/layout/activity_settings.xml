@@ -64,19 +64,34 @@
             android:text="@string/settings_balances"
             android:textAlignment="textStart" />
 
-        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        <Button
             android:id="@+id/settings_currency"
+            style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_row="3"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:gravity="start|center"
+            android:text="@string/settings_currency"
+            android:textAlignment="textStart" />
+
+        <Button
+            android:id="@+id/settings_converter"
+            style="@style/settings_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:gravity="start|center"
+            android:text="@string/settings_converter"
+            android:textAlignment="textStart" />
 
         <Button
             android:id="@+id/settings_categories"
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="4"
+            android:layout_row="5"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_customize_categories"
@@ -87,7 +102,7 @@
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="5"
+            android:layout_row="6"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_templates"
@@ -98,7 +113,7 @@
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="6"
+            android:layout_row="7"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_theme"
@@ -109,7 +124,7 @@
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="7"
+            android:layout_row="8"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_language"
@@ -121,7 +136,7 @@
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="8"
+            android:layout_row="9"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_reminders"
@@ -132,7 +147,7 @@
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="9"
+            android:layout_row="10"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_contact"
@@ -144,12 +159,10 @@
             style="@style/settings_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="10"
+            android:layout_row="11"
             android:layout_column="0"
             android:gravity="start|center"
             android:text="@string/settings_sign_out"
             android:textAlignment="textStart" />
-
-
     </GridLayout>
 </ScrollView>

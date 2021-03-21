@@ -36,7 +36,8 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView tv_user_name;
     private TextView tv_user_email;
     private ImageButton btn_back;
-    private SearchableSpinner spn_currency;
+    private Button btn_currency;
+    private Button btn_converter;
     private Button btn_balances;
     private Button btn_categories;
     private Button btn_templates;
@@ -49,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
     private Account account = new Account();
 
     private FirebaseService<Account> firebaseService;
-    private List<Currency> currencyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,8 @@ public class SettingsActivity extends AppCompatActivity {
         tv_user_email = findViewById(R.id.account_email);
 
         btn_back = findViewById(R.id.settings_back);
-        spn_currency = findViewById(R.id.settings_currency);
+        btn_currency = findViewById(R.id.settings_currency);
+        btn_converter = findViewById(R.id.settings_converter);
         btn_balances = findViewById(R.id.settings_balances);
         btn_categories = findViewById(R.id.settings_categories);
         btn_templates = findViewById(R.id.settings_templates);
@@ -87,6 +88,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         btn_balances.setOnClickListener(balancesEventListener());
         btn_categories.setOnClickListener(categoriesEventListener());
+        btn_currency.setOnClickListener(currencyEventListener());
+        btn_converter.setOnClickListener(converterEventListener());
         btn_templates.setOnClickListener(templatesEventListener());
         btn_theme.setOnClickListener(themeEventListener());
         btn_language.setOnClickListener(languageEventListener());
@@ -107,6 +110,20 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    private View.OnClickListener converterEventListener() {
+        return v -> {
+            Intent intent = new Intent(getApplicationContext(), ConverterActivity.class);
+            startActivity(intent);
+        };
+    }
+
+    private View.OnClickListener currencyEventListener() {
+        return v -> {
+            Intent intent = new Intent(getApplicationContext(), CurrencyActivity.class);
+            startActivity(intent);
+        };
+    }
+
     private void getAccount() {
         firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.getAccount(getAccountCallback());
@@ -116,33 +133,11 @@ public class SettingsActivity extends AppCompatActivity {
         return result -> {
             if (result != null) {
                 account = result;
-                setCurrencyAdapter();
                 setAccount();
             }
         };
     }
 
-    private void setCurrencyAdapter() {
-        currencyList = CurrencyJSONParser.getCurrencies();
-        ArrayAdapter<Currency> adapter = new ArrayAdapter<>
-                (getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item,
-                        currencyList);
-        spn_currency.setAdapter(adapter);
-        spn_currency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                account.setCurrency(currencyList.get(position));
-                firebaseService.upsert(account);
-                //TODO doesn't work, it's fucked up
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 
     private View.OnClickListener balancesEventListener() {
         return v -> {
