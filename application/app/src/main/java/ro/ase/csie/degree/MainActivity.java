@@ -14,10 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import ro.ase.csie.degree.adapters.TransactionAdapter;
-import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.fragments.DayFragment;
 import ro.ase.csie.degree.fragments.MonthFragment;
 import ro.ase.csie.degree.fragments.TotalFragment;

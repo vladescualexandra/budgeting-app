@@ -5,8 +5,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,11 +12,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.LongFunction;
 
+import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;

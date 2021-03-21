@@ -15,7 +15,7 @@ import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
-import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;

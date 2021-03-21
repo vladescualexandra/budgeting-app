@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -19,9 +18,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;

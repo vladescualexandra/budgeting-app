@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.adapters.BalanceAdapter;

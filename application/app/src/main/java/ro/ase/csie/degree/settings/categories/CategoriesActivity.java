@@ -12,9 +12,8 @@ import android.widget.ListView;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.model.Account;
-import ro.ase.csie.degree.firebase.Callback;
+import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
