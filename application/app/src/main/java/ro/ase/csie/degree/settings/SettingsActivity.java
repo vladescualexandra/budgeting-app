@@ -5,18 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
-
-import java.util.List;
 
 import ro.ase.csie.degree.R;
 
@@ -24,12 +17,9 @@ import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Account;
-import ro.ase.csie.degree.model.Currency;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.CurrencyJSONParser;
 
 public class SettingsActivity extends AppCompatActivity {
 
