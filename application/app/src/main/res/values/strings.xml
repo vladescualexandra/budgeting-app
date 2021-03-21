@@ -64,5 +64,6 @@
     <string name="settings_currency">Currency</string>
     <string name="settings_converter">Converter</string>
     <string name="search">Search</string>
+    <string name="placeholder_currency">placeholder_currency</string>
 
 </resources>

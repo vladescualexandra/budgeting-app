@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private TextView tv_user_name;
     private TextView tv_user_email;
+    private TextView tv_user_currency;
     private ImageButton btn_back;
     private Button btn_currency;
     private Button btn_converter;
@@ -64,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void initComponents() {
         tv_user_name = findViewById(R.id.account_name);
         tv_user_email = findViewById(R.id.account_email);
-
+        tv_user_currency = findViewById(R.id.account_currency);
         btn_back = findViewById(R.id.settings_back);
         btn_currency = findViewById(R.id.settings_currency);
         btn_converter = findViewById(R.id.settings_converter);
@@ -81,6 +82,11 @@ public class SettingsActivity extends AppCompatActivity {
     private void setAccount() {
         tv_user_name.setText(account.getName());
         tv_user_email.setText(account.getEmail());
+        if (account.getCurrency() != null) {
+            tv_user_currency.setText("Currency: " + account.getCurrency().toString());
+        } else {
+            tv_user_currency.setText("");
+        }
     }
 
     private void initEventListeners() {

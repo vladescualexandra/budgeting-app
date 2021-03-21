@@ -19,8 +19,10 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
+import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.adapters.BalanceAdapter;
+import ro.ase.csie.degree.model.Currency;
 
 public class BalancesActivity extends AppCompatActivity {
 
@@ -30,6 +32,7 @@ public class BalancesActivity extends AppCompatActivity {
     private ImageButton iv_balance_add;
     private ListView lv_balances;
 
+    private Currency currency;
     private List<Balance> balanceList = new ArrayList<>();
     private FirebaseService<Balance> firebaseService;
 

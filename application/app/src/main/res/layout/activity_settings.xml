@@ -49,6 +49,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/placeholder_email" />
 
+                <TextView
+                    android:id="@+id/account_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder_currency" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

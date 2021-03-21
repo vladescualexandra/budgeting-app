@@ -2,16 +2,19 @@ package ro.ase.csie.degree.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -34,7 +37,8 @@ public class CurrencyActivity extends AppCompatActivity {
 
     private FirebaseService<Account> accountFirebaseService;
     private List<Currency> currencyList = new ArrayList<>();
-    private Currency currency = new Currency();
+    private Currency currency = null;
+    private Account account = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class CurrencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_currency);
 
         initComponents();
+        accountFirebaseService = FirebaseService.getInstance(getApplicationContext());
+        accountFirebaseService.getAccount(getAccountCallback());
     }
 
     private void initComponents() {
@@ -54,27 +60,26 @@ public class CurrencyActivity extends AppCompatActivity {
 
         lv_currencies = findViewById(R.id.currency_list);
         setAdapter();
-        lv_currencies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                accountFirebaseService = FirebaseService.getInstance(getApplicationContext());
-                accountFirebaseService.getAccount(getAccountCallback());
-                currency = currencyList.get(position);
-            }
+        lv_currencies.setOnItemClickListener((parent, view, position, id) -> {
+            currency = currencyList.get(position);
+            account.setCurrency(currency);
+            accountFirebaseService.upsert(account);
         });
+        lv_currencies.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        lv_currencies.setSelector(R.color.rally_dark_green);
     }
 
+    @SuppressLint("ResourceAsColor")
     private Callback<Account> getAccountCallback() {
         return result -> {
             if (result != null) {
-                Account account = new Account();
                 account = result;
-                account.setCurrency(currency);
-
-                Log.e("getAccCallback", account.toString());
-                Log.e("getAccCallback", account.getCurrency().toString());
-
-                accountFirebaseService.upsert(account);
+                for (int i = 0; i < currencyList.size(); i++) {
+                    if (currencyList.get(i).getSymbol().equals(account.getCurrency().getSymbol())) {
+                        lv_currencies.setSelection(i);
+                        break;
+                    }
+                }
             }
         };
     }
