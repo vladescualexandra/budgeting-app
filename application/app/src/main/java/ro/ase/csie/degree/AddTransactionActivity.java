@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -46,7 +45,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
 
     private Transaction transaction = new Transaction();
-
     private List<Category> expenseCategories = new ArrayList<>();
     private List<Category> incomeCategories = new ArrayList<>();
     private List<Balance> balances = new ArrayList<>();
@@ -63,16 +61,13 @@ public class AddTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
 
-
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
-
         initComponents();
         initDefaults();
         retrieveDataFromFirebase();
-
     }
 
     private void retrieveDataFromFirebase() {
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService = FirebaseService.getInstance(getApplicationContext());
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
         firebaseService.updateBalancesUI(updateBalancesCallback());
@@ -221,8 +216,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void saveIncome(Income income) {
         income.getBalance_from().deposit(income.getAmount());
-        Log.e("income", income.toString());
-
         firebaseService.upsert(income);
         firebaseService.upsert(income.getBalance_from());
     }
@@ -230,9 +223,6 @@ public class AddTransactionActivity extends AppCompatActivity {
     private void saveTransfer(Transfer transfer) {
         transfer.getBalance_from().withdraw(transfer.getAmount());
         transfer.getBalance_to().deposit(transfer.getAmount());
-
-        Log.e("transfer", transfer.toString());
-
         firebaseService.upsert(transfer);
         firebaseService.upsert(transfer.getBalance_from());
         firebaseService.upsert(transfer.getBalance_to());
@@ -269,7 +259,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         return transfer;
     }
-
 
     private void close() {
         Intent intent = getIntent();
