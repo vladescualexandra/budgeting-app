@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.List;
 

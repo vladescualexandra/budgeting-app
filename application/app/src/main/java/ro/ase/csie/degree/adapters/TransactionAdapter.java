@@ -61,7 +61,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         setText(tv_category, transaction.getCategory().getName());
         setText(tv_date, DateConverter.toString(transaction.getDate()));
-        setText(tv_balance, transaction.getBalance().getName());
+        setText(tv_balance, transaction.getBalance_from().getName());
 
         String sign = transaction.getCategory().getType().equals(TransactionType.EXPENSE) ? "-" : "+";
         setText(tv_amount, sign + transaction.getAmount());

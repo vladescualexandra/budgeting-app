@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
             Transaction transaction = data.getParcelableExtra(MainActivity.NEW_TRANSACTION);
-            if (transaction.getBalance().operation(transaction.getCategory().getType(), transaction.getAmount())) {
+            if (transaction.getBalance_from().operation(transaction.getCategory().getType(), transaction.getAmount())) {
                 updateBalance(transaction);
                 firebaseService.upsert(transaction);
             }
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateBalance(Transaction transaction) {
-        Balance balance = transaction.getBalance();
+        Balance balance = transaction.getBalance_from();
         FirebaseService<Balance> balanceFirebaseService = FirebaseService.getInstance(getApplicationContext());
         balanceFirebaseService.upsert(balance);
     }

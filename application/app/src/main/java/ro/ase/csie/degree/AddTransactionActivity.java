@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,8 +33,9 @@ public class AddTransactionActivity extends AppCompatActivity {
     private RadioGroup rg_type;
     private TextInputEditText tiet_details;
     private TextInputEditText tiet_amount;
-    private SearchableSpinner spn_category;
-    private SearchableSpinner spn_balances;
+    private Spinner spn_category;
+    private Spinner spn_balances_from;
+    private Spinner spn_balances_to;
     private Button btn_date;
     private Button btn_save;
 
@@ -111,6 +112,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         transaction.getCategory().setType(rg_type.getCheckedRadioButtonId()
                 == R.id.add_transaction_type_expense
                 ? TransactionType.EXPENSE : TransactionType.INCOME);
+
+        spn_balances_to.setEnabled(transaction.getCategory().getType().equals(TransactionType.TRANSFER));
     }
 
     private void initComponents() {
@@ -118,9 +121,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         tiet_details = findViewById(R.id.add_transaction_details);
         tiet_amount = findViewById(R.id.add_transaction_amount);
         spn_category = findViewById(R.id.add_transaction_category);
-        spn_category.setTitle(getString(R.string.select_category));
-        spn_balances = findViewById(R.id.add_transaction_balance);
-        spn_balances.setTitle(getString(R.string.select_balance));
+        spn_balances_from = findViewById(R.id.add_transaction_balance_from);
+        spn_balances_to = findViewById(R.id.add_transaction_balance_to);
         btn_date = findViewById(R.id.add_transaction_date);
         btn_save = findViewById(R.id.add_transaction_save);
 
@@ -131,11 +133,22 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private RadioGroup.OnCheckedChangeListener changeTypeEventListener() {
         return (group, checkedId) -> {
-            if (checkedId == R.id.add_transaction_type_expense) {
-                transaction.getCategory().setType(TransactionType.EXPENSE);
-            } else {
-                transaction.getCategory().setType(TransactionType.INCOME);
+            switch (checkedId) {
+                case R.id.add_transaction_type_expense:
+                    transaction.getCategory().setType(TransactionType.EXPENSE);
+                    setCategoryAdapter();
+                    break;
+                case R.id.add_transaction_type_income:
+                    transaction.getCategory().setType(TransactionType.INCOME);
+                    setCategoryAdapter();
+                    break;
+                default:
+                    transaction.getCategory().setType(TransactionType.TRANSFER);
+                    break;
             }
+
+            spn_category.setEnabled(checkedId != R.id.add_transaction_type_transfer);
+            spn_balances_to.setEnabled(checkedId == R.id.add_transaction_type_transfer);
             setCategoryAdapter();
         };
     }
@@ -166,13 +179,13 @@ public class AddTransactionActivity extends AppCompatActivity {
 
 
             TransactionType type = transaction.getCategory().getType();
-            double available_amount = transaction.getBalance().getAvailable_amount();
+            double available_amount = transaction.getBalance_from().getAvailable_amount();
             double amount = Double.parseDouble(tiet_amount.getText().toString());
 
-            Balance balance = (Balance) spn_balances.getSelectedItem();
+            Balance balance = (Balance) spn_balances_from.getSelectedItem();
             Category category = (Category) spn_category.getSelectedItem();
 
-            transaction.setBalance(balance);
+            transaction.setBalance_from(balance);
             transaction.setCategory(category);
 
 
@@ -208,9 +221,10 @@ public class AddTransactionActivity extends AppCompatActivity {
                         (getApplicationContext(),
                                 android.R.layout.simple_spinner_item,
                                 balances);
-        spn_balances.setAdapter(adapter);
+        spn_balances_from.setAdapter(adapter);
+        spn_balances_to.setAdapter(adapter);
         if (balances.size() > 0) {
-            transaction.setBalance(balances.get(0));
+            transaction.setBalance_from(balances.get(0));
         }
     }
 

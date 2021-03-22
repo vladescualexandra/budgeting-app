@@ -2,29 +2,24 @@ package ro.ase.csie.degree.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import java.io.Serializable;
 import java.util.Date;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
-import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.util.DateConverter;
 
 public class Transaction extends FirebaseObject implements Parcelable {
 
-    private String details;
-    private Category category;
-    private Balance balance;
-    private double amount;
-    private Date date;
+    protected String details;
+    protected Category category;
+    protected Balance balance_from;
+    protected double amount;
+    protected Date date;
 
     public Transaction() {
         super(null, null);
         this.category = new Category();
-        this.balance = new Balance();
+        this.balance_from = new Balance();
     }
 
 
@@ -36,12 +31,12 @@ public class Transaction extends FirebaseObject implements Parcelable {
         this.category = category;
     }
 
-    public Balance getBalance() {
-        return balance;
+    public Balance getBalance_from() {
+        return balance_from;
     }
 
-    public void setBalance(Balance balance) {
-        this.balance = balance;
+    public void setBalance_from(Balance balance_from) {
+        this.balance_from = balance_from;
     }
 
     public double getAmount() {
@@ -73,7 +68,7 @@ public class Transaction extends FirebaseObject implements Parcelable {
         return "Transaction{" +
                 "details='" + details + '\'' +
                 ", category=" + category +
-                ", balance=" + balance +
+                ", balance=" + balance_from +
                 ", amount=" + amount +
                 ", date=" + date +
                 '}';
@@ -85,7 +80,7 @@ public class Transaction extends FirebaseObject implements Parcelable {
         this.user = in.readString();
         this.details = in.readString();
         this.category = (Category) in.readSerializable();
-        this.balance = (Balance) in.readSerializable();
+        this.balance_from = (Balance) in.readSerializable();
         this.amount = in.readDouble();
 
         String dateString = in.readString();
@@ -115,7 +110,7 @@ public class Transaction extends FirebaseObject implements Parcelable {
         dest.writeString(user);
         dest.writeString(details);
         dest.writeSerializable(category);
-        dest.writeSerializable(balance);
+        dest.writeSerializable(balance_from);
         dest.writeDouble(amount);
 
         String dateString = DateConverter.toString(date);

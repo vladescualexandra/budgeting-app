@@ -25,14 +25,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/categories_income" />
+
+        <RadioButton
+            android:id="@+id/add_transaction_type_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/categories_transfer" />
     </RadioGroup>
 
-    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-        android:id="@+id/add_transaction_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16sp"
-        />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -58,12 +59,25 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-        android:id="@+id/add_transaction_balance"
+    <Spinner
+        android:id="@+id/add_transaction_balance_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16sp"/>
 
+    <Spinner
+        android:id="@+id/add_transaction_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16sp"
+        />
+
+    <Spinner
+        android:id="@+id/add_transaction_balance_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16sp"
+        />
     <Button
         android:id="@+id/add_transaction_date"
         android:layout_width="match_parent"
