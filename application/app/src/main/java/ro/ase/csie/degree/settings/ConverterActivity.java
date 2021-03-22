@@ -69,31 +69,27 @@ public class ConverterActivity extends AppCompatActivity {
             Currency currency_to = (Currency) spn_currency_to.getSelectedItem();
 
             String url = buildURL(currency_from, currency_to);
-            getConversionFromURL(url, currency_from.getCode(), currency_to.getCode());
+            getConversionFromURL(url, amount_from, currency_from.getCode(), currency_to.getCode());
         };
     }
 
-    private void getConversionFromURL(String url, String from, String to) {
+    private void getConversionFromURL(String url, double amount_from, String from, String to) {
         Callable<String> asyncOperation = new HttpManager(url);
-        Callback<String> mainThreadOperation = getMainThreadOperation(from, to);
+        Callback<String> mainThreadOperation = getMainThreadOperation(amount_from, from, to);
         asyncTaskRunner.executeAsync(asyncOperation, mainThreadOperation);
     }
 
-    private Callback<String> getMainThreadOperation(String from, String to) {
-        return new Callback<String>() {
-            @Override
-            public void updateUI(String result) {
-                if (result != null) {
-                    String json = from + "_" + to;
-                    JSONObject object = null;
-                    try {
-                        object = new JSONObject(result);
-                        double amount_to = 0;
-                        amount_to = object.getDouble(json);
-                        tv_amount_to.setText(String.valueOf(amount_to));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+    private Callback<String> getMainThreadOperation(double amount_from, String from, String to) {
+        return result -> {
+            if (result != null) {
+                String json = from + "_" + to;
+                try {
+                    JSONObject object = new JSONObject(result);
+                    double rate = object.getDouble(json);
+                    double amount_to = rate * amount_from;
+                    tv_amount_to.setText(String.valueOf(amount_to));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         };
