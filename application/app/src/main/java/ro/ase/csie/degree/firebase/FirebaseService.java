@@ -195,5 +195,4 @@ public class FirebaseService<T extends FirebaseObject> {
                 .equalTo(user_key);
     }
 
-
 }

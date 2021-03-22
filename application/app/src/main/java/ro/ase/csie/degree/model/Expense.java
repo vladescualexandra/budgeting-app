@@ -8,5 +8,9 @@ public class Expense extends Transaction{
         super(transaction);
     }
 
+    public Expense() {
+        super();
+    }
+
 
 }

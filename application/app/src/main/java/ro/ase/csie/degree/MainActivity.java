@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -18,13 +17,11 @@ import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.fragments.DayFragment;
+import ro.ase.csie.degree.fragments.PieChartFragment;
 import ro.ase.csie.degree.fragments.MonthFragment;
 import ro.ase.csie.degree.fragments.TotalFragment;
 import ro.ase.csie.degree.fragments.YearFragment;
-import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
 
@@ -63,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         initComponents();
         setDefaultDate();
         getTransactionsFromFirebase(DateDisplayType.DAY_MONTH_YEAR);
-        show(new DayFragment());
-
-
+        show(new PieChartFragment());
     }
 
     private void setDefaultDate() {
@@ -176,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 transactionList.clear();
                 transactionList.addAll(result);
                 notifyAdapter();
+                show(new PieChartFragment(transactionList));
             }
         };
     }
@@ -223,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (tab.getPosition()) {
                     case 0:
-                        fragment = new DayFragment();
+                        fragment = new PieChartFragment();
                         filter(DateDisplayType.DAY_MONTH_YEAR);
                         break;
                     case 1:
@@ -280,8 +276,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager
                     .beginTransaction()
                     .replace(R.id.main_fragment, fragment)
-                    .addToBackStack(null)
-                    .commit();
+                    .commitAllowingStateLoss();
         }
     }
 
@@ -291,4 +286,5 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finishAffinity();
     }
+
 }

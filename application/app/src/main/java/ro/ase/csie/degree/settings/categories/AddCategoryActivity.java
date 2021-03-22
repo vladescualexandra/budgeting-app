@@ -80,7 +80,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     }
 
 
-    private void getColors() {
+    public List<Integer> getColors() {
         colors = new ArrayList<>();
         colors.add(R.color.color_0);
         colors.add(R.color.color_1);
@@ -110,5 +110,6 @@ public class AddCategoryActivity extends AppCompatActivity {
         colors.add(R.color.color_25);
         colors.add(R.color.color_26);
         colors.add(R.color.color_27);
+        return colors;
     }
 }

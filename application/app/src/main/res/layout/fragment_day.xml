@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ro.ase.csie.degree.fragments.DayFragment">
+    tools:context="ro.ase.csie.degree.fragments.PieChartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="20dp"
-        android:textColor="@color/rally_white"
-        android:text="fragment day"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/day_pie_chart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
 
 </FrameLayout>
