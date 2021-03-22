@@ -6,7 +6,11 @@ import android.util.Patterns;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Balance;
+import ro.ase.csie.degree.model.Expense;
+import ro.ase.csie.degree.model.Income;
+import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.model.Transfer;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -63,11 +67,28 @@ public class InputValidation {
 
     }
 
-    public static boolean amountValidation(Context context, TransactionType type, double available_amount, double amount) {
-        if (type.equals(TransactionType.INCOME)) {
-            return amount > 0;
-        } else {
-            return available_amount >= amount && amount > 0;
-        }
+    public static boolean expenseValidation(Expense expense) {
+        return expense.getAmount() > 0 && expense.getBalance_from().getAvailable_amount() >= expense.getAmount();
     }
+
+    public static boolean incomeValidation(Income income) {
+        return income.getAmount() > 0;
+    }
+
+    public static boolean transferValidation(Transfer transfer) {
+        return !transfer.getBalance_from().getId().equals(transfer.getBalance_to().getId())
+                && transfer.getAmount() > 0
+                && transfer.getBalance_from().getAvailable_amount() >= transfer.getAmount();
+    }
+
+    public static boolean amountValidation(TextInputEditText tiet_amount) {
+        if (tiet_amount.getText().toString() == null
+                || tiet_amount.getText().toString().trim().isEmpty()) {
+            tiet_amount.setError("Insert an amount greater than 0.");
+            return false;
+        }
+        tiet_amount.setError(null);
+        return true;
+    }
+
 }

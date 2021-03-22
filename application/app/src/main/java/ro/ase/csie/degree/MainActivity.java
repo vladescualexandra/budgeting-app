@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import ro.ase.csie.degree.fragments.TotalFragment;
 import ro.ase.csie.degree.fragments.YearFragment;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
 
@@ -37,7 +39,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String NEW_TRANSACTION = "new_transaction";
     public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
 
     private ImageButton ib_refresh;
@@ -211,19 +212,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
-            Transaction transaction = data.getParcelableExtra(MainActivity.NEW_TRANSACTION);
-            if (transaction.getBalance_from().operation(transaction.getCategory().getType(), transaction.getAmount())) {
-                updateBalance(transaction);
-                firebaseService.upsert(transaction);
-            }
-
+            getTransactionsFromFirebase(DateDisplayType.DAY_MONTH_YEAR);
         }
-    }
-
-    private void updateBalance(Transaction transaction) {
-        Balance balance = transaction.getBalance_from();
-        FirebaseService<Balance> balanceFirebaseService = FirebaseService.getInstance(getApplicationContext());
-        balanceFirebaseService.upsert(balance);
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {

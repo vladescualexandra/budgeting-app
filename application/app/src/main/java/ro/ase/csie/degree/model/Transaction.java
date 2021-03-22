@@ -22,6 +22,14 @@ public class Transaction extends FirebaseObject implements Parcelable {
         this.balance_from = new Balance();
     }
 
+    public Transaction(Transaction transaction) {
+        super(transaction.getId(), transaction.getUser());
+        this.details = transaction.getDetails();
+        this.category = transaction.getCategory();
+        this.balance_from = transaction.getBalance_from();
+        this.amount = transaction.getAmount();
+        this.date = transaction.getDate();
+    }
 
     public Category getCategory() {
         return category;

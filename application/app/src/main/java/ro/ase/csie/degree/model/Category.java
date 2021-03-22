@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
+import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.FirebaseObject;
 
 public class Category extends FirebaseObject implements Serializable {
@@ -16,6 +17,7 @@ public class Category extends FirebaseObject implements Serializable {
     public Category() {
         super(null, null);
     }
+
 
     public int getColor() {
         return color;

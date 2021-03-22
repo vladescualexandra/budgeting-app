@@ -4,9 +4,8 @@ import java.util.concurrent.Executor;
 
 public class Expense extends Transaction{
 
-    public Expense() {
-        super();
-        this.category.setType(TransactionType.EXPENSE);
+    public Expense(Transaction transaction) {
+        super(transaction);
     }
 
 

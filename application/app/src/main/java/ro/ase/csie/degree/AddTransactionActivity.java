@@ -6,11 +6,13 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,8 +24,11 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
+import ro.ase.csie.degree.model.Expense;
+import ro.ase.csie.degree.model.Income;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.InputValidation;
 
@@ -57,6 +62,9 @@ public class AddTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
+
+
+        firebaseService = FirebaseService.getInstance(getApplicationContext());
 
         initComponents();
         initDefaults();
@@ -172,33 +180,99 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private View.OnClickListener saveTransactionEventListener() {
         return v -> {
+            buildTransaction();
 
-            if (!tiet_details.getText().toString().trim().isEmpty()) {
-                transaction.setDetails(tiet_details.getText().toString().trim());
-            }
+            if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_expense) {
+                Expense expense = new Expense(transaction);
+                if (InputValidation.expenseValidation(expense)) {
+                    saveExpense(expense);
+                    close();
+                }
 
+            } else if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_income) {
+                Income income = new Income(transaction);
+                if (InputValidation.incomeValidation(income)) {
+                    saveIncome(income);
+                    close();
+                }
 
-            TransactionType type = transaction.getCategory().getType();
-            double available_amount = transaction.getBalance_from().getAvailable_amount();
-            double amount = Double.parseDouble(tiet_amount.getText().toString());
-
-            Balance balance = (Balance) spn_balances_from.getSelectedItem();
-            Category category = (Category) spn_category.getSelectedItem();
-
-            transaction.setBalance_from(balance);
-            transaction.setCategory(category);
-
-
-            if (InputValidation.amountValidation(getApplicationContext(), type, available_amount, amount)) {
-                transaction.setAmount(amount);
-                saveTransaction();
+            } else {
+                Transfer transfer = buildTransfer(transaction);
+                if (!InputValidation.transferValidation(transfer)) {
+                    Toast.makeText(getApplicationContext(),
+                            "Invalid transfer.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    saveTransfer(transfer);
+                    close();
+                }
             }
         };
+
     }
 
-    private void saveTransaction() {
+
+    private void saveExpense(Expense expense) {
+        expense.getBalance_from().withdraw(expense.getAmount());
+        Log.e("expense", expense.toString());
+        firebaseService.upsert(expense);
+        firebaseService.upsert(expense.getBalance_from());
+    }
+
+    private void saveIncome(Income income) {
+        income.getBalance_from().deposit(income.getAmount());
+        Log.e("income", income.toString());
+
+        firebaseService.upsert(income);
+        firebaseService.upsert(income.getBalance_from());
+    }
+
+    private void saveTransfer(Transfer transfer) {
+        transfer.getBalance_from().withdraw(transfer.getAmount());
+        transfer.getBalance_to().deposit(transfer.getAmount());
+
+        Log.e("transfer", transfer.toString());
+
+        firebaseService.upsert(transfer);
+        firebaseService.upsert(transfer.getBalance_from());
+        firebaseService.upsert(transfer.getBalance_to());
+    }
+
+    private void buildTransaction() {
+        if (!tiet_details.getText().toString().trim().isEmpty()) {
+            transaction.setDetails(tiet_details.getText().toString().trim());
+        }
+
+        if (InputValidation.amountValidation(tiet_amount)) {
+            double amount = Double.parseDouble(tiet_amount.getText().toString());
+            transaction.setAmount(amount);
+        }
+
+        Balance balance = (Balance) spn_balances_from.getSelectedItem();
+        transaction.setBalance_from(balance);
+
+        if (rg_type.getCheckedRadioButtonId() != R.id.add_transaction_type_transfer) {
+            Category category = (Category) spn_category.getSelectedItem();
+            transaction.setCategory(category);
+        }
+    }
+
+    private Transfer buildTransfer(Transaction transaction) {
+        Transfer transfer = new Transfer();
+        transfer.setDate(transaction.getDate());
+        transfer.setDetails(transaction.getDetails());
+        transfer.setAmount(transaction.getAmount());
+        transfer.setBalance_from(transaction.getBalance_from());
+
+        Balance balance_to = (Balance) spn_balances_to.getSelectedItem();
+        transfer.setBalance_to(balance_to);
+
+        return transfer;
+    }
+
+
+    private void close() {
         Intent intent = getIntent();
-        intent.putExtra(MainActivity.NEW_TRANSACTION, (Parcelable) transaction);
         setResult(RESULT_OK, intent);
         finish();
     }
