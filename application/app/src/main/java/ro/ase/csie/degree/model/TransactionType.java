@@ -1,10 +1,12 @@
 package ro.ase.csie.degree.model;
 
+import androidx.annotation.NonNull;
+
 public enum TransactionType {
 
-    EXPENSE ("expense"),
-    INCOME ("income"),
-    TRANSFER ("transfer");
+    EXPENSE ("EXPENSE"),
+    INCOME ("INCOME"),
+    TRANSFER ("TRANSFER");
 
     private String type;
 
@@ -14,5 +16,12 @@ public enum TransactionType {
 
     public String getType() {
         return this.type;
+    }
+
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getType();
     }
 }

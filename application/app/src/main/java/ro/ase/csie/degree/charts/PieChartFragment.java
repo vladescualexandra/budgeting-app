@@ -1,9 +1,8 @@
-package ro.ase.csie.degree.fragments;
+package ro.ase.csie.degree.charts;
 
 import android.os.Bundle;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,7 @@ public class PieChartFragment extends ChartFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pie_chart, container, false);
 
-        pieChart = view.findViewById(R.id.day_pie_chart);
+        pieChart = view.findViewById(R.id.main_fragment_chart_pie);
         pieChart.getDescription().setEnabled(false);
 
         this.categoriesMap = buildMap();

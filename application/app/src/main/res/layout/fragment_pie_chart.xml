@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ro.ase.csie.degree.fragments.PieChartFragment">
+    tools:context="ro.ase.csie.degree.charts.PieChartFragment">
 
     <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/day_pie_chart"
+        android:id="@+id/main_fragment_chart_pie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

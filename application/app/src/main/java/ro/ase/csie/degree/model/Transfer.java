@@ -11,7 +11,7 @@ public class Transfer extends Transaction {
         this.category = new Category();
         this.category.setType(TransactionType.TRANSFER);
         this.category.setName(TransactionType.TRANSFER.toString());
-        this.category.setColor(R.color.rally_dark_green);
+        this.category.setColor(R.color.rally_blue);
     }
 
     public Balance getBalance_to() {

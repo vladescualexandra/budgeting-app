@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.fragments;
+package ro.ase.csie.degree.charts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,19 +13,19 @@ import java.util.List;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
 
-public class BarChartFragment extends ChartFragment {
-
-    public BarChartFragment() {
+public class LineChartFragment extends ChartFragment {
+    public LineChartFragment() {
+        super();
     }
 
-    public BarChartFragment(List<Transaction> transactionList) {
+    public LineChartFragment(List<Transaction> transactionList) {
         super(transactionList);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
+        View view = inflater.inflate(R.layout.fragment_line_chart, container, false);
         return view;
     }
 }

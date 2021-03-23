@@ -17,8 +17,8 @@ import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.fragments.ChartType;
-import ro.ase.csie.degree.fragments.PieChartFragment;
+import ro.ase.csie.degree.charts.ChartType;
+import ro.ase.csie.degree.charts.PieChartFragment;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
@@ -263,11 +263,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void show() {
         this.fragment = ChartType.getFragment(selectedChartType, transactionList);
-
-//        Bundle args = new Bundle();
-//        args.putParcelableArrayList(ChartFragment.TRANSACTIONS, transactionList);
-//        this.fragment.setArguments(args);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()

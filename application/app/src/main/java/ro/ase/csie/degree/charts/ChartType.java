@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.fragments;
+package ro.ase.csie.degree.charts;
 
 import androidx.fragment.app.Fragment;
 

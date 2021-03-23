@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="bar chart"
-        android:textColor="@color/rally_white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+   <com.github.mikephil.charting.charts.BarChart
+       android:id="@+id/main_fragment_chart_bar"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
