@@ -1,11 +1,9 @@
 package ro.ase.csie.degree.model;
 
-import android.os.Parcelable;
-
+import androidx.annotation.Nullable;
 
 import java.io.Serializable;
 
-import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.FirebaseObject;
 
 public class Category extends FirebaseObject implements Serializable {
@@ -47,4 +45,18 @@ public class Category extends FirebaseObject implements Serializable {
     public String toString() {
         return this.name;
     }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Category category = (Category) obj;
+        if (!this.getType().equals(category.getType())) {
+            return false;
+        }
+        if (!this.getName().equals(category.getName())) {
+            return false;
+        }
+        return true;
+    }
+
+
 }

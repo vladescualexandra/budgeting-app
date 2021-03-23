@@ -17,7 +17,6 @@ import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.fragments.ChartFragment;
 import ro.ase.csie.degree.fragments.ChartType;
 import ro.ase.csie.degree.fragments.PieChartFragment;
 import ro.ase.csie.degree.model.Transaction;
@@ -66,12 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         initComponents();
         setDefaultDate();
-        setFragment();
-    }
-
-    private void setFragment() {
-        getTransactionsFromFirebase();
-        buildFragmentBundle();
+        filterTransactions();
     }
 
     private void setDefaultDate() {
@@ -79,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        filterTransactions();
     }
 
     private void initComponents() {
@@ -134,24 +126,15 @@ public class MainActivity extends AppCompatActivity {
     private void displaySelectedFragment(TabLayout.Tab tab) {
         dateDisplayType = DateDisplayType.getDateDisplayType(tab.getPosition());
         filterTransactions();
-        getTransactionsFromFirebase();
-        buildFragmentBundle();
+//        getTransactionsFromFirebase();
     }
 
 
     private View.OnClickListener changeChart(ChartType chartType) {
         return v -> {
             selectedChartType = chartType;
-            fragment = ChartType.getFragment(selectedChartType);
-            buildFragmentBundle();
+            show();
         };
-    }
-
-    private void buildFragmentBundle() {
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(ChartFragment.TRANSACTIONS, transactionList);
-        fragment.setArguments(args);
-        show(fragment);
     }
 
 
@@ -226,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 transactionList.clear();
                 transactionList.addAll(result);
                 notifyAdapter();
-                buildFragmentBundle();
+                show();
             }
         };
     }
@@ -278,14 +261,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void show(Fragment fragment) {
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_fragment, fragment)
-                    .commitAllowingStateLoss();
-        }
+    private void show() {
+        this.fragment = ChartType.getFragment(selectedChartType, transactionList);
+
+//        Bundle args = new Bundle();
+//        args.putParcelableArrayList(ChartFragment.TRANSACTIONS, transactionList);
+//        this.fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_fragment, this.fragment)
+                .commitAllowingStateLoss();
+
     }
 
     @Override
