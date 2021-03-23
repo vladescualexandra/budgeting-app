@@ -114,6 +114,7 @@
             android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/main_chart_pie"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
                 android:background="@color/rally_dark_grey"
@@ -121,6 +122,7 @@
                 android:src="@drawable/ic_baseline_pie_chart_24" />
 
             <ImageButton
+                android:id="@+id/main_chart_bar"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
                 android:layout_gravity="right"
@@ -130,6 +132,7 @@
                 android:src="@drawable/ic_baseline_bar_chart_24" />
 
             <ImageButton
+                android:id="@+id/main_chart_line"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
                 android:layout_gravity="right"

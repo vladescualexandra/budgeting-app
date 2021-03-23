@@ -17,10 +17,9 @@ import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.fragments.ChartFragment;
+import ro.ase.csie.degree.fragments.ChartType;
 import ro.ase.csie.degree.fragments.PieChartFragment;
-import ro.ase.csie.degree.fragments.MonthFragment;
-import ro.ase.csie.degree.fragments.TotalFragment;
-import ro.ase.csie.degree.fragments.YearFragment;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
@@ -42,25 +41,37 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_date_filter;
     private ImageButton btn_settings;
     private ImageButton btn_add;
+    private ImageButton ib_chart_pie;
+    private ImageButton ib_chart_bar;
+    private ImageButton ib_chart_line;
+
+
     private TabLayout tabLayout;
     private ListView lv_transactions;
 
-    private List<Transaction> transactionList = new ArrayList<>();
+    private ArrayList<Transaction> transactionList = new ArrayList<>();
 
     private FirebaseService firebaseService;
 
     private int day, month, year;
+
+    private Fragment fragment = new PieChartFragment();
+    private DateDisplayType dateDisplayType = DateDisplayType.DAY_MONTH_YEAR;
+    private ChartType selectedChartType = ChartType.PIE_CHART;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         initComponents();
         setDefaultDate();
-        getTransactionsFromFirebase(DateDisplayType.DAY_MONTH_YEAR);
-        show(new PieChartFragment());
+        setFragment();
+    }
+
+    private void setFragment() {
+        getTransactionsFromFirebase();
+        buildFragmentBundle();
     }
 
     private void setDefaultDate() {
@@ -69,17 +80,12 @@ public class MainActivity extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        filter(DateDisplayType.DAY_MONTH_YEAR);
+        filterTransactions();
     }
 
     private void initComponents() {
         ib_refresh = findViewById(R.id.main_refresh);
-        ib_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDefaultDate();
-            }
-        });
+        ib_refresh.setOnClickListener(v -> setDefaultDate());
 
         tv_date_filter = findViewById(R.id.main_date_filter);
         tv_date_filter.setOnClickListener(filterEventListener());
@@ -93,27 +99,82 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.main_tabs);
         tabLayout.addOnTabSelectedListener(changeTabEventListener());
 
+
+        ib_chart_pie = findViewById(R.id.main_chart_pie);
+        ib_chart_bar = findViewById(R.id.main_chart_bar);
+        ib_chart_line = findViewById(R.id.main_chart_line);
+
+        ib_chart_pie.setOnClickListener(changeChart(ChartType.PIE_CHART));
+        ib_chart_bar.setOnClickListener(changeChart(ChartType.BAR_CHART));
+        ib_chart_line.setOnClickListener(changeChart(ChartType.LINE_CHART));
+
         lv_transactions = findViewById(R.id.main_list_transactions);
         setAdapter();
     }
 
-    private View.OnClickListener filterEventListener() {
-        return v -> {
-            switch (tabLayout.getSelectedTabPosition()) {
-                case 0:
-                    buildDayMonthYearPicker();
-                    break;
-                case 1:
-                    buildMonthYearPicker(DateDisplayType.MONTH_YEAR);
-                    break;
-                case 2:
-                    buildMonthYearPicker(DateDisplayType.YEAR);
-                    break;
-                default:
-                    filter(DateDisplayType.TOTAL);
-                    break;
+    private TabLayout.OnTabSelectedListener changeTabEventListener() {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                displaySelectedFragment(tab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         };
+    }
+
+    private void displaySelectedFragment(TabLayout.Tab tab) {
+        dateDisplayType = DateDisplayType.getDateDisplayType(tab.getPosition());
+        filterTransactions();
+        getTransactionsFromFirebase();
+        buildFragmentBundle();
+    }
+
+
+    private View.OnClickListener changeChart(ChartType chartType) {
+        return v -> {
+            selectedChartType = chartType;
+            fragment = ChartType.getFragment(selectedChartType);
+            buildFragmentBundle();
+        };
+    }
+
+    private void buildFragmentBundle() {
+        Bundle args = new Bundle();
+        args.putParcelableArrayList(ChartFragment.TRANSACTIONS, transactionList);
+        fragment.setArguments(args);
+        show(fragment);
+    }
+
+
+    private View.OnClickListener filterEventListener() {
+        return v -> {
+            dateDisplayType = DateDisplayType.getDateDisplayType(tabLayout.getSelectedTabPosition());
+            buildDatePicker();
+        };
+    }
+
+    private void buildDatePicker() {
+        switch (dateDisplayType) {
+            case MONTH_YEAR:
+            case YEAR:
+                buildMonthYearPicker(dateDisplayType);
+                break;
+            case TOTAL:
+                break;
+            default:
+                buildDayMonthYearPicker();
+                break;
+
+        }
     }
 
     private void buildDayMonthYearPicker() {
@@ -123,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     day = selectedDay;
                     month = selectedMonth;
                     year = selectedYear;
-                    filter(DateDisplayType.DAY_MONTH_YEAR);
+                    filterTransactions();
                 },
                 year, month, day);
         datePicker.show();
@@ -134,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 (selectedMonth, selectedYear) -> {
                     month = selectedMonth;
                     year = selectedYear;
-                    filter(type);
+                    filterTransactions();
                 }
                 , year, month);
 
@@ -152,17 +213,11 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private DatePickerDialog.OnDateSetListener x() {
-        return (view, year, month, dayOfMonth) -> {
-            Date date = (DateConverter.toDate(dayOfMonth, month, year));
-            tv_date_filter.setText(DateConverter.toString(date));
-        };
-    }
 
-    private void getTransactionsFromFirebase(DateDisplayType type) {
+    private void getTransactionsFromFirebase() {
         Date date = DateConverter.toDate(day, month, year);
         firebaseService = FirebaseService.getInstance(getApplicationContext());
-        firebaseService.updateTransactionsUI(updateTransactionsCallback(), type, date);
+        firebaseService.updateTransactionsUI(updateTransactionsCallback(), dateDisplayType, date);
     }
 
     private Callback<List<Transaction>> updateTransactionsCallback() {
@@ -171,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 transactionList.clear();
                 transactionList.addAll(result);
                 notifyAdapter();
-                show(new PieChartFragment(transactionList));
+                buildFragmentBundle();
             }
         };
     }
@@ -208,67 +263,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
-            getTransactionsFromFirebase(DateDisplayType.DAY_MONTH_YEAR);
+            getTransactionsFromFirebase();
         }
     }
 
-    private TabLayout.OnTabSelectedListener changeTabEventListener() {
-        return new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Fragment fragment;
-                switch (tab.getPosition()) {
-                    case 0:
-                        fragment = new PieChartFragment();
-                        filter(DateDisplayType.DAY_MONTH_YEAR);
-                        break;
-                    case 1:
-                        fragment = new MonthFragment();
-                        filter(DateDisplayType.MONTH_YEAR);
-                        break;
-                    case 2:
-                        fragment = new YearFragment();
-                        filter(DateDisplayType.YEAR);
-                        break;
-                    default:
-                        fragment = new TotalFragment();
-                        filter(DateDisplayType.TOTAL);
-                        tv_date_filter.setText("");
-                        break;
 
-                }
-                show(fragment);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        };
+    private void filterTransactions() {
+        setFilterText();
+        getTransactionsFromFirebase();
     }
 
-    private void filter(DateDisplayType type) {
-        switch (type) {
-            case DAY_MONTH_YEAR:
-                tv_date_filter.setText(DateConverter.toDisplayDate(day, month, year));
-                break;
-            case MONTH_YEAR:
-                tv_date_filter.setText(DateConverter.toMonthYear(month, year));
-                break;
-            case YEAR:
-                tv_date_filter.setText(DateConverter.toYear(year));
-                break;
-            default:
-                tv_date_filter.setText("");
-                break;
-        }
-        getTransactionsFromFirebase(type);
+    private void setFilterText() {
+        tv_date_filter.setText(DateDisplayType.display(dateDisplayType, day, month, year));
     }
+
 
     private void show(Fragment fragment) {
         if (fragment != null) {
@@ -279,7 +287,6 @@ public class MainActivity extends AppCompatActivity {
                     .commitAllowingStateLoss();
         }
     }
-
 
     @Override
     public void onBackPressed() {

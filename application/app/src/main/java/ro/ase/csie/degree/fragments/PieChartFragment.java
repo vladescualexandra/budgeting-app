@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -22,30 +23,22 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 
-public class PieChartFragment extends Fragment {
+public class PieChartFragment extends ChartFragment {
 
-    public static final String TRANSACTIONS = "transactions";
-    private List<Transaction> transactionList;
     private Map<String, Float> categoriesMap;
     private ArrayList<PieEntry> pieEntries;
     private PieChart pieChart;
     private List<Integer> colors = new ArrayList<>();
 
     public PieChartFragment() {
-        transactionList = new ArrayList<>();
+        super();
     }
 
     public PieChartFragment(List<Transaction> transactionList) {
-        this.transactionList = transactionList;
+        super(transactionList);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            transactionList = getArguments().getParcelableArrayList(TRANSACTIONS);
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
