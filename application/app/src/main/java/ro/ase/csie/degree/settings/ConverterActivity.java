@@ -40,7 +40,6 @@ public class ConverterActivity extends AppCompatActivity {
 
     private final String server = "https://free.currconv.com";
     private final String api = "de2df0aa08b9a8e38beb";
-    // https://free.currconv.com/api/v7/convert?q=USD_PHP&compact=ultra&apiKey=de2df0aa08b9a8e38beb
 
     private AsyncTaskRunner asyncTaskRunner = new AsyncTaskRunner();
 
@@ -106,7 +105,7 @@ public class ConverterActivity extends AppCompatActivity {
         currencyList = CurrencyJSONParser.getCurrencies();
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item,
+                        R.layout.row_spinner_currency,
                         currencyList);
         spn_currency_from.setAdapter(adapter);
         spn_currency_to.setAdapter(adapter);

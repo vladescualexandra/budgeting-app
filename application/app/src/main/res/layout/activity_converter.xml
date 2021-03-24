@@ -11,76 +11,82 @@
         android:id="@+id/converter_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/rally_grey"
+        android:background="@null"
         android:contentDescription="@string/settings_back"
         android:padding="10sp"
         android:src="@drawable/abc_vector_test"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <EditText
-        android:id="@+id/converter_amount_from"
-        android:layout_width="300sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center"
-        android:hint="0"
-        android:inputType="numberDecimal"
-        android:textAlignment="center"
-        android:textColor="@color/rally_white"
-        android:textColorHint="@color/rally_white"
-        android:textSize="26sp"
-        android:layout_marginTop="50sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/converter_back" />
-
-    <Spinner
-        android:id="@+id/converter_currency_from"
-        android:layout_width="300sp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/converter_amount_from" />
-
-
-    <Button
-        android:id="@+id/converter_convert"
-        android:layout_width="300sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center"
-        android:text="@string/converter_convert"
-        app:layout_constraintBottom_toTopOf="@+id/converter_amount_to"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/converter_currency_from" />
-
-    <TextView
-        android:id="@+id/converter_amount_to"
-        android:layout_width="300sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center"
-        android:text="0"
-        android:textAlignment="center"
-        android:textColor="@color/rally_white"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/converter_currency_to"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/converter_currency_to"
-        android:layout_width="300sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="50sp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/converter_back">
+
+        <EditText
+            android:id="@+id/converter_amount_from"
+            style="@style/convert_edit_text"
+            android:layout_width="300sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="@string/_0"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toTopOf="@+id/converter_currency_from"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/converter_currency_from"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16sp"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/converter_convert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
+        <Button
+            android:id="@+id/converter_convert"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:text="@string/converter_convert"
+            app:layout_constraintBottom_toTopOf="@+id/converter_amount_to"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/converter_amount_to"
+            style="@style/convert_text_view"
+            android:layout_width="300sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50sp"
+            android:text="@string/_0"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/converter_currency_to"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/converter_currency_to"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16sp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

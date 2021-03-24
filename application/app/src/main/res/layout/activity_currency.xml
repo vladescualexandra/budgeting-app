@@ -23,13 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
-        android:hint="@string/search" />
+        android:hint="@string/search"
+        android:padding="10sp"
+        android:textColor="@color/rally_white"
+        android:textColorHint="@color/rally_white" />
 
     <ListView
         android:id="@+id/currency_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10sp"
-        />
+        android:layout_margin="10sp" />
 
 </LinearLayout>

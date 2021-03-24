@@ -60,6 +60,7 @@ public class CurrencyActivity extends AppCompatActivity {
             account.setCurrency(currency);
             accountFirebaseService.upsert(account);
         });
+
         lv_currencies.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         lv_currencies.setSelector(R.color.rally_dark_green);
     }
@@ -82,7 +83,7 @@ public class CurrencyActivity extends AppCompatActivity {
     private void setAdapter() {
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item,
+                        R.layout.row_item_currency,
                         currencyList);
         lv_currencies.setAdapter(adapter);
     }

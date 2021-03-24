@@ -62,4 +62,20 @@
         <item name="android:textColor">@color/rally_white</item>
     </style>
 
+    <style name="convert_edit_text">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/rally_white</item>
+        <item name="android:textColorHint">@color/rally_white</item>
+        <item name="android:textSize">32sp</item>
+        <item name="background">@null</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="convert_text_view">
+        <item name="android:textColor">@color/rally_white</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

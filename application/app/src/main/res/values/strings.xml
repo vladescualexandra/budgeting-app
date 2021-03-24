@@ -67,5 +67,6 @@
     <string name="placeholder_currency">placeholder_currency</string>
     <string name="converter_convert">Convert</string>
     <string name="categories_transfer">Transfer</string>
+    <string name="_0">0</string>
 
 </resources>
