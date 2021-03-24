@@ -9,9 +9,11 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ro.ase.csie.degree.adapters.TransactionAdapter;
 import ro.ase.csie.degree.async.Callback;
@@ -19,7 +21,10 @@ import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.charts.ChartType;
 import ro.ase.csie.degree.charts.PieChartFragment;
+import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
 
@@ -102,6 +107,47 @@ public class MainActivity extends AppCompatActivity {
 
         lv_transactions = findViewById(R.id.main_list_transactions);
         setAdapter();
+        lv_transactions.setOnItemClickListener((parent, view, position, id) -> Toast.makeText(getApplicationContext(),
+                "??????",
+                Toast.LENGTH_LONG).show());
+        lv_transactions.setOnItemLongClickListener(deleteTransactionEventListener());
+    }
+
+    private AdapterView.OnItemLongClickListener deleteTransactionEventListener() {
+        return (parent, view, position, id) -> {
+            Toast.makeText(getApplicationContext(),
+                    "DELETE",
+                    Toast.LENGTH_LONG).show();
+//           Transaction transaction = transactionList.get(position);
+//
+//           firebaseService.delete(transaction);
+//           updateBalancesAfterDelete(transaction);
+            return true;
+        };
+    }
+
+    private void updateBalancesAfterDelete(Transaction transaction) {
+        TransactionType type = transaction.getCategory().getType();
+        double amount = transaction.getAmount();
+
+        Balance balance_from = transaction.getBalance_from();
+
+        switch (type) {
+            case EXPENSE:
+                balance_from.deposit(amount);
+                break;
+            case INCOME:
+                balance_from.withdraw(amount);
+                break;
+            case TRANSFER:
+                balance_from.deposit(amount);
+                Transfer transfer = new Transfer(transaction);
+                Balance balance_to = transfer.getBalance_to();
+                balance_to.withdraw(amount);
+                firebaseService.upsert(balance_to);
+        }
+
+        firebaseService.upsert(balance_from);
     }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {
@@ -126,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
     private void displaySelectedFragment(TabLayout.Tab tab) {
         dateDisplayType = DateDisplayType.getDateDisplayType(tab.getPosition());
         filterTransactions();
-//        getTransactionsFromFirebase();
     }
 
 

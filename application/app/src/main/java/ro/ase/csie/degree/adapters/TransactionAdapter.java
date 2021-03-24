@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import ro.ase.csie.degree.R;
@@ -43,7 +45,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
         @SuppressLint("ViewHolder") View view = layoutInflater.inflate(resource, parent, false);
 
         if (transactionList != null) {
-            if (transactionList.size() > 0 ) {
+            if (transactionList.size() > 0) {
                 if (position < transactionList.size()) {
                     buildTransaction(view, transactionList.get(position));
                 }
@@ -55,12 +57,14 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     private void buildTransaction(View view, Transaction transaction) {
         TextView tv_category = view.findViewById(R.id.row_transaction_category);
         TextView tv_amount = view.findViewById(R.id.row_transaction_amount);
-        TextView tv_date =  view.findViewById(R.id.row_transaction_date);
+        TextView tv_date = view.findViewById(R.id.row_transaction_date);
+        TextView tv_details = view.findViewById(R.id.row_transaction_details);
         TextView tv_balance = view.findViewById(R.id.row_transaction_balance);
         ImageButton ib_bar = view.findViewById(R.id.row_transaction_bar);
 
         setText(tv_category, transaction.getCategory().getName());
         setText(tv_date, DateConverter.toString(transaction.getDate()));
+        setText(tv_details, transaction.getDetails());
         setText(tv_balance, transaction.getBalance_from().getName());
 
         String sign = transaction.getCategory().getType().equals(TransactionType.EXPENSE) ? "-" : "+";

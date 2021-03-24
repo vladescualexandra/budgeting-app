@@ -54,6 +54,8 @@ public class BarChartFragment extends ChartFragment {
         barChart.getDescription().setEnabled(false);
         barChart.getLegend().setEnabled(true);
 
+        this.colors.add(getResources().getColor(R.color.teal_200));
+
         this.map = buildMap();
         this.barEntries = buildEntries();
 
@@ -62,7 +64,7 @@ public class BarChartFragment extends ChartFragment {
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "");
         barDataSet.setColors(this.colors);
-        barDataSet.setValueTextColor(R.color.rally_white);
+        barDataSet.setValueTextColor(getResources().getColor(R.color.rally_white));
 
         BarData barData = new BarData(barDataSet);
 
@@ -77,8 +79,9 @@ public class BarChartFragment extends ChartFragment {
 
         float x = 5.0f;
         for (String key : this.map.keySet()) {
-            this.barEntries.add(new BarEntry(x, this.map.get(key)));
-            x += 2.0f;
+            BarEntry entry = new BarEntry(x, this.map.get(key));
+            this.barEntries.add(entry);
+            x += 1.0f;
         }
 
         return this.barEntries;

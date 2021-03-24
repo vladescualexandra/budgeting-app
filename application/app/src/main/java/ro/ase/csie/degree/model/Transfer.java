@@ -6,8 +6,17 @@ public class Transfer extends Transaction {
 
     private Balance balance_to;
 
+    public Transfer(Transaction transaction) {
+        super(transaction);
+        setTransferCategory();
+    }
+
     public Transfer() {
         super();
+        setTransferCategory();
+    }
+
+    private void setTransferCategory() {
         this.category = new Category();
         this.category.setType(TransactionType.TRANSFER);
         this.category.setName(TransactionType.TRANSFER.toString());

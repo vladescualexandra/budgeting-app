@@ -42,12 +42,12 @@
 
 
     <style name="row_transaction_category">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/rally_white</item>
     </style>
 
     <style name="row_transaction_details">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/rally_white</item>
     </style>
 
@@ -58,7 +58,7 @@
     </style>
 
     <style name="row_transaction_balance">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/rally_white</item>
     </style>
 

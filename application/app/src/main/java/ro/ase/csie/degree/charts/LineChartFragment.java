@@ -74,12 +74,7 @@ public class LineChartFragment extends ChartFragment {
             return new ArrayList<>();
         }
 
-        Collections.sort(this.transactionList, new Comparator<Transaction>() {
-            @Override
-            public int compare(Transaction o1, Transaction o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
+        Collections.sort(this.transactionList, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
 
         for (int i = 0; i < this.transactionList.size(); i++) {
             if (!this.transactionList.get(i).getCategory().getType().equals(TransactionType.TRANSFER)) {
