@@ -30,7 +30,6 @@ public class BarChartFragment extends ChartFragment {
     private ArrayList<BarEntry> barEntries = new ArrayList<>();
 
     private ArrayList<Integer> colors = new ArrayList<>();
-    private ArrayList<String> labels = new ArrayList<>();
 
     public BarChartFragment() {
     }
@@ -43,7 +42,14 @@ public class BarChartFragment extends ChartFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
+        if (this.transactionList != null && !this.transactionList.isEmpty()) {
+            buildBarChart(view);
+        }
 
+        return view;
+    }
+
+    private void buildBarChart(View view) {
         barChart = view.findViewById(R.id.main_fragment_chart_bar);
         barChart.getDescription().setEnabled(false);
         barChart.getLegend().setEnabled(true);
@@ -51,20 +57,17 @@ public class BarChartFragment extends ChartFragment {
         this.map = buildMap();
         this.barEntries = buildEntries();
 
-
         ArrayList<LegendEntry> legendEntries = buildLegend();
         barChart.getLegend().setCustom(legendEntries);
 
-
         BarDataSet barDataSet = new BarDataSet(barEntries, "");
         barDataSet.setColors(this.colors);
+        barDataSet.setValueTextColor(R.color.rally_white);
 
         BarData barData = new BarData(barDataSet);
 
         barChart.setData(barData);
         barChart.invalidate();
-
-        return view;
     }
 
     private ArrayList<BarEntry> buildEntries() {

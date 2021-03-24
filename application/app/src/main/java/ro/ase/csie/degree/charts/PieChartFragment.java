@@ -45,6 +45,14 @@ public class PieChartFragment extends ChartFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pie_chart, container, false);
 
+        if (this.transactionList != null && !this.transactionList.isEmpty()) {
+            buildPieChart(view);
+        }
+
+        return view;
+    }
+
+    private void buildPieChart(View view) {
         pieChart = view.findViewById(R.id.main_fragment_chart_pie);
         pieChart.getDescription().setEnabled(false);
 
@@ -57,8 +65,6 @@ public class PieChartFragment extends ChartFragment {
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
-
-        return view;
     }
 
 
