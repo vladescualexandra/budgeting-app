@@ -31,7 +31,7 @@
     </style>
 
     <style name="total_balance_text">
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/rally_white</item>
     </style>
 
@@ -76,6 +76,11 @@
         <item name="android:textColor">@color/rally_white</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="settings_card_text">
+        <item name="android:textColor">@color/rally_white</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

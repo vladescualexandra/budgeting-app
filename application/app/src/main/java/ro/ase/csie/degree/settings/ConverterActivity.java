@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import ro.ase.csie.degree.util.CurrencyJSONParser;
 
 public class ConverterActivity extends AppCompatActivity {
 
+    private ImageButton btn_back;
     private EditText et_amount_from;
     private Spinner spn_currency_from;
     private TextView tv_amount_to;
@@ -53,6 +55,8 @@ public class ConverterActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
+        btn_back = findViewById(R.id.converter_back);
+        btn_back.setOnClickListener(v -> finish());
         et_amount_from = findViewById(R.id.converter_amount_from);
         spn_currency_from = findViewById(R.id.converter_currency_from);
         tv_amount_to = findViewById(R.id.converter_amount_to);

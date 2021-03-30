@@ -146,7 +146,9 @@
     <ListView
         android:id="@+id/main_list_transactions"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150sp"
         android:padding="8sp" />
+
+
 
 </LinearLayout>

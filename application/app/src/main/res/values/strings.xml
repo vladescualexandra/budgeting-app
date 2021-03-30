@@ -68,5 +68,6 @@
     <string name="converter_convert">Convert</string>
     <string name="categories_transfer">Transfer</string>
     <string name="_0">0</string>
+    <string name="default_currency">default currency</string>
 
 </resources>

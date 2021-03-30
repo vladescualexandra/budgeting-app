@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:gravity="center"
-    android:weightSum="2"
-    android:layout_marginLeft="16sp"
-    android:padding="8sp">
+    android:orientation="horizontal"
+    android:padding="8sp"
+    android:weightSum="3">
 
     <TextView
         android:id="@+id/balances_row_name"
+        style="@style/row_balance_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
         android:text="@string/default_balance_name"
-        style="@style/row_balance_text"
-        android:layout_weight="1"
-        android:layout_gravity="start"
-        />
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/balances_row_available_amount"
+        style="@style/row_balance_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/default_amount"
-        style="@style/row_balance_text"
         android:layout_gravity="center"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:text="@string/default_amount" />
 </LinearLayout>

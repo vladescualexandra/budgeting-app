@@ -29,7 +29,9 @@
             android:layout_row="1"
             android:layout_column="0"
             android:layout_columnSpan="1"
-            android:layout_margin="16sp">
+            android:layout_margin="16sp"
+            app:cardBackgroundColor="@color/rally_dark_green"
+            app:cardCornerRadius="16sp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,18 +41,21 @@
 
                 <TextView
                     android:id="@+id/account_name"
+                    style="@style/settings_card_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/placeholder_name" />
 
                 <TextView
                     android:id="@+id/account_email"
+                    style="@style/settings_card_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/placeholder_email" />
 
                 <TextView
                     android:id="@+id/account_currency"
+                    style="@style/settings_card_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/placeholder_currency" />
