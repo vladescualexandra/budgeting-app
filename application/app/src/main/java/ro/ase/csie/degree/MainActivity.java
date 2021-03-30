@@ -9,22 +9,18 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import ro.ase.csie.degree.adapters.TransactionAdapter;
+import ro.ase.csie.degree.adapters.TransactionExpandableAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.charts.ChartType;
 import ro.ase.csie.degree.charts.PieChartFragment;
-import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.model.TransactionType;
-import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
 
@@ -51,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TabLayout tabLayout;
-    private ListView lv_transactions;
+    private ExpandableListView elv_transactions;
 
     private ArrayList<Transaction> transactionList = new ArrayList<>();
 
@@ -71,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
         initComponents();
         setDefaultDate();
         filterTransactions();
+
     }
+
 
     private void setDefaultDate() {
         Calendar calendar = Calendar.getInstance();
@@ -105,50 +103,10 @@ public class MainActivity extends AppCompatActivity {
         ib_chart_bar.setOnClickListener(changeChart(ChartType.BAR_CHART));
         ib_chart_line.setOnClickListener(changeChart(ChartType.LINE_CHART));
 
-        lv_transactions = findViewById(R.id.main_list_transactions);
+        elv_transactions = findViewById(R.id.main_expandable_list_transactions);
         setAdapter();
-        lv_transactions.setOnItemClickListener((parent, view, position, id) -> Toast.makeText(getApplicationContext(),
-                "??????",
-                Toast.LENGTH_LONG).show());
-        lv_transactions.setOnItemLongClickListener(deleteTransactionEventListener());
     }
 
-    private AdapterView.OnItemLongClickListener deleteTransactionEventListener() {
-        return (parent, view, position, id) -> {
-            Toast.makeText(getApplicationContext(),
-                    "DELETE",
-                    Toast.LENGTH_LONG).show();
-//           Transaction transaction = transactionList.get(position);
-//
-//           firebaseService.delete(transaction);
-//           updateBalancesAfterDelete(transaction);
-            return true;
-        };
-    }
-
-    private void updateBalancesAfterDelete(Transaction transaction) {
-        TransactionType type = transaction.getCategory().getType();
-        double amount = transaction.getAmount();
-
-        Balance balance_from = transaction.getBalance_from();
-
-        switch (type) {
-            case EXPENSE:
-                balance_from.deposit(amount);
-                break;
-            case INCOME:
-                balance_from.withdraw(amount);
-                break;
-            case TRANSFER:
-                balance_from.deposit(amount);
-                Transfer transfer = new Transfer(transaction);
-                Balance balance_to = transfer.getBalance_to();
-                balance_to.withdraw(amount);
-                firebaseService.upsert(balance_to);
-        }
-
-        firebaseService.upsert(balance_from);
-    }
 
     private TabLayout.OnTabSelectedListener changeTabEventListener() {
         return new TabLayout.OnTabSelectedListener() {
@@ -274,17 +232,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        TransactionAdapter adapter = new TransactionAdapter
-                (getApplicationContext(),
-                        R.layout.row_item_transaction,
-                        transactionList,
-                        getLayoutInflater());
-        lv_transactions.setAdapter(adapter);
+        ExpandableListAdapter adapter = new TransactionExpandableAdapter(this, transactionList);
+        elv_transactions.setAdapter(adapter);
     }
 
     private void notifyAdapter() {
-        TransactionAdapter adapter = (TransactionAdapter) lv_transactions.getAdapter();
-        adapter.notifyDataSetChanged();
+//        TransactionExpandableAdapter adapter = (TransactionExpandableAdapter) elv_transactions.getExpandableListAdapter();
+//        adapter.notifyDataSetChanged();
+        setAdapter();
     }
 
     @Override
