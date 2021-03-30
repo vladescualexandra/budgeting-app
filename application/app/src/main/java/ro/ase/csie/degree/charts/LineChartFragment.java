@@ -58,7 +58,7 @@ public class LineChartFragment extends ChartFragment {
         lineChart = view.findViewById(R.id.main_fragment_chart_line);
         lineChart.getDescription().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
-
+        lineChart.getLegend().setTextColor(getResources().getColor(R.color.rally_white));
 
         this.entries = buildEntries();
 

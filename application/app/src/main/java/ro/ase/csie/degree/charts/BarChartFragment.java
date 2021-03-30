@@ -53,8 +53,7 @@ public class BarChartFragment extends ChartFragment {
         barChart = view.findViewById(R.id.main_fragment_chart_bar);
         barChart.getDescription().setEnabled(false);
         barChart.getLegend().setEnabled(true);
-
-        this.colors.add(getResources().getColor(R.color.teal_200));
+        barChart.getLegend().setTextColor(getResources().getColor(R.color.rally_white));
 
         this.map = buildMap();
         this.barEntries = buildEntries();
