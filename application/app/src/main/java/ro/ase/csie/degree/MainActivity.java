@@ -104,6 +104,14 @@ public class MainActivity extends AppCompatActivity {
         ib_chart_line.setOnClickListener(changeChart(ChartType.LINE_CHART));
 
         elv_transactions = findViewById(R.id.main_expandable_list_transactions);
+        final int[] lastPosition = {-1};
+        elv_transactions.setOnGroupExpandListener(groupPosition -> {
+            if (lastPosition[0] != -1
+                    && groupPosition != lastPosition[0]) {
+                elv_transactions.collapseGroup(lastPosition[0]);
+            }
+            lastPosition[0] = groupPosition;
+        });
         setAdapter();
     }
 
