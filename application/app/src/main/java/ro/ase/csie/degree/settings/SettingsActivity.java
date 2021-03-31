@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -38,9 +39,6 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_contact;
     private Button btn_sign_out;
 
-    private Account account = new Account();
-
-    private FirebaseService<Account> firebaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         initComponents();
-        getAccount();
+        setAccount();
         initEventListeners();
     }
 
@@ -70,13 +68,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setAccount() {
-        tv_user_name.setText(account.getName());
-        tv_user_email.setText(account.getEmail());
-        if (account.getCurrency() != null) {
-            tv_user_currency.setText("Currency: " + account.getCurrency().toString());
-        } else {
-            tv_user_currency.setText("");
-        }
+            tv_user_name.setText(Account.getInstance().getName());
+            tv_user_email.setText(Account.getInstance().getEmail());
+            if (Account.getInstance().getCurrency() != null) {
+                tv_user_currency.setText("Currency: " + Account.getInstance().getCurrency().toString());
+            } else {
+                tv_user_currency.setText("");
+            }
     }
 
     private void initEventListeners() {
@@ -93,10 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_contact.setOnClickListener(contactEventListener());
 
         btn_sign_out.setOnClickListener(v -> {
-            SharedPreferences user_info = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = user_info.edit();
-            editor.remove(Account.USER_KEY);
-            editor.apply();
+            Account.signOut(getApplicationContext());
 
             GoogleAuthentication googleAuthentication = new GoogleAuthentication(getApplicationContext());
             googleAuthentication.signOut();
@@ -117,20 +112,6 @@ public class SettingsActivity extends AppCompatActivity {
         return v -> {
             Intent intent = new Intent(getApplicationContext(), CurrencyActivity.class);
             startActivity(intent);
-        };
-    }
-
-    private void getAccount() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
-        firebaseService.getAccount(getAccountCallback());
-    }
-
-    private Callback<Account> getAccountCallback() {
-        return result -> {
-            if (result != null) {
-                account = result;
-                setAccount();
-            }
         };
     }
 

@@ -1,6 +1,5 @@
 package ro.ase.csie.degree.firebase;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,12 +11,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Balance;
@@ -29,27 +27,22 @@ public class FirebaseService<T extends FirebaseObject> {
 
 
     public static final String ATTRIBUTE_USER = "user";
+    public static final String ATTRIBUTE_EMAIL = "email";
 
     private final DatabaseReference database;
     private static FirebaseService firebaseService;
-    private final String user_key;
     private Query query;
 
 
-    private FirebaseService(Context context) {
+    private FirebaseService() {
         database = FirebaseDatabase.getInstance().getReference();
-        user_key = getUID(context);
     }
 
-    private String getUID(Context context) {
-        return Account.getUID(context);
-    }
-
-    public static FirebaseService getInstance(Context context) {
+    public static FirebaseService getInstance() {
         if (firebaseService == null) {
             synchronized (FirebaseService.class) {
                 if (firebaseService == null) {
-                    firebaseService = new FirebaseService(context);
+                    firebaseService = new FirebaseService();
                 }
             }
         }
@@ -69,10 +62,9 @@ public class FirebaseService<T extends FirebaseObject> {
         return null;
     }
 
-
-    public void upsert(T object) {
+    public T upsert(T object) {
         if (object == null) {
-            return;
+            return null;
         }
 
         if (object.getId() == null || object.getId().trim().isEmpty()) {
@@ -80,11 +72,14 @@ public class FirebaseService<T extends FirebaseObject> {
             object.setId(id);
         }
 
-        object.setUser(user_key);
+        object.setUser(SplashActivity.KEY);
+
         database
                 .child(getPath(object))
                 .child(object.getId())
                 .setValue(object);
+
+        return object;
     }
 
     public void delete(T object) {
@@ -98,18 +93,47 @@ public class FirebaseService<T extends FirebaseObject> {
                 .removeValue();
     }
 
-    public void getAccount(final Callback<Account> callback) {
-        final Account[] account = new Account[1];
+    public void getAccount(final Callback<Account> callback, String email) {
         query = database
-                .child(Table.USERS.toString());
+                .child(Table.USERS.toString())
+                .orderByChild(ATTRIBUTE_EMAIL)
+                .equalTo(email);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    account[0] = item.getValue(Account.class);
+                    Account account = item.getValue(Account.class);
+                    if (account != null) {
+                        callback.updateUI(account);
+                    } else {
+                        Log.e("FirebaseService", "ACCOUNT IS NULL!");
+                    }
                 }
-                callback.updateUI(account[0]);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("cancel", error.getMessage());
+            }
+        });
+    }
+
+    public void getAccount(final Callback<Account> callback) {
+        query = database
+                .child(Table.USERS.toString())
+                .child(SplashActivity.KEY);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Account account = snapshot.getValue(Account.class);
+                if (account != null) {
+                    callback.updateUI(account);
+                } else {
+                    Log.e("FirebaseService", "ACCOUNT IS NULL!");
+                }
             }
 
             @Override
@@ -187,12 +211,11 @@ public class FirebaseService<T extends FirebaseObject> {
         });
     }
 
-
     private Query getQuery(Table table) {
         return database
                 .child(table.toString())
                 .orderByChild(ATTRIBUTE_USER)
-                .equalTo(user_key);
+                .equalTo(SplashActivity.KEY);
     }
 
 }

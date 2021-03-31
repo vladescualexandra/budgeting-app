@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 
 import ro.ase.csie.degree.authentication.LoginActivity;
@@ -13,6 +14,7 @@ import ro.ase.csie.degree.model.Account;
 public class SplashActivity extends AppCompatActivity {
 
     private final int DISPLAY_DURATION = 2000;
+    public static String KEY;
     Intent intent;
 
     @Override
@@ -20,18 +22,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        String key = Account.getUID(getApplicationContext());
+        KEY = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
+                .getString(Account.USER_KEY, null);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (key == null) {
-                    intent = new Intent(getApplicationContext(), LoginActivity.class);
-                } else {
-                    intent = new Intent(getApplicationContext(), MainActivity.class);
-                }
-                startActivity(intent);
+        new Handler().postDelayed(() -> {
+            if (KEY == null) {
+                intent = new Intent(getApplicationContext(), LoginActivity.class);
+            } else {
+                Account.retrieveAccount(getApplicationContext());
+                intent = new Intent(getApplicationContext(), MainActivity.class);
             }
+            startActivity(intent);
         }, DISPLAY_DURATION);
     }
 }

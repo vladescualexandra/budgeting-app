@@ -74,14 +74,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private View.OnClickListener emailAuthEventListener() {
-        return (View.OnClickListener) v -> {
+        return v -> {
             intent = new Intent(getApplicationContext(), MainActivity.class);
 
             if (validate()) {
                 emailAuthentication.loginAccount(tiet_email, tiet_password);
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        R.string.toast_invalid_account, Toast.LENGTH_SHORT).show();
             }
         };
     }

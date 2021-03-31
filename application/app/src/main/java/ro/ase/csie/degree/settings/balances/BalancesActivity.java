@@ -43,7 +43,7 @@ public class BalancesActivity extends AppCompatActivity {
     }
 
     private void getBalancesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance();
         firebaseService.updateBalancesUI(updateBalancesCallback());
     }
 

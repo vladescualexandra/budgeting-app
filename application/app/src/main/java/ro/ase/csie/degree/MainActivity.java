@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTransactionsFromFirebase() {
         Date date = DateConverter.toDate(day, month, year);
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance();
         firebaseService.updateTransactionsUI(updateTransactionsCallback(), dateDisplayType, date);
     }
 

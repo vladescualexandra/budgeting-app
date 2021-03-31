@@ -2,14 +2,16 @@ package ro.ase.csie.degree.authentication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import ro.ase.csie.degree.MainActivity;
-import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Account;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,47 +57,31 @@ public class EmailAuthentication {
                 .setDisplayName(name)
                 .build();
         currentUser.updateProfile(profileUpdate)
-            .addOnCompleteListener(task -> {
-                setAccount();
-                saveData();
-                Toast.makeText(context,
-                        account.toString(),
-                        Toast.LENGTH_SHORT).show();
-            });
+                .addOnCompleteListener(task -> {
+                    Account.createAccount(context, currentUser.getDisplayName(), currentUser.getEmail());
+                });
     }
 
-    private void saveData() {
-        FirebaseService firebaseService = FirebaseService.getInstance(context);
-        firebaseService.upsert(account);
+    public void loginAccount(@NonNull TextInputEditText tiet_email,
+                             @NonNull TextInputEditText tiet_password) {
+
+        String email = tiet_email.getText().toString().trim();
+        String password = tiet_password.getText().toString();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(completeLoginEvent(email))
+                .addOnFailureListener(e -> Toast.makeText(context,
+                        e.getMessage(),
+                        Toast.LENGTH_LONG).show());
     }
 
-    public void loginAccount(TextInputEditText email, TextInputEditText password) {
-        mAuth.signInWithEmailAndPassword(email.getText().toString().trim(),
-                password.getText().toString())
-                .addOnCompleteListener(completeLoginEvent());
-    }
-
-    private OnCompleteListener<AuthResult> completeLoginEvent() {
+    private OnCompleteListener<AuthResult> completeLoginEvent(String email) {
         return task -> {
             if (task.isSuccessful()) {
-                Intent intent = new Intent(context, MainActivity.class);
-                setAccount();
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                Account.authenticate(context, email);
+            } else {
+                Log.e("EmailAuthentication", "Task not successful.");
             }
         };
     }
-
-    private Account getAccount() {
-        currentUser = mAuth.getCurrentUser();
-        account = new Account(currentUser.getDisplayName(), currentUser.getEmail());
-        account.setId(currentUser.getUid());
-        return account;
-    }
-
-    public void setAccount() {
-        account = getAccount();
-        account.setAccount(context);
-    }
-
 }

@@ -76,7 +76,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance();
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
     }
 
@@ -147,7 +147,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 && resultCode == RESULT_OK) {
             Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
             category.setType(isExpense ? TransactionType.EXPENSE : TransactionType.INCOME);
-            category.setUser(Account.getUID(getApplicationContext()));
+            category.setUser(Account.getInstance().getId());
             firebaseService.upsert(category);
             notifyAdapter();
         }

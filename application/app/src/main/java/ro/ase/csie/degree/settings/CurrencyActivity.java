@@ -3,9 +3,11 @@ package ro.ase.csie.degree.settings;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -15,8 +17,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Account;
@@ -30,10 +34,8 @@ public class CurrencyActivity extends AppCompatActivity {
     private EditText et_search;
     private ListView lv_currencies;
 
-    private FirebaseService<Account> accountFirebaseService;
     private List<Currency> currencyList = new ArrayList<>();
     private Currency currency = null;
-    private Account account = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,6 @@ public class CurrencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_currency);
 
         initComponents();
-        accountFirebaseService = FirebaseService.getInstance(getApplicationContext());
-        accountFirebaseService.getAccount(getAccountCallback());
     }
 
     private void initComponents() {
@@ -57,27 +57,12 @@ public class CurrencyActivity extends AppCompatActivity {
         setAdapter();
         lv_currencies.setOnItemClickListener((parent, view, position, id) -> {
             currency = currencyList.get(position);
-            account.setCurrency(currency);
-            accountFirebaseService.upsert(account);
+            Account.getInstance().setCurrency(currency);
+            Account.updateAccount();
         });
 
         lv_currencies.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         lv_currencies.setSelector(R.color.rally_dark_green);
-    }
-
-    @SuppressLint("ResourceAsColor")
-    private Callback<Account> getAccountCallback() {
-        return result -> {
-            if (result != null) {
-                account = result;
-                for (int i = 0; i < currencyList.size(); i++) {
-                    if (currencyList.get(i).getSymbol().equals(account.getCurrency().getSymbol())) {
-                        lv_currencies.setSelection(i);
-                        break;
-                    }
-                }
-            }
-        };
     }
 
     private void setAdapter() {

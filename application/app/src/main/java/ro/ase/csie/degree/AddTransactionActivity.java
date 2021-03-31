@@ -67,11 +67,9 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void retrieveDataFromFirebase() {
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
-        firebaseService = FirebaseService.getInstance(getApplicationContext());
+        firebaseService = FirebaseService.getInstance();
         firebaseService.updateCategoriesUI(updateCategoriesCallback());
         firebaseService.updateBalancesUI(updateBalancesCallback());
-
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {
@@ -206,10 +204,8 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     }
 
-
     private void saveExpense(Expense expense) {
         expense.getBalance_from().withdraw(expense.getAmount());
-        Log.e("expense", expense.toString());
         firebaseService.upsert(expense);
         firebaseService.upsert(expense.getBalance_from());
     }

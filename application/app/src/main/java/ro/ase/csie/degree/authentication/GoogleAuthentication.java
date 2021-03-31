@@ -30,13 +30,6 @@ public class GoogleAuthentication {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
-        if (mGoogleSignInClient != null) {
-            mGoogleSignInClient.signOut();
-        }
-    }
-
-    public GoogleSignInClient getClient() {
-        return mGoogleSignInClient;
     }
 
     public Intent getSignInIntent() {
@@ -48,7 +41,7 @@ public class GoogleAuthentication {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             GoogleSignInAccount account = task.getResult(ApiException.class);
             if (account != null) {
-                setAccount(account);
+                Account.authenticate(context, account.getEmail());
             } else {
                 Toast.makeText(context,
                         "Something went wrong.",
@@ -57,12 +50,6 @@ public class GoogleAuthentication {
         } catch (ApiException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setAccount(GoogleSignInAccount account) {
-        Account user = new Account(account.getDisplayName(), account.getEmail());
-        user.setId(account.getId());
-        user.setAccount(context);
     }
 
     public void signOut() {
