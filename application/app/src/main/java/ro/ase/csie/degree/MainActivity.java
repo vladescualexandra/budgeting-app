@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+        setFilterText();
     }
 
     private void initComponents() {
@@ -168,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 buildDayMonthYearPicker();
                 break;
-
         }
     }
 
@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 , year, month);
 
-
         picker.setActivatedMonth(month)
                 .setMinYear(1990)
                 .setActivatedYear(year)
@@ -213,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
         picker.build()
                 .show();
     }
-
 
     private void getTransactionsFromFirebase() {
         Date date = DateConverter.toDate(day, month, year);
