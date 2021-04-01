@@ -3,7 +3,6 @@ package ro.ase.csie.degree.settings;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -109,7 +107,7 @@ public class ConverterActivity extends AppCompatActivity {
         currencyList = CurrencyJSONParser.getCurrencies();
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
-                        R.layout.row_spinner_currency,
+                        R.layout.row_spinner_simple,
                         currencyList);
         spn_currency_from.setAdapter(adapter);
         spn_currency_to.setAdapter(adapter);

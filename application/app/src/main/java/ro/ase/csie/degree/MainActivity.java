@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void setDefaultDate() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);

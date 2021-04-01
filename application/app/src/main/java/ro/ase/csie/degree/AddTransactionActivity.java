@@ -274,7 +274,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         ArrayAdapter<Category> adapter =
                 new ArrayAdapter<>
                         (getApplicationContext(),
-                                android.R.layout.simple_spinner_item,
+                                R.layout.row_spinner_simple,
                                 getCategoriesByType());
         spn_category.setAdapter(adapter);
         if (getCategoriesByType().size() > 0) {
@@ -286,7 +286,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         ArrayAdapter<Balance> adapter =
                 new ArrayAdapter<>
                         (getApplicationContext(),
-                                android.R.layout.simple_spinner_item,
+                                R.layout.row_spinner_simple,
                                 balances);
         spn_balances_from.setAdapter(adapter);
         spn_balances_to.setAdapter(adapter);

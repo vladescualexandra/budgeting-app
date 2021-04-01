@@ -10,8 +10,10 @@
 
     <RadioGroup
         android:id="@+id/add_transaction_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/add_transaction_type_expense"
@@ -37,19 +39,25 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/rally_dark_grey"
+        android:textColor="@color/rally_white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_transaction_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/transaction_details_optional" />
+            android:hint="@string/transaction_details_optional"
+
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/rally_dark_grey"
+        android:textColor="@color/rally_white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_transaction_amount"
