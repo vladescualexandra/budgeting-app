@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -182,6 +183,12 @@ public class MainActivity extends AppCompatActivity {
                 },
                 year, month, day);
         datePicker.show();
+        datePicker
+                .getButton(DialogInterface.BUTTON_NEGATIVE)
+                .setTextColor(getResources().getColor(R.color.rally_dark_green));
+        datePicker
+                .getButton(DialogInterface.BUTTON_POSITIVE)
+                .setTextColor(getResources().getColor(R.color.rally_dark_green));
     }
 
     private void buildMonthYearPicker(DateDisplayType type) {

@@ -2,7 +2,9 @@ package ro.ase.csie.degree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -161,6 +163,12 @@ public class AddTransactionActivity extends AppCompatActivity {
                     setDateEventListener(),
                     year, month, day);
             datePickerDialog.show();
+            datePickerDialog
+                    .getButton(DialogInterface.BUTTON_NEGATIVE)
+                    .setTextColor(getResources().getColor(R.color.rally_dark_green));
+            datePickerDialog
+                    .getButton(DialogInterface.BUTTON_POSITIVE)
+                    .setTextColor(getResources().getColor(R.color.rally_dark_green));
         };
     }
 
