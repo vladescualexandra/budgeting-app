@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -94,6 +95,7 @@ public class FirebaseService<T extends FirebaseObject> {
     }
 
     public void getAccount(final Callback<Account> callback, String email) {
+        Log.e("FirebaseService", "getAccount: " + email);
         query = database
                 .child(Table.USERS.toString())
                 .orderByChild(ATTRIBUTE_EMAIL)
@@ -102,15 +104,18 @@ public class FirebaseService<T extends FirebaseObject> {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    Account account = item.getValue(Account.class);
-                    if (account != null) {
-                        callback.updateUI(account);
-                    } else {
-                        Log.e("FirebaseService", "ACCOUNT IS NULL!");
+                if (snapshot.getValue() == null) {
+                    callback.updateUI(null);
+                } else {
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        Account account = item.getValue(Account.class);
+                        if (account != null) {
+                            callback.updateUI(account);
+                        } else {
+                            Log.e("FirebaseService", "ACCOUNT IS NULL!");
+                        }
                     }
                 }
-
             }
 
             @Override
@@ -128,11 +133,15 @@ public class FirebaseService<T extends FirebaseObject> {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Account account = snapshot.getValue(Account.class);
-                if (account != null) {
-                    callback.updateUI(account);
+                if (snapshot.getValue() == null) {
+                    callback.updateUI(null);
                 } else {
-                    Log.e("FirebaseService", "ACCOUNT IS NULL!");
+                    Account account = snapshot.getValue(Account.class);
+                    if (account != null) {
+                        callback.updateUI(account);
+                    } else {
+                        Log.e("FirebaseService", "ACCOUNT IS NULL!");
+                    }
                 }
             }
 
@@ -142,6 +151,7 @@ public class FirebaseService<T extends FirebaseObject> {
             }
         });
     }
+
 
     public void updateBalancesUI(final Callback<List<Balance>> callback) {
         query = getQuery(Table.BALANCES);

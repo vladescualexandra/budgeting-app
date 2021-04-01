@@ -2,6 +2,7 @@ package ro.ase.csie.degree.authentication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import ro.ase.csie.degree.model.Account;
@@ -40,13 +41,9 @@ public class GoogleAuthentication {
         try {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            if (account != null) {
-                Account.authenticate(context, account.getEmail());
-            } else {
-                Toast.makeText(context,
-                        "Something went wrong.",
-                        Toast.LENGTH_SHORT).show();
-            }
+
+            Account.googleAuthentication(context, account);
+
         } catch (ApiException e) {
             e.printStackTrace();
         }

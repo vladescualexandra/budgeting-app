@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import java.io.Serializable;
 
 import ro.ase.csie.degree.MainActivity;
@@ -70,12 +72,20 @@ public class Account extends FirebaseObject implements Serializable {
     }
 
     public static void authenticate(Context context, String email) {
+        Log.e("Account", "authenticate: " + email);
         firebaseService.getAccount(getAccountCallback(context), email);
     }
 
     public static void createAccount(Context context, String name, String email) {
+        Log.e("Account", "create account");
         account = (Account) firebaseService.upsert(new Account(name, email));
+        Log.e("Account", "create account: " + account.toString());
         enterAccount(context);
+    }
+
+    public static void googleAuthentication(Context context, GoogleSignInAccount gsa) {
+        Log.e("Account", "googleAuthentication");
+        firebaseService.getAccount(getGoogleAccountCallback(context, gsa), gsa.getEmail());
     }
 
     public static void signOut(Context context) {
@@ -111,14 +121,35 @@ public class Account extends FirebaseObject implements Serializable {
 
     private static Callback<Account> getAccountCallback(Context context) {
         return result -> {
+            Log.e("Account", "getAccountCallback");
             if (result != null) {
-                try {
-                    account = (Account) result.clone();
-                    Log.e("Account", "getAccountCallback: " + account.toString());
-                    enterAccount(context);
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
+                getAccount(context, result);
+            } else {
+                Log.e("Account", "getAccountCallback: result is null.");
+            }
+        };
+    }
+
+    private static void getAccount(Context context, Account result) {
+        try {
+            account = (Account) result.clone();
+            Log.e("Account", "getAccountCallback: " + account.toString());
+            enterAccount(context);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Callback<Account> getGoogleAccountCallback(Context context, GoogleSignInAccount gsa) {
+        return result -> {
+            Log.e("Account", "getGoogleAccountCallback");
+            if (result != null) {
+                getAccount(context, result);
+            } else {
+                Log.e("Account", "getGoogleAccountCallback: (google) result is null.");
+                account = (Account) firebaseService.upsert(new Account(gsa.getDisplayName(), gsa.getEmail()));
+                Log.e("Account", "getGoogleAccountCallback: " + account.toString());
+//                getAccount(context, account);
             }
         };
     }
