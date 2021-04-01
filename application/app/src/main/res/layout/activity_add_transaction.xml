@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="16sp"
+        android:layout_marginBottom="16sp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -20,31 +21,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/categories_expenses" />
+            android:padding="8sp"
+            android:text="@string/categories_expenses"
+            android:textColor="@color/rally_dark_green" />
 
         <RadioButton
             android:id="@+id/add_transaction_type_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/categories_income" />
+            android:buttonTint="@color/rally_red"
+            android:padding="8sp"
+            android:text="@string/categories_income"
+            android:textColor="@color/rally_red" />
 
         <RadioButton
             android:id="@+id/add_transaction_type_transfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/categories_transfer" />
+            android:buttonTint="@color/rally_blue"
+            android:padding="8sp"
+            android:text="@string/categories_transfer"
+            android:textColor="@color/rally_blue" />
     </RadioGroup>
 
 
-
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/text_style_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/rally_dark_grey"
-        android:textColor="@color/rally_white">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_transaction_details"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/transaction_details_optional"
@@ -54,38 +62,56 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/text_style_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/rally_dark_grey"
-        android:textColor="@color/rally_white">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_transaction_amount"
+            style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_transaction_amount"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/text_style_input"
+        android:text="@string/spinner_balance_from"/>
+
     <Spinner
         android:id="@+id/add_transaction_balance_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16sp"/>
+        android:padding="16sp"
+         />
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/text_style_input"
+        android:text="@string/spinner_category"/>
     <Spinner
         android:id="@+id/add_transaction_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16sp"
-        />
+        android:padding="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/text_style_input"
+        android:text="@string/spinner_balance_to"/>
 
     <Spinner
         android:id="@+id/add_transaction_balance_to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16sp"
-        />
+        android:padding="16sp" />
+
     <Button
         android:id="@+id/add_transaction_date"
         android:layout_width="match_parent"

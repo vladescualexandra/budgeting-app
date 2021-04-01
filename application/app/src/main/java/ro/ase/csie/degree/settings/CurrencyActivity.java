@@ -18,6 +18,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.SplashActivity;
@@ -59,6 +60,9 @@ public class CurrencyActivity extends AppCompatActivity {
             currency = currencyList.get(position);
             Account.getInstance().setCurrency(currency);
             Account.updateAccount();
+
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         });
 
         lv_currencies.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);

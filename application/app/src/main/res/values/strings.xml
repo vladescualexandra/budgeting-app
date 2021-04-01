@@ -69,5 +69,8 @@
     <string name="categories_transfer">Transfer</string>
     <string name="_0">0</string>
     <string name="default_currency">default currency</string>
+    <string name="spinner_balance_from">Balance from</string>
+    <string name="spinner_category">Category</string>
+    <string name="spinner_balance_to">Balance to</string>
 
 </resources>

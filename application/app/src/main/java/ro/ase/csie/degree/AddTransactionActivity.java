@@ -132,6 +132,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         rg_type.setOnCheckedChangeListener(changeTypeEventListener());
         btn_date.setOnClickListener(dateDialogEventListener());
         btn_save.setOnClickListener(saveTransactionEventListener());
+
+
     }
 
     private RadioGroup.OnCheckedChangeListener changeTypeEventListener() {
@@ -139,11 +141,9 @@ public class AddTransactionActivity extends AppCompatActivity {
             switch (checkedId) {
                 case R.id.add_transaction_type_expense:
                     transaction.getCategory().setType(TransactionType.EXPENSE);
-                    setCategoryAdapter();
                     break;
                 case R.id.add_transaction_type_income:
                     transaction.getCategory().setType(TransactionType.INCOME);
-                    setCategoryAdapter();
                     break;
                 default:
                     transaction.getCategory().setType(TransactionType.TRANSFER);
@@ -279,6 +279,11 @@ public class AddTransactionActivity extends AppCompatActivity {
         spn_category.setAdapter(adapter);
         if (getCategoriesByType().size() > 0) {
             transaction.setCategory(getCategoriesByType().get(0));
+            spn_category.setEnabled(true);
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "You have no categories.", Toast.LENGTH_SHORT).show();
+            spn_category.setEnabled(false);
         }
     }
 
@@ -292,14 +297,19 @@ public class AddTransactionActivity extends AppCompatActivity {
         spn_balances_to.setAdapter(adapter);
         if (balances.size() > 0) {
             transaction.setBalance_from(balances.get(0));
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "You have no balances.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private List<Category> getCategoriesByType() {
         if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_expense) {
             return expenseCategories;
-        } else {
+        } else if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_income){
             return incomeCategories;
+        } else {
+            return new ArrayList<>();
         }
     }
 }
