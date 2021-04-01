@@ -1,86 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    tools:context="ro.ase.csie.degree.authentication.RegisterActivity">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/login_register_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_name"
-            style="@style/text_style_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/text_name"
-            android:inputType="textEmailAddress" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/login_register_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_email"
-            style="@style/text_style_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/text_email"
-            android:inputType="textEmailAddress" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/login_register_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/register_password"
-            style="@style/text_style_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/text_password"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/login_redirect_to_login"
-        style="@style/text_style_redirect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16sp"
-        android:text="@string/text_redirect_login" />
-
-    <Button
-        android:id="@+id/register_create_account_btn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="32sp"
-        android:layout_marginRight="32sp"
-        android:text="@string/text_register" />
+        android:orientation="vertical"
+        tools:context="ro.ase.csie.degree.authentication.RegisterActivity">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/register_google_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="32sp"
-        android:layout_marginRight="32sp"
-        android:text="@string/btn_register_with_google" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/login_register_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_name"
+                style="@style/text_style_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_name"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/login_register_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_email"
+                style="@style/text_style_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_email"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/login_register_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_password"
+                style="@style/text_style_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_password"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/login_redirect_to_login"
+            style="@style/text_style_redirect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16sp"
+            android:text="@string/text_redirect_login" />
+
+        <Button
+            android:id="@+id/register_create_account_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="32sp"
+            android:layout_marginRight="32sp"
+            android:text="@string/text_register" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/register_google_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="32sp"
+            android:layout_marginRight="32sp"
+            android:text="@string/btn_register_with_google" />
+
+
+    </LinearLayout>
+</ScrollView>
