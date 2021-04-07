@@ -156,7 +156,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private View.OnClickListener contactEventListener() {
         return v -> {
-
+            Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+            startActivity(intent);
         };
     }
 }

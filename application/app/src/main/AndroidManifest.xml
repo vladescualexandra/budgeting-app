@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App">
+        <activity android:name=".settings.ContactActivity"></activity>
         <activity android:name=".settings.ConverterActivity" />
         <activity android:name=".settings.CurrencyActivity" />
         <activity android:name=".AddTransactionActivity" />
