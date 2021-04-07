@@ -12,6 +12,7 @@ import ro.ase.csie.degree.model.Account;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,5 +84,15 @@ public class EmailAuthentication {
                 Log.e("EmailAuthentication", "Task not successful.");
             }
         };
+    }
+
+    public void resetPassword(String email) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> Toast.makeText(context,
+                        "Email sent.",
+                        Toast.LENGTH_LONG).show())
+                .addOnFailureListener(e -> Toast.makeText(context,
+                        "Email failed.",
+                        Toast.LENGTH_LONG).show());
     }
 }

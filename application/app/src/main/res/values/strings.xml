@@ -72,5 +72,6 @@
     <string name="spinner_balance_from">Balance from</string>
     <string name="spinner_category">Category</string>
     <string name="spinner_balance_to">Balance to</string>
+    <string name="login_forgot_password">Forgot password?</string>
 
 </resources>
