@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -24,8 +25,11 @@ import ro.ase.csie.degree.charts.PieChartFragment;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
+import ro.ase.csie.degree.util.Streak;
 
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         setDefaultDate();
         filterTransactions();
 
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar.make(parentLayout,
+                Streak.days + " streak days.",
+                BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     private void setDefaultDate() {
@@ -95,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.main_tabs);
         tabLayout.addOnTabSelectedListener(changeTabEventListener());
 
-
         ib_chart_pie = findViewById(R.id.main_chart_pie);
         ib_chart_bar = findViewById(R.id.main_chart_bar);
         ib_chart_line = findViewById(R.id.main_chart_line);
@@ -104,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
         ib_chart_bar.setOnClickListener(changeChart(ChartType.BAR_CHART));
         ib_chart_line.setOnClickListener(changeChart(ChartType.LINE_CHART));
 
+        setExpandableListView();
+    }
+
+    private void setExpandableListView() {
         elv_transactions = findViewById(R.id.main_expandable_list_transactions);
         final int[] lastPosition = {-1};
         elv_transactions.setOnGroupExpandListener(groupPosition -> {
@@ -113,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
             }
             lastPosition[0] = groupPosition;
         });
-        setAdapter();
     }
 
 
@@ -223,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             if (result != null) {
                 transactionList.clear();
                 transactionList.addAll(result);
-                notifyAdapter();
+                setAdapter();
                 show();
             }
         };
@@ -244,14 +254,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        ExpandableListAdapter adapter = new TransactionExpandableAdapter(this, transactionList);
+        ExpandableListAdapter adapter = new TransactionExpandableAdapter(getApplicationContext(), transactionList);
         elv_transactions.setAdapter(adapter);
-    }
-
-    private void notifyAdapter() {
-//        TransactionExpandableAdapter adapter = (TransactionExpandableAdapter) elv_transactions.getExpandableListAdapter();
-//        adapter.notifyDataSetChanged();
-        setAdapter();
     }
 
     @Override
@@ -262,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void filterTransactions() {
         setFilterText();
         getTransactionsFromFirebase();
@@ -272,7 +275,6 @@ public class MainActivity extends AppCompatActivity {
         tv_date_filter.setText(DateDisplayType.display(dateDisplayType, day, month, year));
     }
 
-
     private void show() {
         this.fragment = ChartType.getFragment(selectedChartType, transactionList);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -280,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.main_fragment, this.fragment)
                 .commitAllowingStateLoss();
-
     }
 
     @Override

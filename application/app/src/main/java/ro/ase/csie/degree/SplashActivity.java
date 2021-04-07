@@ -1,8 +1,11 @@
 package ro.ase.csie.degree;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,6 +13,8 @@ import android.util.Log;
 
 import ro.ase.csie.degree.authentication.LoginActivity;
 import ro.ase.csie.degree.model.Account;
+import ro.ase.csie.degree.util.DateConverter;
+import ro.ase.csie.degree.util.Streak;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -31,8 +36,13 @@ public class SplashActivity extends AppCompatActivity {
             } else {
                 Account.retrieveAccount(getApplicationContext());
                 intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                Streak.handleStreak(getApplicationContext());
             }
             startActivity(intent);
         }, DISPLAY_DURATION);
     }
+
+
+
 }

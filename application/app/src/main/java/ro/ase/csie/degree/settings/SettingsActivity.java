@@ -21,12 +21,14 @@ import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
+import ro.ase.csie.degree.util.Streak;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private TextView tv_user_name;
     private TextView tv_user_email;
     private TextView tv_user_currency;
+    private TextView tv_streak;
     private ImageButton btn_back;
     private Button btn_currency;
     private Button btn_converter;
@@ -54,6 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         tv_user_name = findViewById(R.id.account_name);
         tv_user_email = findViewById(R.id.account_email);
         tv_user_currency = findViewById(R.id.account_currency);
+        tv_streak = findViewById(R.id.account_streak);
         btn_back = findViewById(R.id.settings_back);
         btn_currency = findViewById(R.id.settings_currency);
         btn_converter = findViewById(R.id.settings_converter);
@@ -75,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
             } else {
                 tv_user_currency.setText("");
             }
+            tv_streak.setText(Streak.days + " days streak");
     }
 
     private void initEventListeners() {
