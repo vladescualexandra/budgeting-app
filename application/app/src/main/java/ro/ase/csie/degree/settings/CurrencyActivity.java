@@ -19,13 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.SplashActivity;
+import ro.ase.csie.degree.async.AsyncTaskRunner;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Currency;
+import ro.ase.csie.degree.network.CurrenciesManager;
+import ro.ase.csie.degree.network.HttpManager;
 import ro.ase.csie.degree.util.CurrencyJSONParser;
 
 
@@ -44,6 +48,7 @@ public class CurrencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_currency);
 
         initComponents();
+        CurrenciesManager.getCurrenciesFromURL(currenciesCallback());
     }
 
     private void initComponents() {
@@ -52,10 +57,8 @@ public class CurrencyActivity extends AppCompatActivity {
 
         et_search = findViewById(R.id.currency_search);
         et_search.addTextChangedListener(textChangedEventListener());
-        currencyList = CurrencyJSONParser.getCurrencies();
 
         lv_currencies = findViewById(R.id.currency_list);
-        setAdapter();
         lv_currencies.setOnItemClickListener((parent, view, position, id) -> {
             currency = currencyList.get(position);
             Account.getInstance().setCurrency(currency);
@@ -75,6 +78,17 @@ public class CurrencyActivity extends AppCompatActivity {
                         R.layout.row_item_currency,
                         currencyList);
         lv_currencies.setAdapter(adapter);
+
+    }
+
+    private Callback<String> currenciesCallback() {
+        return result -> {
+            if (result != null) {
+                currencyList.clear();
+                currencyList = CurrencyJSONParser.getCurrencies(result);
+                setAdapter();
+            }
+        };
     }
 
 

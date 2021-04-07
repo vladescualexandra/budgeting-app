@@ -23,6 +23,7 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.AsyncTaskRunner;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Currency;
+import ro.ase.csie.degree.network.CurrenciesManager;
 import ro.ase.csie.degree.network.HttpManager;
 import ro.ase.csie.degree.util.CurrencyJSONParser;
 
@@ -37,20 +38,15 @@ public class ConverterActivity extends AppCompatActivity {
 
     private List<Currency> currencyList = new ArrayList<>();
 
-
-    private final String server = "https://free.currconv.com";
-    private final String api = "de2df0aa08b9a8e38beb";
-
-    private AsyncTaskRunner asyncTaskRunner = new AsyncTaskRunner();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_converter);
 
         initComponents();
-        setAdapters();
+        CurrenciesManager.getCurrenciesFromURL(currenciesCallback());
     }
+
 
     private void initComponents() {
         btn_back = findViewById(R.id.converter_back);
@@ -66,21 +62,16 @@ public class ConverterActivity extends AppCompatActivity {
     private View.OnClickListener convertEventListener() {
         return v -> {
             double amount_from = Double.parseDouble(et_amount_from.getText().toString().trim());
-            Currency currency_from = (Currency) spn_currency_from.getSelectedItem();
-            Currency currency_to = (Currency) spn_currency_to.getSelectedItem();
+            String from = ((Currency) spn_currency_from.getSelectedItem()).getCode();
+            String to = ((Currency) spn_currency_to.getSelectedItem()).getCode();
 
-            String url = buildURL(currency_from, currency_to);
-            getConversionFromURL(url, amount_from, currency_from.getCode(), currency_to.getCode());
+            CurrenciesManager
+                    .getConversionFromURL(from, to, conversionCallback(amount_from, from, to));
         };
     }
 
-    private void getConversionFromURL(String url, double amount_from, String from, String to) {
-        Callable<String> asyncOperation = new HttpManager(url);
-        Callback<String> mainThreadOperation = getMainThreadOperation(amount_from, from, to);
-        asyncTaskRunner.executeAsync(asyncOperation, mainThreadOperation);
-    }
 
-    private Callback<String> getMainThreadOperation(double amount_from, String from, String to) {
+    private Callback<String> conversionCallback(double amount_from, String from, String to) {
         return result -> {
             if (result != null) {
                 String json = from + "_" + to;
@@ -96,15 +87,16 @@ public class ConverterActivity extends AppCompatActivity {
         };
     }
 
-
-    private String buildURL(Currency currency_from, Currency currency_to) {
-        String url = server + "/api/v7/convert?q=" + currency_from.getCode() + "_" + currency_to.getCode() + "&compact=ultra&apiKey=" + api;
-        Log.e("buildURL", url);
-        return url;
+    private Callback<String> currenciesCallback() {
+        return result -> {
+            currencyList.clear();
+            currencyList = CurrencyJSONParser.getCurrencies(result);
+            setAdapters();
+        };
     }
 
+
     private void setAdapters() {
-        currencyList = CurrencyJSONParser.getCurrencies();
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
                         R.layout.row_spinner_simple,
