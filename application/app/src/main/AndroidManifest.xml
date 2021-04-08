@@ -3,6 +3,7 @@
     package="ro.ase.csie.degree">
 
     <uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App">
-        <activity android:name=".settings.ContactActivity"></activity>
+        <activity android:name=".settings.ContactActivity" />
         <activity android:name=".settings.ConverterActivity" />
         <activity android:name=".settings.CurrencyActivity" />
         <activity android:name=".AddTransactionActivity" />
@@ -30,6 +31,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".util.ReminderReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".util.ReminderIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>
