@@ -27,6 +27,7 @@ import ro.ase.csie.degree.util.Streak;
 public class SettingsActivity extends AppCompatActivity {
 
     public static final String REMINDERS = "reminders";
+    public static final String PREFS_SETTINGS = "settings";
     private TextView tv_user_name;
     private TextView tv_user_email;
     private TextView tv_user_currency;
@@ -53,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        settings = getSharedPreferences(PREFS_SETTINGS, Context.MODE_PRIVATE);
 
         initComponents();
         setAccount();
@@ -153,7 +154,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private View.OnClickListener templatesEventListener() {
         return v -> {
-
+            Intent intent = new Intent(getApplicationContext(), TemplatesActivity.class);
+            startActivity(intent);
         };
     }
 

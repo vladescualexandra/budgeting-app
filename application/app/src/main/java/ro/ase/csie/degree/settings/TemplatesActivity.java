@@ -72,7 +72,7 @@ public class TemplatesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CREATE_TEMPLATE && data != null) {
-                Transaction template = (Transaction) data.getSerializableExtra(AddTransactionActivity.NEW_TEMPLATE);
+                Transaction template = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
                 Toast.makeText(getApplicationContext(),
                         REQUEST_CODE_CREATE_TEMPLATE + ": " + template.toString(),
                         Toast.LENGTH_LONG).show();

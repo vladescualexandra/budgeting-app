@@ -89,12 +89,14 @@ public class Transaction extends FirebaseObject implements Parcelable {
         return "Transaction{" +
                 "details='" + details + '\'' +
                 ", category=" + category +
-                ", balance=" + balance_from +
+                ", balance_from=" + balance_from +
+                ", balance_to=" + balance_to +
                 ", amount=" + amount +
                 ", date=" + date +
+                ", id='" + id + '\'' +
+                ", user='" + user + '\'' +
                 '}';
     }
-
 
     protected Transaction(Parcel in) {
         this.id = in.readString();
