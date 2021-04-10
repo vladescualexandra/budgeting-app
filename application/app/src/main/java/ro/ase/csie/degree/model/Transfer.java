@@ -2,6 +2,8 @@ package ro.ase.csie.degree.model;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.services.BalanceService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 
 public class Transfer extends Transaction {
 
@@ -17,12 +19,16 @@ public class Transfer extends Transaction {
         this.category.setColor(R.color.rally_blue);
     }
 
-    public static void saveTransfer(FirebaseService firebaseService, Transfer transfer) {
+    public static void saveTransfer(Transfer transfer) {
         transfer.getBalance_from().withdraw(transfer.getAmount());
         transfer.getBalance_to().deposit(transfer.getAmount());
-        firebaseService.upsert(transfer);
-        firebaseService.upsert(transfer.getBalance_from());
-        firebaseService.upsert(transfer.getBalance_to());
+
+        TransactionService transactionService = new TransactionService();
+        transactionService.upsert(transfer);
+
+        BalanceService balanceService = new BalanceService();
+        balanceService.upsert(transfer.getBalance_from());
+        balanceService.upsert(transfer.getBalance_to());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package ro.ase.csie.degree.model;
 
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.services.BalanceService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 
 public class Expense extends Transaction{
 
@@ -8,9 +10,13 @@ public class Expense extends Transaction{
         super(transaction);
     }
 
-    public static void saveExpense(FirebaseService firebaseService, Expense expense) {
+    public static void saveExpense(Expense expense) {
         expense.getBalance_from().withdraw(expense.getAmount());
-        firebaseService.upsert(expense);
-        firebaseService.upsert(expense.getBalance_from());
+
+        TransactionService transactionService = new TransactionService();
+        transactionService.upsert(expense);
+
+        BalanceService balanceService = new BalanceService();
+        balanceService.upsert(expense.getBalance_from());
     }
 }

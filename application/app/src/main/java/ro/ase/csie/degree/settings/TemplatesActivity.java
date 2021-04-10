@@ -10,14 +10,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ro.ase.csie.degree.AddTransactionActivity;
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.firebase.TemplateService;
+import ro.ase.csie.degree.async.Callback;
+import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.model.Transaction;
 
 public class TemplatesActivity extends AppCompatActivity {
@@ -35,6 +35,7 @@ public class TemplatesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_templates);
 
         initComponents();
+        getTemplates();
     }
 
     private void initComponents() {
@@ -42,13 +43,29 @@ public class TemplatesActivity extends AppCompatActivity {
         ib_add = findViewById(R.id.templates_add);
         lv_templates = findViewById(R.id.templates_list);
 
-        ib_back.setOnClickListener(v-> finish());
+        ib_back.setOnClickListener(v -> finish());
         ib_add.setOnClickListener(addTemplateEventListener());
 
         setAdapter();
         lv_templates.setOnItemClickListener(useTemplateEventListener());
         lv_templates.setOnItemLongClickListener(deleteTemplateListener());
     }
+
+    private void getTemplates() {
+        TemplateService templateService = new TemplateService();
+        templateService.updateTemplatesUI(getTemplatesCallback());
+    }
+
+    private Callback<List<Transaction>> getTemplatesCallback() {
+        return result -> {
+            if (result != null) {
+                templates.clear();
+                templates.addAll(result);
+                notifyAdapter();
+            }
+        };
+    }
+
 
     private void setAdapter() {
         ArrayAdapter<Transaction> adapter = new ArrayAdapter<>
@@ -80,8 +97,7 @@ public class TemplatesActivity extends AppCompatActivity {
             if (requestCode == REQUEST_CODE_CREATE_TEMPLATE && data != null) {
                 Transaction template = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
                 TemplateService templateService = new TemplateService();
-                templateService.upsertTemplate(template);
-                templates.add(template);
+                templateService.upsert(template);
                 notifyAdapter();
             }
         }
@@ -104,8 +120,6 @@ public class TemplatesActivity extends AppCompatActivity {
             }
         };
     }
-
-
 
 
 }

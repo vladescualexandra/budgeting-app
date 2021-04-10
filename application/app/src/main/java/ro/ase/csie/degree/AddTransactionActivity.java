@@ -24,6 +24,9 @@ import java.util.List;
 
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.services.BalanceService;
+import ro.ase.csie.degree.firebase.services.CategoryService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Expense;
@@ -72,9 +75,11 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void retrieveDataFromFirebase() {
-        firebaseService = FirebaseService.getInstance();
-        firebaseService.updateCategoriesUI(updateCategoriesCallback());
-        firebaseService.updateBalancesUI(updateBalancesCallback());
+        CategoryService categoryService = new CategoryService();
+        categoryService.updateCategoriesUI(updateCategoriesCallback());
+
+        BalanceService balanceService = new BalanceService();
+        balanceService.updateBalancesUI(updateBalancesCallback());
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import ro.ase.csie.degree.R;
 
+import ro.ase.csie.degree.firebase.services.CategoryService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
@@ -35,7 +36,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private List<Category> expenses_categories = new ArrayList<>();
     private List<Category> income_categories = new ArrayList<>();
 
-    private FirebaseService<Category> firebaseService;
+    private final CategoryService categoryService = new CategoryService();
     private boolean isExpense = true;
 
     @Override
@@ -65,9 +66,9 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (menu_categories.getMenu().getItem(0).isChecked()) {
-                    firebaseService.delete(expenses_categories.get(position));
+                    categoryService.delete(expenses_categories.get(position));
                 } else {
-                    firebaseService.delete(income_categories.get(position));
+                    categoryService.delete(income_categories.get(position));
                 }
                 notifyAdapter();
                 return true;
@@ -76,8 +77,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void getCategoriesFromFirebase() {
-        firebaseService = FirebaseService.getInstance();
-        firebaseService.updateCategoriesUI(updateCategoriesCallback());
+        categoryService.updateCategoriesUI(updateCategoriesCallback());
     }
 
     private Callback<List<Category>> updateCategoriesCallback() {
@@ -148,7 +148,7 @@ public class CategoriesActivity extends AppCompatActivity {
             Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
             category.setType(isExpense ? TransactionType.EXPENSE : TransactionType.INCOME);
             category.setUser(Account.getInstance().getId());
-            firebaseService.upsert(category);
+            categoryService.upsert(category);
             notifyAdapter();
         }
     }

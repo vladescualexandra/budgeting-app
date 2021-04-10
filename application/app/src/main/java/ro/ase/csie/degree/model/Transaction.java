@@ -8,6 +8,7 @@ import java.util.Date;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.util.DateConverter;
 
 public class Transaction extends FirebaseObject implements Parcelable {
@@ -142,16 +143,16 @@ public class Transaction extends FirebaseObject implements Parcelable {
         dest.writeString(dateString);
     }
 
-    public static void saveTransaction(FirebaseService firebaseService, Transaction transaction) {
+    public static void saveTransaction(Transaction transaction) {
         switch (transaction.getCategory().getType()) {
             case EXPENSE:
-                Expense.saveExpense(firebaseService, new Expense(transaction));
+                Expense.saveExpense(new Expense(transaction));
                 break;
             case INCOME:
-                Income.saveIncome(firebaseService, new Income(transaction));
+                Income.saveIncome(new Income(transaction));
                 break;
             case TRANSFER:
-                Transfer.saveTransfer(firebaseService, new Transfer(transaction));
+                Transfer.saveTransfer(new Transfer(transaction));
         }
     }
 

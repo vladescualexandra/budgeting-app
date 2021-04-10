@@ -3,7 +3,6 @@ package ro.ase.csie.degree.model;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +15,7 @@ import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseObject;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.services.AccountService;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -31,7 +31,7 @@ public class Account extends FirebaseObject implements Serializable {
     private String email;
     private Currency currency;
 
-    private static FirebaseService firebaseService = FirebaseService.getInstance();
+    private static AccountService accountService = new AccountService();
 
     private Account() {
         super(null, null);
@@ -64,24 +64,24 @@ public class Account extends FirebaseObject implements Serializable {
     }
 
     public static void updateAccount() {
-        firebaseService.upsert(account);
+        accountService.upsert(account);
     }
 
     public static void retrieveAccount(Context context) {
-        firebaseService.getAccount(getAccountCallback(context));
+        accountService.getAccount(getAccountCallback(context));
     }
 
     public static void authenticate(Context context, String email) {
-        firebaseService.getAccount(getAccountCallback(context), email);
+        accountService.getAccount(getAccountCallback(context), email);
     }
 
     public static void createAccount(Context context, String name, String email) {
-        account = (Account) firebaseService.upsert(new Account(name, email));
+        account = accountService.upsert(new Account(name, email));
         enterAccount(context);
     }
 
     public static void googleAuthentication(Context context, GoogleSignInAccount gsa) {
-        firebaseService.getAccount(getGoogleAccountCallback(context, gsa), gsa.getEmail());
+        accountService.getAccount(getGoogleAccountCallback(context, gsa), gsa.getEmail());
     }
 
     public static void signOut(Context context) {
@@ -119,7 +119,6 @@ public class Account extends FirebaseObject implements Serializable {
         return result -> {
             if (result != null) {
                 getAccount(context, result);
-            } else {
             }
         };
     }
@@ -138,8 +137,7 @@ public class Account extends FirebaseObject implements Serializable {
             if (result != null) {
                 getAccount(context, result);
             } else {
-                account = (Account) firebaseService.upsert(new Account(gsa.getDisplayName(), gsa.getEmail()));
-//                getAccount(context, account);
+                account = accountService.upsert(new Account(gsa.getDisplayName(), gsa.getEmail()));
             }
         };
     }

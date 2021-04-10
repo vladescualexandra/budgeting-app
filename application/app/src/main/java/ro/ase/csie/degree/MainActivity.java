@@ -22,6 +22,9 @@ import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.charts.ChartType;
 import ro.ase.csie.degree.charts.PieChartFragment;
+import ro.ase.csie.degree.firebase.services.BalanceService;
+import ro.ase.csie.degree.firebase.services.CategoryService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Expense;
 import ro.ase.csie.degree.model.Income;
 import ro.ase.csie.degree.model.Transaction;
@@ -60,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Transaction> transactionList = new ArrayList<>();
 
-    private FirebaseService firebaseService;
+    private TransactionService transactionService = new TransactionService();
+    private BalanceService balanceService = new BalanceService();
+    private CategoryService categoryService = new CategoryService();
 
     private int day, month, year;
 
@@ -228,8 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTransactionsFromFirebase() {
         Date date = DateConverter.toDate(day, month, year);
-        firebaseService = FirebaseService.getInstance();
-        firebaseService.updateTransactionsUI(updateTransactionsCallback(), dateDisplayType, date);
+        transactionService.updateTransactionsUI(updateTransactionsCallback(), dateDisplayType, date);
     }
 
     private Callback<List<Transaction>> updateTransactionsCallback() {
@@ -272,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionActivity.TRANSACTION);
-            Transaction.saveTransaction(firebaseService, transaction);
+            Transaction.saveTransaction(transaction);
             notifyAdapter();
         }
     }

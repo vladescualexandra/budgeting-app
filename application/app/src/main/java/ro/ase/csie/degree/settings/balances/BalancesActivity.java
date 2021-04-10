@@ -17,6 +17,7 @@ import java.util.List;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
+import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.adapters.BalanceAdapter;
 import ro.ase.csie.degree.model.Currency;
@@ -31,7 +32,7 @@ public class BalancesActivity extends AppCompatActivity {
 
     private Currency currency;
     private List<Balance> balanceList = new ArrayList<>();
-    private FirebaseService<Balance> firebaseService;
+    private BalanceService balanceService = new BalanceService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,7 @@ public class BalancesActivity extends AppCompatActivity {
     }
 
     private void getBalancesFromFirebase() {
-        firebaseService = FirebaseService.getInstance();
-        firebaseService.updateBalancesUI(updateBalancesCallback());
+        balanceService.updateBalancesUI(updateBalancesCallback());
     }
 
     private Callback<List<Balance>> updateBalancesCallback() {
@@ -71,7 +71,7 @@ public class BalancesActivity extends AppCompatActivity {
 
     private AdapterView.OnItemLongClickListener deleteBalanceEventListener() {
         return (parent, view, position, id) -> {
-            firebaseService.delete(balanceList.get(position));
+            balanceService.delete(balanceList.get(position));
             notifyAdapter();
             return true;
         };
@@ -89,7 +89,7 @@ public class BalancesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_BALANCE & data != null) {
             Balance balance = (Balance) data.getSerializableExtra(AddBalanceActivity.NEW_BALANCE);
-            firebaseService.upsert(balance);
+            balanceService.upsert(balance);
         }
     }
 
