@@ -2,13 +2,11 @@ package ro.ase.csie.degree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,14 +24,10 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.firebase.services.CategoryService;
-import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.model.Expense;
-import ro.ase.csie.degree.model.Income;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
-import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.InputValidation;
 

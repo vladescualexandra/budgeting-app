@@ -16,7 +16,6 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
-import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.util.DateConverter;
 
@@ -29,9 +28,9 @@ public class TransactionService {
     }
 
 
-    public Transaction upsert(Transaction transaction) {
+    public void upsert(Transaction transaction) {
         if (transaction == null) {
-            return null;
+            return;
         }
 
         if (transaction.getId() == null || transaction.getId().trim().isEmpty()) {
@@ -47,7 +46,6 @@ public class TransactionService {
                 .child(transaction.getId())
                 .setValue(transaction);
 
-        return transaction;
     }
 
     public void delete(Transaction transaction) {

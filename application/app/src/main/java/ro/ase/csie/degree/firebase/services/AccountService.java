@@ -14,7 +14,6 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Account;
-import ro.ase.csie.degree.model.Transaction;
 
 public class AccountService {
 

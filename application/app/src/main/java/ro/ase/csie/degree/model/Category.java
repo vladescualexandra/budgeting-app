@@ -46,17 +46,4 @@ public class Category extends FirebaseObject implements Serializable {
         return this.name;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        Category category = (Category) obj;
-        if (!this.getType().equals(category.getType())) {
-            return false;
-        }
-        if (!this.getName().equals(category.getName())) {
-            return false;
-        }
-        return true;
-    }
-
-
 }

@@ -2,12 +2,10 @@ package ro.ase.csie.degree.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -17,19 +15,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.concurrent.Callable;
 
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.SplashActivity;
-import ro.ase.csie.degree.async.AsyncTaskRunner;
 import ro.ase.csie.degree.async.Callback;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Currency;
 import ro.ase.csie.degree.network.CurrenciesManager;
-import ro.ase.csie.degree.network.HttpManager;
 import ro.ase.csie.degree.util.CurrencyJSONParser;
 
 

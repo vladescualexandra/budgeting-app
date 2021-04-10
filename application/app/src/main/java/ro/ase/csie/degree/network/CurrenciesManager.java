@@ -1,12 +1,9 @@
 package ro.ase.csie.degree.network;
 
-import android.util.Log;
-
 import java.util.concurrent.Callable;
 
 import ro.ase.csie.degree.async.AsyncTaskRunner;
 import ro.ase.csie.degree.async.Callback;
-import ro.ase.csie.degree.model.Currency;
 
 public class CurrenciesManager {
 

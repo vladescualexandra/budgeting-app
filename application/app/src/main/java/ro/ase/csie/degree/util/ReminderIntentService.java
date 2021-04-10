@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationManagerCompat;
 
-import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.settings.SettingsActivity;
 

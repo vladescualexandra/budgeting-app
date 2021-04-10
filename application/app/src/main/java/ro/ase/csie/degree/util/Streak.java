@@ -2,7 +2,6 @@ package ro.ase.csie.degree.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,9 +36,8 @@ public class Streak {
         return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 
-    public static int getDays() {
+    public static void getDays() {
         days = daysBetween(first_day, last_day);
-        return days;
     }
 
     public static void handleStreak(Context context) {

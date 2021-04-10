@@ -2,13 +2,10 @@ package ro.ase.csie.degree.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ExpandableListAdapter;
 
 import java.util.Date;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
-import ro.ase.csie.degree.firebase.FirebaseService;
-import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.util.DateConverter;
 
 public class Transaction extends FirebaseObject implements Parcelable {

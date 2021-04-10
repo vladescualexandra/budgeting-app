@@ -14,7 +14,6 @@ import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.services.CategoryService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.async.Callback;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
@@ -62,17 +61,14 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private AdapterView.OnItemLongClickListener deleteCategoryEventListener() {
-        return new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (menu_categories.getMenu().getItem(0).isChecked()) {
-                    categoryService.delete(expenses_categories.get(position));
-                } else {
-                    categoryService.delete(income_categories.get(position));
-                }
-                notifyAdapter();
-                return true;
+        return (parent, view, position, id) -> {
+            if (menu_categories.getMenu().getItem(0).isChecked()) {
+                categoryService.delete(expenses_categories.get(position));
+            } else {
+                categoryService.delete(income_categories.get(position));
             }
+            notifyAdapter();
+            return true;
         };
     }
 

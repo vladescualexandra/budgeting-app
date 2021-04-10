@@ -15,7 +15,6 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Balance;
-import ro.ase.csie.degree.model.Transaction;
 
 public class BalanceService {
 
@@ -26,9 +25,9 @@ public class BalanceService {
     }
 
 
-    public Balance upsert(Balance balance) {
+    public void upsert(Balance balance) {
         if (balance == null) {
-            return null;
+            return;
         }
 
         if (balance.getId() == null || balance.getId().trim().isEmpty()) {
@@ -44,7 +43,6 @@ public class BalanceService {
                 .child(balance.getId())
                 .setValue(balance);
 
-        return balance;
     }
 
     public void delete(Balance balance) {

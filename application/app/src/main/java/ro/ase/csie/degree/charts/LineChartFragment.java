@@ -1,7 +1,6 @@
 package ro.ase.csie.degree.charts;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
-import ro.ase.csie.degree.util.DateConverter;
 
 public class LineChartFragment extends ChartFragment {
 

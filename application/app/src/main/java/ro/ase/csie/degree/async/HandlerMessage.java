@@ -1,7 +1,5 @@
 package ro.ase.csie.degree.async;
 
-import org.json.JSONException;
-
 public class HandlerMessage<R> implements Runnable {
 
     private final Callback<R> mainThreadOperation;

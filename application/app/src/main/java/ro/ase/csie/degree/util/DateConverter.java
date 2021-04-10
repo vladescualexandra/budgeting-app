@@ -1,16 +1,9 @@
 package ro.ase.csie.degree.util;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
-import java.time.format.TextStyle;
 import java.util.Date;
-import java.util.Locale;
 
 import ro.ase.csie.degree.firebase.DateDisplayType;
 

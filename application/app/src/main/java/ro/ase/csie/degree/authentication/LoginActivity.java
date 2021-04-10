@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;

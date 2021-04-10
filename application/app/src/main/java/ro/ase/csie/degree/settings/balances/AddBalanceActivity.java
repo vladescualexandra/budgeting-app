@@ -1,23 +1,16 @@
 package ro.ase.csie.degree.settings.balances;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.List;
-
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Balance;
-import ro.ase.csie.degree.model.Currency;
-import ro.ase.csie.degree.util.CurrencyJSONParser;
 import ro.ase.csie.degree.util.InputValidation;
 
 public class AddBalanceActivity extends AppCompatActivity {

@@ -1,16 +1,10 @@
 package ro.ase.csie.degree.util;
 
 import android.content.Context;
-import android.text.Editable;
 import android.util.Patterns;
 
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.model.Balance;
-import ro.ase.csie.degree.model.Expense;
-import ro.ase.csie.degree.model.Income;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.model.TransactionType;
-import ro.ase.csie.degree.model.Transfer;
 
 import com.google.android.material.textfield.TextInputEditText;
 

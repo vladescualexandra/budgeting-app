@@ -15,7 +15,6 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.Table;
 import ro.ase.csie.degree.model.Category;
-import ro.ase.csie.degree.model.Transaction;
 
 public class CategoryService {
 
@@ -26,9 +25,9 @@ public class CategoryService {
     }
 
 
-    public Category upsert(Category category) {
+    public void upsert(Category category) {
         if (category == null) {
-            return null;
+            return;
         }
 
         if (category.getId() == null || category.getId().trim().isEmpty()) {
@@ -44,7 +43,6 @@ public class CategoryService {
                 .child(category.getId())
                 .setValue(category);
 
-        return category;
     }
 
     public void delete(Category category) {

@@ -4,8 +4,6 @@ import android.os.Handler;
 
 import java.util.concurrent.Callable;
 
-import ro.ase.csie.degree.R;
-
 public class RunnableTask<R> implements Runnable {
 
     private final Callable<R> asyncOperation;

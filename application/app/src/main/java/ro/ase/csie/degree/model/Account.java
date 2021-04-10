@@ -14,7 +14,6 @@ import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseObject;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.services.AccountService;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -106,6 +105,7 @@ public class Account extends FirebaseObject implements Serializable {
     @NonNull
     @Override
     protected Object clone() throws CloneNotSupportedException {
+        Object o = super.clone();
         Account account = new Account();
         account.id = this.id;
         account.user = this.user;

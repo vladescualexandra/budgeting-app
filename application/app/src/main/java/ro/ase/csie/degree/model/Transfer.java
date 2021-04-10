@@ -1,7 +1,6 @@
 package ro.ase.csie.degree.model;
 
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.firebase.services.TransactionService;
 

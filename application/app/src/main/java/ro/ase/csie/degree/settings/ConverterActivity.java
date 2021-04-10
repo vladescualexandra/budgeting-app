@@ -3,7 +3,6 @@ package ro.ase.csie.degree.settings;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,14 +16,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import ro.ase.csie.degree.R;
-import ro.ase.csie.degree.async.AsyncTaskRunner;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Currency;
 import ro.ase.csie.degree.network.CurrenciesManager;
-import ro.ase.csie.degree.network.HttpManager;
 import ro.ase.csie.degree.util.CurrencyJSONParser;
 
 public class ConverterActivity extends AppCompatActivity {

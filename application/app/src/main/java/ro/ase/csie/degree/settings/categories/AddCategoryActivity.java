@@ -3,7 +3,6 @@ package ro.ase.csie.degree.settings.categories;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -80,7 +79,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     }
 
 
-    public List<Integer> getColors() {
+    public void getColors() {
         colors = new ArrayList<>();
         colors.add(R.color.color_0);
         colors.add(R.color.color_1);
@@ -110,6 +109,5 @@ public class AddCategoryActivity extends AppCompatActivity {
         colors.add(R.color.color_25);
         colors.add(R.color.color_26);
         colors.add(R.color.color_27);
-        return colors;
     }
 }

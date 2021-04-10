@@ -25,9 +25,9 @@ public class TemplateService {
     }
 
 
-    public Transaction upsert(Transaction template) {
+    public void upsert(Transaction template) {
         if (template == null) {
-            return null;
+            return;
         }
 
         if (template.getId() == null || template.getId().trim().isEmpty()) {
@@ -43,7 +43,6 @@ public class TemplateService {
                 .child(template.getId())
                 .setValue(template);
 
-        return template;
     }
 
 

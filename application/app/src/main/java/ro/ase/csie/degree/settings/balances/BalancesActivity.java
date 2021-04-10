@@ -16,7 +16,6 @@ import java.util.List;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.adapters.BalanceAdapter;
