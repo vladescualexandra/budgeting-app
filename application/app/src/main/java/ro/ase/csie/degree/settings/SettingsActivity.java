@@ -1,22 +1,11 @@
 package ro.ase.csie.degree.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -29,12 +18,10 @@ import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
-import ro.ase.csie.degree.async.Callback;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.ReminderReceiver;
+import ro.ase.csie.degree.util.Notifications;
 import ro.ase.csie.degree.util.Streak;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -57,7 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_contact;
     private Button btn_sign_out;
 
-    public static final String CHANNEL_ID = "CHANNEL_ID";
 
     SharedPreferences settings;
     SharedPreferences.Editor settingsEditor;
@@ -120,7 +106,11 @@ public class SettingsActivity extends AppCompatActivity {
         switch_reminder.setOnCheckedChangeListener(remindersEventListener());
 
         btn_contact.setOnClickListener(contactEventListener());
-        btn_sign_out.setOnClickListener(v -> {
+        btn_sign_out.setOnClickListener(signOutClickListener());
+    }
+
+    private View.OnClickListener signOutClickListener() {
+        return v -> {
             Account.signOut(getApplicationContext());
 
             GoogleAuthentication googleAuthentication = new GoogleAuthentication(getApplicationContext());
@@ -128,7 +118,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
             startActivity(intent);
-        });
+        };
     }
 
 
@@ -181,11 +171,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     private CompoundButton.OnCheckedChangeListener remindersEventListener() {
         return (buttonView, isChecked) -> {
-            PendingIntent pendingIntent = getPendingIntent(buildNotification());
             if (isChecked) {
-                scheduleNotification(pendingIntent);
+                Notifications.scheduleNotification(this);
             } else {
-                cancelNotification(pendingIntent);
+                Notifications.cancelNotification(this);
             }
 
             settingsEditor = settings.edit();
@@ -201,35 +190,5 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
-    private Notification buildNotification() {
-        return new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-                .setContentTitle("Making transactions?")
-                .setContentText("Don't forget to budget!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-                .build();
-    }
-
-    private PendingIntent getPendingIntent(Notification notification) {
-        Intent notificationIntent = new Intent(this, ReminderReceiver.class);
-        notificationIntent.putExtra(ReminderReceiver.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(ReminderReceiver.NOTIFICATION, notification);
-        return PendingIntent.getBroadcast(this,
-                0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    private void scheduleNotification(PendingIntent pendingIntent) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        assert alarmManager != null;
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, 0,
-                AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
-
-    private void cancelNotification(PendingIntent pendingIntent) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        assert alarmManager != null;
-        alarmManager.cancel(pendingIntent);
-    }
 
 }
