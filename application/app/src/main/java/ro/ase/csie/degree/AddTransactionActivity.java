@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -37,6 +38,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
 
     public static final String NEW_TEMPLATE = "new_template";
+    public static final String TRANSACTION = "transaction";
     private RadioGroup rg_type;
     private TextInputEditText tiet_details;
     private TextInputEditText tiet_amount;
@@ -134,25 +136,35 @@ public class AddTransactionActivity extends AppCompatActivity {
         btn_date.setOnClickListener(dateDialogEventListener());
         btn_save.setOnClickListener(saveTransactionEventListener());
 
-
+        spn_balances_from.setVisibility(View.VISIBLE);
+        spn_category.setVisibility(View.VISIBLE);
+        spn_balances_to.setVisibility(View.INVISIBLE);
+        transaction.getCategory().setType(TransactionType.EXPENSE);
     }
 
     private RadioGroup.OnCheckedChangeListener changeTypeEventListener() {
         return (group, checkedId) -> {
             switch (checkedId) {
                 case R.id.add_transaction_type_expense:
+                    spn_balances_from.setVisibility(View.VISIBLE);
+                    spn_category.setVisibility(View.VISIBLE);
+                    spn_balances_to.setVisibility(View.INVISIBLE);
                     transaction.getCategory().setType(TransactionType.EXPENSE);
                     break;
                 case R.id.add_transaction_type_income:
+                    spn_balances_from.setVisibility(View.INVISIBLE);
+                    spn_category.setVisibility(View.VISIBLE);
+                    spn_balances_to.setVisibility(View.VISIBLE);
                     transaction.getCategory().setType(TransactionType.INCOME);
                     break;
-                default:
+                case R.id.add_transaction_type_transfer:
+                    spn_balances_from.setVisibility(View.VISIBLE);
+                    spn_category.setVisibility(View.INVISIBLE);
+                    spn_balances_to.setVisibility(View.VISIBLE);
                     transaction.getCategory().setType(TransactionType.TRANSFER);
                     break;
             }
 
-            spn_category.setEnabled(checkedId != R.id.add_transaction_type_transfer);
-            spn_balances_to.setEnabled(checkedId == R.id.add_transaction_type_transfer);
             setCategoryAdapter();
         };
     }
@@ -185,53 +197,27 @@ public class AddTransactionActivity extends AppCompatActivity {
             buildTransaction();
 
             if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_expense) {
-                Expense expense = new Expense(transaction);
-                if (InputValidation.expenseValidation(expense)) {
-                    saveExpense(expense);
+                if (InputValidation.expenseValidation(transaction)) {
                     close();
                 }
 
             } else if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_income) {
-                Income income = new Income(transaction);
-                if (InputValidation.incomeValidation(income)) {
-                    saveIncome(income);
+                if (InputValidation.incomeValidation(transaction)) {
                     close();
                 }
 
             } else {
-                Transfer transfer = buildTransfer(transaction);
-                if (!InputValidation.transferValidation(transfer)) {
+                if (!InputValidation.transferValidation(transaction)) {
                     Toast.makeText(getApplicationContext(),
                             "Invalid transfer.",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    saveTransfer(transfer);
                     close();
                 }
             }
         };
 
     }
-    private void saveExpense(Expense expense) {
-        expense.getBalance_from().withdraw(expense.getAmount());
-        firebaseService.upsert(expense);
-        firebaseService.upsert(expense.getBalance_from());
-    }
-
-    private void saveIncome(Income income) {
-        income.getBalance_from().deposit(income.getAmount());
-        firebaseService.upsert(income);
-        firebaseService.upsert(income.getBalance_from());
-    }
-
-    private void saveTransfer(Transfer transfer) {
-        transfer.getBalance_from().withdraw(transfer.getAmount());
-        transfer.getBalance_to().deposit(transfer.getAmount());
-        firebaseService.upsert(transfer);
-        firebaseService.upsert(transfer.getBalance_from());
-        firebaseService.upsert(transfer.getBalance_to());
-    }
-
 
     private void buildTransaction() {
         if (!tiet_details.getText().toString().trim().isEmpty()) {
@@ -252,21 +238,9 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
     }
 
-    private Transfer buildTransfer(Transaction transaction) {
-        Transfer transfer = new Transfer();
-        transfer.setDate(transaction.getDate());
-        transfer.setDetails(transaction.getDetails());
-        transfer.setAmount(transaction.getAmount());
-        transfer.setBalance_from(transaction.getBalance_from());
-
-        Balance balance_to = (Balance) spn_balances_to.getSelectedItem();
-        transfer.setBalance_to(balance_to);
-
-        return transfer;
-    }
-
     private void close() {
         Intent intent = getIntent();
+        intent.putExtra(TRANSACTION, (Parcelable) transaction);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -278,14 +252,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 R.layout.row_spinner_simple,
                                 getCategoriesByType());
         spn_category.setAdapter(adapter);
-        if (getCategoriesByType().size() > 0) {
-            transaction.setCategory(getCategoriesByType().get(0));
-            spn_category.setEnabled(true);
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "You have no categories.", Toast.LENGTH_SHORT).show();
-            spn_category.setEnabled(false);
-        }
+        spn_category.setPrompt("Categories");
     }
 
     private void setBalanceAdapter() {
@@ -296,18 +263,14 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 balances);
         spn_balances_from.setAdapter(adapter);
         spn_balances_to.setAdapter(adapter);
-        if (balances.size() > 0) {
-            transaction.setBalance_from(balances.get(0));
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "You have no balances.", Toast.LENGTH_SHORT).show();
-        }
+        spn_balances_from.setPrompt("Balance from");
+        spn_balances_to.setPrompt("Balance to");
     }
 
     private List<Category> getCategoriesByType() {
         if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_expense) {
             return expenseCategories;
-        } else if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_income){
+        } else if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_income) {
             return incomeCategories;
         } else {
             return new ArrayList<>();

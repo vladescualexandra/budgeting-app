@@ -75,41 +75,26 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/text_style_input"
-        android:text="@string/spinner_balance_from"/>
-
     <Spinner
         android:id="@+id/add_transaction_balance_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16sp"
+        android:spinnerMode="dialog"
          />
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/text_style_input"
-        android:text="@string/spinner_category"/>
     <Spinner
         android:id="@+id/add_transaction_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
         android:padding="16sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/text_style_input"
-        android:text="@string/spinner_balance_to"/>
 
     <Spinner
         android:id="@+id/add_transaction_balance_to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
         android:padding="16sp" />
 
     <Button

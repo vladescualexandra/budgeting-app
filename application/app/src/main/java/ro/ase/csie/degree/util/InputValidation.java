@@ -67,15 +67,17 @@ public class InputValidation {
 
     }
 
-    public static boolean expenseValidation(Expense expense) {
+    public static boolean expenseValidation(Transaction expense) {
+        expense.setBalance_to(null);
         return expense.getAmount() > 0 && expense.getBalance_from().getAvailable_amount() >= expense.getAmount();
     }
 
-    public static boolean incomeValidation(Income income) {
+    public static boolean incomeValidation(Transaction income) {
+        income.setBalance_from(null);
         return income.getAmount() > 0;
     }
 
-    public static boolean transferValidation(Transfer transfer) {
+    public static boolean transferValidation(Transaction transfer) {
         return !transfer.getBalance_from().getId().equals(transfer.getBalance_to().getId())
                 && transfer.getAmount() > 0
                 && transfer.getBalance_from().getAvailable_amount() >= transfer.getAmount();
