@@ -17,6 +17,7 @@ import java.util.List;
 
 import ro.ase.csie.degree.AddTransactionActivity;
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.firebase.TemplateService;
 import ro.ase.csie.degree.model.Transaction;
 
 public class TemplatesActivity extends AppCompatActivity {
@@ -57,6 +58,11 @@ public class TemplatesActivity extends AppCompatActivity {
         lv_templates.setAdapter(adapter);
     }
 
+    private void notifyAdapter() {
+        ArrayAdapter adapter = (ArrayAdapter) lv_templates.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
     private View.OnClickListener addTemplateEventListener() {
         return new View.OnClickListener() {
             @Override
@@ -73,9 +79,10 @@ public class TemplatesActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CREATE_TEMPLATE && data != null) {
                 Transaction template = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
-                Toast.makeText(getApplicationContext(),
-                        REQUEST_CODE_CREATE_TEMPLATE + ": " + template.toString(),
-                        Toast.LENGTH_LONG).show();
+                TemplateService templateService = new TemplateService();
+                templateService.upsertTemplate(template);
+                templates.add(template);
+                notifyAdapter();
             }
         }
     }

@@ -3,10 +3,10 @@ package ro.ase.csie.degree.firebase;
 public enum Table {
 
     USERS ("users"),
-    BUDGET ("budget"),
     CATEGORIES ("categories"),
     BALANCES ("balances"),
-    TRANSACTIONS ("transactions");
+    TRANSACTIONS ("transactions"),
+    TEMPLATES ("templates");
 
     private final String table;
 

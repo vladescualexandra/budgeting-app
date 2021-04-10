@@ -34,6 +34,10 @@ public class FirebaseService<T extends FirebaseObject> {
     private static FirebaseService firebaseService;
     private Query query;
 
+    public DatabaseReference getDatabase() {
+        return database;
+    }
+
 
     private FirebaseService() {
         database = FirebaseDatabase.getInstance().getReference();
