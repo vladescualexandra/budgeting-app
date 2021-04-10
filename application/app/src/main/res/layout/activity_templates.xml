@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settings.TemplatesActivity">
+
+    <ImageButton
+        android:id="@+id/templates_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:background="@color/rally_grey"
+        android:contentDescription="@string/settings_back"
+        android:padding="10sp"
+        android:src="@drawable/abc_vector_test" />
+
+    <ImageButton
+        android:id="@+id/templates_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_gravity="right"
+        android:background="@color/rally_grey"
+        android:contentDescription="@string/settings_back"
+        android:padding="10sp"
+        android:src="@drawable/ic_baseline_add_24" />
+
+    <ListView
+        android:id="@+id/templates_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_margin="16sp"
+        />
+
+</GridLayout>

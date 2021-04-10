@@ -36,6 +36,7 @@ import ro.ase.csie.degree.util.InputValidation;
 public class AddTransactionActivity extends AppCompatActivity {
 
 
+    public static final String NEW_TEMPLATE = "new_template";
     private RadioGroup rg_type;
     private TextInputEditText tiet_details;
     private TextInputEditText tiet_amount;
@@ -211,7 +212,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         };
 
     }
-
     private void saveExpense(Expense expense) {
         expense.getBalance_from().withdraw(expense.getAmount());
         firebaseService.upsert(expense);
@@ -231,6 +231,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         firebaseService.upsert(transfer.getBalance_from());
         firebaseService.upsert(transfer.getBalance_to());
     }
+
 
     private void buildTransaction() {
         if (!tiet_details.getText().toString().trim().isEmpty()) {
