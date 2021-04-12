@@ -1,8 +1,7 @@
 package ro.ase.csie.degree.firebase;
 
-import java.io.Serializable;
 
-public class FirebaseObject implements Serializable {
+public class FirebaseObject {
 
     protected String id;
     protected String user;

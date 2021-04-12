@@ -28,6 +28,7 @@ import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.settings.TemplatesActivity;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.InputValidation;
 
@@ -56,7 +57,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     int month;
     int day;
 
-    private FirebaseService firebaseService;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,49 @@ public class AddTransactionActivity extends AppCompatActivity {
         initComponents();
         initDefaults();
         retrieveDataFromFirebase();
+
+        intent = getIntent();
+        Transaction transaction = intent.getParcelableExtra(TemplatesActivity.USE_TEMPLATE);
+        if (transaction != null) {
+            buildTransaction(transaction);
+        }
+
+    }
+
+    private void buildTransaction(Transaction transaction) {
+        switch (transaction.getCategory().getType()) {
+            case EXPENSE:
+                rg_type.check(R.id.add_transaction_type_expense);
+                spn_category.setSelection(expenseCategories.indexOf(transaction.getCategory()));
+                break;
+            case INCOME:
+                rg_type.check(R.id.add_transaction_type_income);
+                spn_category.setSelection(incomeCategories.indexOf(transaction.getCategory()));
+                break;
+            case TRANSFER:
+                rg_type.check(R.id.add_transaction_type_transfer);
+                break;
+        }
+
+        if (transaction.getBalance_from() != null) {
+            spn_balances_from.setSelection(balances.indexOf(transaction.getBalance_from()));
+        }
+
+
+        if (transaction.getBalance_to() != null) {
+            spn_balances_to.setSelection(balances.indexOf(transaction.getBalance_to()));
+        }
+
+        if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
+            tiet_details.setText(transaction.getDetails());
+        }
+
+        tiet_amount.setText(String.valueOf(transaction.getAmount()));
+
+        if (transaction.getDate() != null) {
+            this.transaction.setDate(transaction.getDate());
+            btn_date.setText(DateConverter.toString(transaction.getDate()));
+        }
     }
 
     private void retrieveDataFromFirebase() {

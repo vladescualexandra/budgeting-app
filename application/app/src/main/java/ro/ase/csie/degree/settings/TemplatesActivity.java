@@ -1,8 +1,10 @@
 package ro.ase.csie.degree.settings;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,11 +20,14 @@ import ro.ase.csie.degree.AddTransactionActivity;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.services.TemplateService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Transaction;
 
 public class TemplatesActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_CREATE_TEMPLATE = 201;
+    public static final int REQUEST_CODE_USE_TEMPLATE = 202;
+    public static final String USE_TEMPLATE = "use_template";
     private ImageButton ib_back;
     private ImageButton ib_add;
     private ListView lv_templates;
@@ -99,16 +104,19 @@ public class TemplatesActivity extends AppCompatActivity {
                 TemplateService templateService = new TemplateService();
                 templateService.upsert(template);
                 notifyAdapter();
+            } else if (requestCode == REQUEST_CODE_USE_TEMPLATE && data != null) {
+                Transaction transaction = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
+                TransactionService transactionService = new TransactionService();
+                transactionService.upsert(transaction);
             }
         }
     }
 
     private AdapterView.OnItemClickListener useTemplateEventListener() {
-        return new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
+        return (parent, view, position, id) -> {
+            Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
+            intent.putExtra(USE_TEMPLATE, templates.get(position));
+            startActivityForResult(intent, REQUEST_CODE_USE_TEMPLATE);
         };
     }
 
@@ -116,6 +124,22 @@ public class TemplatesActivity extends AppCompatActivity {
         return new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog dialog = new AlertDialog.Builder(getApplicationContext())
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to delete this template?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                TemplateService templateService = new TemplateService();
+                                templateService.delete(templates.get(position));
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .create();
                 return false;
             }
         };
