@@ -1,5 +1,7 @@
 package ro.ase.csie.degree.firebase.services;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +31,8 @@ public class TemplateService {
         if (template == null) {
             return;
         }
+
+        Log.e("upsertTemplate", template.toString());
 
         if (template.getId() == null || template.getId().trim().isEmpty()) {
             String id = firebaseService.getDatabase().push().getKey();

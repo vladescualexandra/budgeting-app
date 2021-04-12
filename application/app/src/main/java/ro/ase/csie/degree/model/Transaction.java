@@ -2,13 +2,16 @@ package ro.ase.csie.degree.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.util.Date;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
 import ro.ase.csie.degree.util.DateConverter;
 
-public class Transaction extends FirebaseObject implements Parcelable {
+public class Transaction extends FirebaseObject implements Parcelable, Cloneable {
 
     protected String details;
     protected Category category;
@@ -100,9 +103,9 @@ public class Transaction extends FirebaseObject implements Parcelable {
         this.id = in.readString();
         this.user = in.readString();
         this.details = in.readString();
-        this.category = (Category) in.readSerializable();
-        this.balance_from = (Balance) in.readSerializable();
-        this.balance_to = (Balance) in.readSerializable();
+        this.category = in.readParcelable(Category.class.getClassLoader());
+        this.balance_from = in.readParcelable(Balance.class.getClassLoader());
+        this.balance_to = in.readParcelable(Balance.class.getClassLoader());
         this.amount = in.readDouble();
 
         String dateString = in.readString();
@@ -131,9 +134,9 @@ public class Transaction extends FirebaseObject implements Parcelable {
         dest.writeString(id);
         dest.writeString(user);
         dest.writeString(details);
-        dest.writeSerializable(category);
-        dest.writeSerializable(balance_from);
-        dest.writeSerializable(balance_to);
+        dest.writeParcelable(category, flags);
+        dest.writeParcelable(balance_from, flags);
+        dest.writeParcelable(balance_to, flags);
         dest.writeDouble(amount);
 
         String dateString = DateConverter.toString(date);
@@ -150,8 +153,23 @@ public class Transaction extends FirebaseObject implements Parcelable {
                 break;
             case TRANSFER:
                 Transfer.saveTransfer(new Transfer(transaction));
+                break;
         }
     }
 
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Transaction clone = new Transaction();
 
+        clone.setId(id);
+        clone.setUser(user);
+        clone.setDetails(details);
+        clone.setCategory(category);
+        clone.setBalance_from(balance_from);
+        clone.setBalance_to(balance_to);
+        clone.setDate(date);
+
+        return clone;
+    }
 }

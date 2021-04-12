@@ -1,10 +1,13 @@
 package ro.ase.csie.degree.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
 
-public class Balance extends FirebaseObject implements Serializable {
+public class Balance extends FirebaseObject implements Parcelable {
 
     private String name;
     private double available_amount;
@@ -12,6 +15,25 @@ public class Balance extends FirebaseObject implements Serializable {
     public Balance() {
         super(null, null);
     }
+
+    protected Balance(Parcel in) {
+        id = in.readString();
+        user = in.readString();
+        name = in.readString();
+        available_amount = in.readDouble();
+    }
+
+    public static final Creator<Balance> CREATOR = new Creator<Balance>() {
+        @Override
+        public Balance createFromParcel(Parcel in) {
+            return new Balance(in);
+        }
+
+        @Override
+        public Balance[] newArray(int size) {
+            return new Balance[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -57,6 +79,24 @@ public class Balance extends FirebaseObject implements Serializable {
 
     @Override
     public String toString() {
-        return this.name + " : " + this.available_amount;
+        return "Balance{" +
+                "name='" + name + '\'' +
+                ", available_amount=" + available_amount +
+                ", id='" + id + '\'' +
+                ", user='" + user + '\'' +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(user);
+        dest.writeString(name);
+        dest.writeDouble(available_amount);
     }
 }

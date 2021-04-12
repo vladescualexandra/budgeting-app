@@ -3,6 +3,7 @@ package ro.ase.csie.degree.model;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
@@ -19,7 +20,7 @@ import ro.ase.csie.degree.firebase.services.AccountService;
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class Account extends FirebaseObject implements Serializable {
+public class Account extends FirebaseObject implements Cloneable {
 
     private static Account account = null;
 
@@ -145,7 +146,7 @@ public class Account extends FirebaseObject implements Serializable {
     private static void enterAccount(Context context) {
         saveKey(context);
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(USER_KEY, account);
+        intent.putExtra(USER_KEY, (Parcelable) account);
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

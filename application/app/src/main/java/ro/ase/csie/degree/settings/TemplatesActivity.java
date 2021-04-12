@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,9 +19,12 @@ import java.util.List;
 
 import ro.ase.csie.degree.AddTransactionActivity;
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.adapters.TemplateAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.firebase.services.TransactionService;
+import ro.ase.csie.degree.model.Balance;
+import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
 
 public class TemplatesActivity extends AppCompatActivity {
@@ -66,32 +70,34 @@ public class TemplatesActivity extends AppCompatActivity {
             if (result != null) {
                 templates.clear();
                 templates.addAll(result);
+                Log.e("getTemplatesCallback", result.toString());
+                Log.e("getTemplatesCallback", templates.toString());
+
                 notifyAdapter();
             }
         };
     }
 
-
     private void setAdapter() {
-        ArrayAdapter<Transaction> adapter = new ArrayAdapter<>
-                (getApplicationContext(),
-                        R.layout.row_spinner_simple,
-                        templates);
+        TemplateAdapter adapter = new TemplateAdapter(
+                getApplicationContext(),
+                R.layout.row_item_template,
+                templates,
+                getLayoutInflater());
         lv_templates.setAdapter(adapter);
+        Log.e("setAdapter", templates.toString());
     }
 
     private void notifyAdapter() {
-        ArrayAdapter adapter = (ArrayAdapter) lv_templates.getAdapter();
+        TemplateAdapter adapter = (TemplateAdapter) lv_templates.getAdapter();
         adapter.notifyDataSetChanged();
+        Log.e("notifyAdapter", templates.toString());
     }
 
     private View.OnClickListener addTemplateEventListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_CREATE_TEMPLATE);
-            }
+        return v -> {
+            Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_CREATE_TEMPLATE);
         };
     }
 
@@ -99,15 +105,18 @@ public class TemplatesActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE_CREATE_TEMPLATE && data != null) {
+            if (data != null) {
                 Transaction template = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
-                TemplateService templateService = new TemplateService();
-                templateService.upsert(template);
-                notifyAdapter();
-            } else if (requestCode == REQUEST_CODE_USE_TEMPLATE && data != null) {
-                Transaction transaction = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
-                TransactionService transactionService = new TransactionService();
-                transactionService.upsert(transaction);
+
+                if (requestCode == REQUEST_CODE_CREATE_TEMPLATE && data != null) {
+                    TemplateService templateService = new TemplateService();
+                    templateService.upsert(template);
+                    setAdapter();
+                } else if (requestCode == REQUEST_CODE_USE_TEMPLATE && data != null) {
+                    Transaction transaction = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
+                    TransactionService transactionService = new TransactionService();
+                    transactionService.upsert(transaction);
+                }
             }
         }
     }

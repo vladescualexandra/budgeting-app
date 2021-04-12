@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,6 +38,9 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     public static final String NEW_TEMPLATE = "new_template";
     public static final String TRANSACTION = "transaction";
+    public static final String BALANCE_FROM = "balance_from";
+    public static final String BALANCE_TO = "balance_to";
+    public static final String CATEGORY = "category";
     private RadioGroup rg_type;
     private TextInputEditText tiet_details;
     private TextInputEditText tiet_amount;
@@ -110,6 +114,12 @@ public class AddTransactionActivity extends AppCompatActivity {
             this.transaction.setDate(transaction.getDate());
             btn_date.setText(DateConverter.toString(transaction.getDate()));
         }
+
+        try {
+            this.transaction = (Transaction) transaction.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void retrieveDataFromFirebase() {
@@ -162,7 +172,6 @@ public class AddTransactionActivity extends AppCompatActivity {
                 == R.id.add_transaction_type_expense
                 ? TransactionType.EXPENSE : TransactionType.INCOME);
 
-        spn_balances_to.setEnabled(transaction.getCategory().getType().equals(TransactionType.TRANSFER));
     }
 
     private void initComponents() {
@@ -208,6 +217,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                     break;
             }
 
+            Log.e("CHANGE_TYPE", transaction.getCategory().toString());
             setCategoryAdapter();
         };
     }
@@ -263,6 +273,8 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void buildTransaction() {
+
+
         if (!tiet_details.getText().toString().trim().isEmpty()) {
             transaction.setDetails(tiet_details.getText().toString().trim());
         }
@@ -283,7 +295,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void close() {
         Intent intent = getIntent();
-        intent.putExtra(TRANSACTION, (Parcelable) transaction);
+        intent.putExtra(TRANSACTION, transaction);
         setResult(RESULT_OK, intent);
         finish();
     }

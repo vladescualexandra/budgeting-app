@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -268,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_ADD_TRANSACTION && resultCode == RESULT_OK && data != null) {
-            Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionActivity.TRANSACTION);
+            Transaction transaction = data.getParcelableExtra(AddTransactionActivity.TRANSACTION);
             Transaction.saveTransaction(transaction);
             notifyAdapter();
         }
