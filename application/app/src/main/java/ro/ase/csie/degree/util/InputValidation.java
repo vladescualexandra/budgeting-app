@@ -1,6 +1,7 @@
 package ro.ase.csie.degree.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Patterns;
 
 import ro.ase.csie.degree.R;
@@ -72,7 +73,9 @@ public class InputValidation {
     }
 
     public static boolean transferValidation(Transaction transfer) {
-        return !transfer.getBalance_from().getId().equals(transfer.getBalance_to().getId())
+        return transfer.getBalance_from() != null
+                && transfer.getBalance_to() != null
+                && !transfer.getBalance_from().getId().equals(transfer.getBalance_to().getId())
                 && transfer.getAmount() > 0
                 && transfer.getBalance_from().getAvailable_amount() >= transfer.getAmount();
     }

@@ -30,6 +30,7 @@ import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
+import ro.ase.csie.degree.model.Transfer;
 import ro.ase.csie.degree.settings.TemplatesActivity;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.InputValidation;
@@ -264,6 +265,10 @@ public class AddTransactionActivity extends AppCompatActivity {
 
             if (validate(rg_type.getCheckedRadioButtonId(), transaction)) {
                 close();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "Invalid transaction.",
+                        Toast.LENGTH_LONG).show();
             }
         };
 
@@ -275,6 +280,10 @@ public class AddTransactionActivity extends AppCompatActivity {
         } else if (id == R.id.add_transaction_type_income) {
             return InputValidation.incomeValidation(transaction);
         } else {
+            if (spn_balances_from.getSelectedItemId() == spn_balances_to.getSelectedItemId()) {
+                return false;
+            }
+            transaction.setCategory(Transfer.getTransferCategory());
             return InputValidation.transferValidation(transaction);
         }
     }
@@ -290,8 +299,11 @@ public class AddTransactionActivity extends AppCompatActivity {
             transaction.setAmount(amount);
         }
 
-        Balance balance = (Balance) spn_balances_from.getSelectedItem();
-        transaction.setBalance_from(balance);
+        Balance balance_from = (Balance) spn_balances_from.getSelectedItem();
+        transaction.setBalance_from(balance_from);
+
+        Balance balance_to = (Balance) spn_balances_from.getSelectedItem();
+        transaction.setBalance_from(balance_to);
 
         if (rg_type.getCheckedRadioButtonId() != R.id.add_transaction_type_transfer) {
             Category category = (Category) spn_category.getSelectedItem();

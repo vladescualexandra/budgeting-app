@@ -8,14 +8,15 @@ public class Transfer extends Transaction {
 
     public Transfer(Transaction transaction) {
         super(transaction);
-        setTransferCategory();
+        this.category = getTransferCategory();
     }
 
-    private void setTransferCategory() {
-        this.category = new Category();
-        this.category.setType(TransactionType.TRANSFER);
-        this.category.setName(TransactionType.TRANSFER.toString());
-        this.category.setColor(R.color.rally_blue);
+    public static Category getTransferCategory() {
+        Category category = new Category();
+        category.setType(TransactionType.TRANSFER);
+        category.setName(TransactionType.TRANSFER.toString());
+        category.setColor(R.color.rally_blue);
+        return category;
     }
 
     public static void saveTransfer(Transfer transfer) {

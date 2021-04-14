@@ -9,11 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.DateConverter;
 
 public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
@@ -39,14 +42,43 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
     private void prepareDetails() {
         for (Transaction transaction : transactionList) {
             List<String> childList = new ArrayList<>();
-            childList.add("Date: " + DateConverter.toString(transaction.getDate()));
+            childList.add(context
+                    .getResources()
+                    .getString(R.string.row_item_transaction_expand_date,
+                            DateConverter.toString(transaction.getDate())));
             if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
-                childList.add("Details: " + transaction.getDetails());
+                childList.add(context
+                        .getResources()
+                        .getString(R.string.row_item_transaction_expand_details,
+                                transaction.getDetails()));
             }
-            childList.add("From balance: " + transaction.getBalance_from().getName());
+
+            if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_from,
+                        transaction.getBalance_from());
+            } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_to,
+                        transaction.getBalance_to());
+            } else {
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_from,
+                        transaction.getBalance_from());
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_to,
+                        transaction.getBalance_from());
+            }
 
             this.expandableDetails.put(transaction, childList);
         }
+    }
+
+    private void addBalance(List<String> childList, int id, Balance balance) {
+        childList.add(context
+                .getResources()
+                .getString(id,
+                        balance.toString()));
     }
 
     @Override
@@ -134,7 +166,6 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         tv_amount.setText(sign + transaction.getAmount());
-
         iv_bar.setBackgroundColor(context.getResources().getColor(transaction.getCategory().getColor()));
         tv_amount.setTextColor(context.getResources().getColor(transaction.getCategory().getColor()));
     }

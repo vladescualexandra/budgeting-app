@@ -75,4 +75,8 @@
     <string name="login_forgot_password">Forgot password?</string>
     <string name="placeholder_streak">placeholder_streak</string>
 
+    <string name="row_item_transaction_expand_date">Date: %s</string>
+    <string name="row_item_transaction_expand_details">Details: %s</string>
+    <string name="row_item_transaction_expand_balance_from">From balance: %s</string>
+    <string name="row_item_transaction_expand_balance_to">To balance: %s</string>
 </resources>
