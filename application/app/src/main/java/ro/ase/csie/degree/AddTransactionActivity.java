@@ -25,6 +25,7 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.firebase.services.CategoryService;
+import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
@@ -56,6 +57,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private List<Category> incomeCategories = new ArrayList<>();
     private List<Balance> balances = new ArrayList<>();
 
+    private boolean isTransaction = false;
 
     int year;
     int month;
@@ -76,32 +78,46 @@ public class AddTransactionActivity extends AppCompatActivity {
         Transaction transaction = intent.getParcelableExtra(TemplatesActivity.USE_TEMPLATE);
         if (transaction != null) {
             buildTransaction(transaction);
+            isTransaction = true;
+            Log.e("onCreate", transaction.toString());
         }
 
     }
 
+    private int getCategoryPosition(Category category, List<Category> categories) {
+        if (category != null) {
+            for (int i = 0; i < categories.size(); i++) {
+                if (categories.get(i).getId().equals(category.getId())) {
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
+    private int getBalancePosition(Balance balance, List<Balance> balances) {
+        if (balance != null) {
+            for (int i = 0; i < balances.size(); i++) {
+                if (balances.get(i).getId().equals(balance.getId())) {
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
     private void buildTransaction(Transaction transaction) {
+
         switch (transaction.getCategory().getType()) {
             case EXPENSE:
                 rg_type.check(R.id.add_transaction_type_expense);
-                spn_category.setSelection(expenseCategories.indexOf(transaction.getCategory()));
                 break;
             case INCOME:
                 rg_type.check(R.id.add_transaction_type_income);
-                spn_category.setSelection(incomeCategories.indexOf(transaction.getCategory()));
                 break;
             case TRANSFER:
                 rg_type.check(R.id.add_transaction_type_transfer);
                 break;
-        }
-
-        if (transaction.getBalance_from() != null) {
-            spn_balances_from.setSelection(balances.indexOf(transaction.getBalance_from()));
-        }
-
-
-        if (transaction.getBalance_to() != null) {
-            spn_balances_to.setSelection(balances.indexOf(transaction.getBalance_to()));
         }
 
         if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
@@ -217,7 +233,6 @@ public class AddTransactionActivity extends AppCompatActivity {
                     break;
             }
 
-            Log.e("CHANGE_TYPE", transaction.getCategory().toString());
             setCategoryAdapter();
         };
     }
@@ -249,31 +264,25 @@ public class AddTransactionActivity extends AppCompatActivity {
         return v -> {
             buildTransaction();
 
-            if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_expense) {
-                if (InputValidation.expenseValidation(transaction)) {
-                    close();
-                }
-
-            } else if (rg_type.getCheckedRadioButtonId() == R.id.add_transaction_type_income) {
-                if (InputValidation.incomeValidation(transaction)) {
-                    close();
-                }
-
-            } else {
-                if (!InputValidation.transferValidation(transaction)) {
-                    Toast.makeText(getApplicationContext(),
-                            "Invalid transfer.",
-                            Toast.LENGTH_LONG).show();
-                } else {
-                    close();
-                }
+            if (validate(rg_type.getCheckedRadioButtonId(), transaction)) {
+                close();
             }
         };
 
     }
 
-    private void buildTransaction() {
 
+    private boolean validate(int id, Transaction transaction) {
+        if (id == R.id.add_transaction_type_expense) {
+            return InputValidation.expenseValidation(transaction);
+        } else if (id == R.id.add_transaction_type_income) {
+            return InputValidation.incomeValidation(transaction);
+        } else {
+            return InputValidation.transferValidation(transaction);
+        }
+    }
+
+    private void buildTransaction() {
 
         if (!tiet_details.getText().toString().trim().isEmpty()) {
             transaction.setDetails(tiet_details.getText().toString().trim());
@@ -293,10 +302,17 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
     }
 
+
     private void close() {
-        Intent intent = getIntent();
-        intent.putExtra(TRANSACTION, transaction);
-        setResult(RESULT_OK, intent);
+        if (isTransaction) {
+            Log.e("close", transaction.toString());
+            TransactionService transactionService = new TransactionService();
+            transactionService.upsert(transaction);
+        } else {
+            Intent intent = getIntent();
+            intent.putExtra(TRANSACTION, transaction);
+            setResult(RESULT_OK, intent);
+        }
         finish();
     }
 
@@ -308,6 +324,9 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 getCategoriesByType());
         spn_category.setAdapter(adapter);
         spn_category.setPrompt("Categories");
+
+        spn_category.setSelection(getCategoryPosition(transaction.getCategory(), expenseCategories));
+
     }
 
     private void setBalanceAdapter() {
@@ -320,6 +339,9 @@ public class AddTransactionActivity extends AppCompatActivity {
         spn_balances_to.setAdapter(adapter);
         spn_balances_from.setPrompt("Balance from");
         spn_balances_to.setPrompt("Balance to");
+
+        spn_balances_from.setSelection(getBalancePosition(transaction.getBalance_from(), balances));
+        spn_balances_to.setSelection(getBalancePosition(transaction.getBalance_to(), balances));
     }
 
     private List<Category> getCategoriesByType() {

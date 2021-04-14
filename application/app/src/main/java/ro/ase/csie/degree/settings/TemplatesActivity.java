@@ -56,8 +56,6 @@ public class TemplatesActivity extends AppCompatActivity {
         ib_add.setOnClickListener(addTemplateEventListener());
 
         setAdapter();
-        lv_templates.setOnItemClickListener(useTemplateEventListener());
-        lv_templates.setOnItemLongClickListener(deleteTemplateListener());
     }
 
     private void getTemplates() {
@@ -116,38 +114,7 @@ public class TemplatesActivity extends AppCompatActivity {
         }
     }
 
-    private AdapterView.OnItemClickListener useTemplateEventListener() {
-        return (parent, view, position, id) -> {
-            Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
-            intent.putExtra(USE_TEMPLATE, templates.get(position));
-            startActivityForResult(intent, REQUEST_CODE_USE_TEMPLATE);
-        };
-    }
 
-    private AdapterView.OnItemLongClickListener deleteTemplateListener() {
-        return new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog dialog = new AlertDialog.Builder(getApplicationContext())
-                        .setTitle("Delete")
-                        .setMessage("Are you sure you want to delete this template?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TemplateService templateService = new TemplateService();
-                                templateService.delete(templates.get(position));
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .create();
-                return false;
-            }
-        };
-    }
 
 
 }

@@ -79,12 +79,7 @@ public class Balance extends FirebaseObject implements Parcelable {
 
     @Override
     public String toString() {
-        return "Balance{" +
-                "name='" + name + '\'' +
-                ", available_amount=" + available_amount +
-                ", id='" + id + '\'' +
-                ", user='" + user + '\'' +
-                '}';
+        return this.name + " - " + this.available_amount;
     }
 
     @Override

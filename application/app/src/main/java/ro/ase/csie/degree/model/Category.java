@@ -1,11 +1,14 @@
 package ro.ase.csie.degree.model;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
 
@@ -67,13 +70,7 @@ public class Category extends FirebaseObject implements Parcelable {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "type=" + type +
-                ", color=" + color +
-                ", name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", user='" + user + '\'' +
-                '}';
+        return this.name;
     }
 
     @Override
@@ -88,5 +85,22 @@ public class Category extends FirebaseObject implements Parcelable {
         dest.writeString(type.toString());
         dest.writeInt(color);
         dest.writeString(name);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return color == category.color &&
+                type.equals(category.type) &&
+                Objects.equals(name, category.name);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, color, name);
     }
 }
