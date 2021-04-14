@@ -12,6 +12,7 @@ import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.adapters.ColorAdapter;
+import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.InputValidation;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,6 +33,8 @@ public class AddCategoryActivity extends AppCompatActivity {
     private Category category = new Category();
     private List<Integer> colors = new ArrayList<>();
 
+    private boolean isExpense;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,9 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private void initComponents() {
         intent = getIntent();
+
+        isExpense = intent.getBooleanExtra(CategoriesActivity.CATEGORY_TYPE, true);
+
         tiet_name = findViewById(R.id.add_category_select_name);
         gv_icons = findViewById(R.id.add_category_select_icon);
         btn_save = findViewById(R.id.add_category_save);
@@ -70,11 +76,17 @@ public class AddCategoryActivity extends AppCompatActivity {
         return v -> {
             if (InputValidation.nameValidation(getApplicationContext(), tiet_name)) {
                 category.setName(tiet_name.getText().toString().trim());
+
+                if (isExpense) {
+                    category.setType(TransactionType.EXPENSE);
+                } else {
+                    category.setType(TransactionType.INCOME);
+                }
+
                 intent.putExtra(NEW_CATEGORY, category);
                 setResult(RESULT_OK, intent);
                 finish();
             }
-
         };
     }
 

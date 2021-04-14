@@ -87,7 +87,7 @@ public class BalancesActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_BALANCE & data != null) {
-            Balance balance = (Balance) data.getSerializableExtra(AddBalanceActivity.NEW_BALANCE);
+            Balance balance = data.getParcelableExtra(AddBalanceActivity.NEW_BALANCE);
             balanceService.upsert(balance);
         }
     }

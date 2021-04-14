@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         initComponents();
         setDefaultDate();
-        filterTransactions();
 
         View parentLayout = findViewById(android.R.id.content);
         Snackbar.make(parentLayout,
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         setFilterText();
+        filterTransactions();
     }
 
     private void initComponents() {

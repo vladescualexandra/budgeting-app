@@ -11,13 +11,13 @@ public class Income extends Transaction{
 
 
     public static void saveIncome(Income income) {
-        income.getBalance_from().deposit(income.getAmount());
+        income.getBalance_to().deposit(income.getAmount());
 
         TransactionService transactionService = new TransactionService();
         transactionService.upsert(income);
 
         BalanceService balanceService = new BalanceService();
-        balanceService.upsert(income.getBalance_from());
+        balanceService.upsert(income.getBalance_to());
     }
 
 }

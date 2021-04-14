@@ -1,6 +1,7 @@
 package ro.ase.csie.degree.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -41,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_theme;
     private Button btn_language;
     private Button btn_reminders;
-    private Switch switch_reminder;
+    private SwitchCompat switch_reminder;
     private Button btn_contact;
     private Button btn_sign_out;
 

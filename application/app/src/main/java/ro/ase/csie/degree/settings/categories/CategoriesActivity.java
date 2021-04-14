@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -141,9 +142,7 @@ public class CategoriesActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_ADD_CATEGORY
                 && data != null
                 && resultCode == RESULT_OK) {
-            Category category = (Category) data.getSerializableExtra(AddCategoryActivity.NEW_CATEGORY);
-            category.setType(isExpense ? TransactionType.EXPENSE : TransactionType.INCOME);
-            category.setUser(Account.getInstance().getId());
+            Category category = data.getParcelableExtra(AddCategoryActivity.NEW_CATEGORY);
             categoryService.upsert(category);
             notifyAdapter();
         }
