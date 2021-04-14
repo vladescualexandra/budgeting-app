@@ -37,11 +37,7 @@ import ro.ase.csie.degree.util.InputValidation;
 public class AddTransactionActivity extends AppCompatActivity {
 
 
-    public static final String NEW_TEMPLATE = "new_template";
     public static final String TRANSACTION = "transaction";
-    public static final String BALANCE_FROM = "balance_from";
-    public static final String BALANCE_TO = "balance_to";
-    public static final String CATEGORY = "category";
     private RadioGroup rg_type;
     private TextInputEditText tiet_details;
     private TextInputEditText tiet_amount;
@@ -78,6 +74,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         Transaction transaction = intent.getParcelableExtra(TemplatesActivity.USE_TEMPLATE);
         if (transaction != null) {
             buildTransaction(transaction);
+            transaction.setId(null);
+            this.transaction.setId(null);
             isTransaction = true;
             Log.e("onCreate", transaction.toString());
         }
@@ -306,8 +304,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private void close() {
         if (isTransaction) {
             Log.e("close", transaction.toString());
-            TransactionService transactionService = new TransactionService();
-            transactionService.upsert(transaction);
+            Transaction.saveTransaction(transaction);
         } else {
             Intent intent = getIntent();
             intent.putExtra(TRANSACTION, transaction);
