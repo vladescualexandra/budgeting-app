@@ -263,6 +263,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         return v -> {
             buildTransaction();
 
+            Log.e("saveTransaction", transaction.toString());
+
             if (validate(rg_type.getCheckedRadioButtonId(), transaction)) {
                 close();
             } else {
@@ -289,7 +291,6 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void buildTransaction() {
-
         if (!tiet_details.getText().toString().trim().isEmpty()) {
             transaction.setDetails(tiet_details.getText().toString().trim());
         }
@@ -302,8 +303,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         Balance balance_from = (Balance) spn_balances_from.getSelectedItem();
         transaction.setBalance_from(balance_from);
 
-        Balance balance_to = (Balance) spn_balances_from.getSelectedItem();
-        transaction.setBalance_from(balance_to);
+        Balance balance_to = (Balance) spn_balances_to.getSelectedItem();
+        transaction.setBalance_to(balance_to);
 
         if (rg_type.getCheckedRadioButtonId() != R.id.add_transaction_type_transfer) {
             Category category = (Category) spn_category.getSelectedItem();
@@ -314,7 +315,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void close() {
         if (isTransaction) {
-            Log.e("close", transaction.toString());
             Transaction.saveTransaction(transaction);
         } else {
             Intent intent = getIntent();

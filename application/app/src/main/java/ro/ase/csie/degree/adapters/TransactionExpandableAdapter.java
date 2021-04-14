@@ -102,7 +102,6 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.row_item_transaction_expand, null);
         }
 
-
         TextView expandedListTextView = convertView
                 .findViewById(R.id.row_item_transaction_expand_property);
         expandedListTextView.setText(expandedListText);

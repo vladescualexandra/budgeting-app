@@ -25,6 +25,7 @@ import ro.ase.csie.degree.AddTransactionActivity;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.settings.TemplatesActivity;
 
 public class TemplateAdapter extends ArrayAdapter<Transaction> {
@@ -108,11 +109,9 @@ public class TemplateAdapter extends ArrayAdapter<Transaction> {
     private void buildCategory(View view, Transaction template) {
         RadioButton rb_category_type = view.findViewById(R.id.row_item_template_category_type);
         rb_category_type.setText(template.getCategory().getType().toString());
-        rb_category_type.setTextColor(context.getResources().getColor(R.color.rally_white));
 
-        CardView cv_category_color = view.findViewById(R.id.row_item_template_category_color);
         TextView tv_category_name = view.findViewById(R.id.row_item_template_category_name);
-        cv_category_color.setCardBackgroundColor(context.getResources().getColor(template.getCategory().getColor()));
+        view.setBackgroundColor(context.getResources().getColor(template.getCategory().getColor()));
         tv_category_name.setText(template.getCategory().getName());
     }
 
@@ -125,12 +124,29 @@ public class TemplateAdapter extends ArrayAdapter<Transaction> {
         TextView tv_balance_from = view.findViewById(R.id.row_item_template_balance_from);
         TextView tv_balance_to = view.findViewById(R.id.row_item_template_balance_to);
 
-        if (template.getBalance_from() != null) {
-            tv_balance_from.setText(template.getBalance_from().getName());
-        }
-
-        if (template.getBalance_to() != null) {
-            tv_balance_to.setText(template.getBalance_to().getName());
+        if (template.getCategory().getType().equals(TransactionType.EXPENSE)) {
+            tv_balance_from
+                    .setText(context
+                            .getResources()
+                            .getString(R.string.row_item_transaction_expand_balance_from,
+                                    template.getBalance_from().getName()));
+        } else if (template.getCategory().getType().equals(TransactionType.INCOME)) {
+            tv_balance_to
+                    .setText(context
+                            .getResources()
+                            .getString(R.string.row_item_transaction_expand_balance_to,
+                                    template.getBalance_to().getName()));
+        } else {
+            tv_balance_from
+                    .setText(context
+                            .getResources()
+                            .getString(R.string.row_item_transaction_expand_balance_from,
+                                    template.getBalance_from().getName()));
+            tv_balance_to
+                    .setText(context
+                            .getResources()
+                            .getString(R.string.row_item_transaction_expand_balance_to,
+                                    template.getBalance_to().getName()));
         }
     }
 
