@@ -2,6 +2,7 @@ package ro.ase.csie.degree.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,6 +77,16 @@ public class TemplateAdapter extends ArrayAdapter<Transaction> {
                     .setNegativeButton("Cancel", (dialog1, which) -> {
                     })
                     .create();
+
+
+            dialog.show();
+
+            dialog
+                    .getButton(DialogInterface.BUTTON_NEGATIVE)
+                    .setTextColor(context.getResources().getColor(R.color.rally_dark_green));
+            dialog
+                    .getButton(DialogInterface.BUTTON_POSITIVE)
+                    .setTextColor(context.getResources().getColor(R.color.rally_dark_green));
             return false;
         };
     }

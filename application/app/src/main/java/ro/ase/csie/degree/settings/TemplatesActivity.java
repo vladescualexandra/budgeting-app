@@ -1,16 +1,11 @@
 package ro.ase.csie.degree.settings;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -23,8 +18,6 @@ import ro.ase.csie.degree.adapters.TemplateAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.firebase.services.TransactionService;
-import ro.ase.csie.degree.model.Balance;
-import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;
 
 public class TemplatesActivity extends AppCompatActivity {
@@ -75,7 +68,7 @@ public class TemplatesActivity extends AppCompatActivity {
 
     private void setAdapter() {
         TemplateAdapter adapter = new TemplateAdapter(
-                getApplicationContext(),
+                TemplatesActivity.this,
                 R.layout.row_item_template,
                 templates,
                 getLayoutInflater());

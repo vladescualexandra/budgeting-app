@@ -269,7 +269,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     }
 
-
     private boolean validate(int id, Transaction transaction) {
         if (id == R.id.add_transaction_type_expense) {
             return InputValidation.expenseValidation(transaction);
