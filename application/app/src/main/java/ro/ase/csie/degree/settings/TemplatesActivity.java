@@ -70,9 +70,6 @@ public class TemplatesActivity extends AppCompatActivity {
             if (result != null) {
                 templates.clear();
                 templates.addAll(result);
-                Log.e("getTemplatesCallback", result.toString());
-                Log.e("getTemplatesCallback", templates.toString());
-
                 notifyAdapter();
             }
         };
@@ -85,13 +82,11 @@ public class TemplatesActivity extends AppCompatActivity {
                 templates,
                 getLayoutInflater());
         lv_templates.setAdapter(adapter);
-        Log.e("setAdapter", templates.toString());
     }
 
     private void notifyAdapter() {
         TemplateAdapter adapter = (TemplateAdapter) lv_templates.getAdapter();
         adapter.notifyDataSetChanged();
-        Log.e("notifyAdapter", templates.toString());
     }
 
     private View.OnClickListener addTemplateEventListener() {

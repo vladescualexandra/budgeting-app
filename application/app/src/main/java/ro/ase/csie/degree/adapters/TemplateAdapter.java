@@ -30,7 +30,7 @@ public class TemplateAdapter extends ArrayAdapter<Transaction> {
                            int resource,
                            List<Transaction> templates,
                            LayoutInflater layoutInflater) {
-        super(context, resource);
+        super(context, resource, templates);
         this.context = context;
         this.resource = resource;
         this.templates = templates;
