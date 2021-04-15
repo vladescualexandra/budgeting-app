@@ -13,7 +13,8 @@
     <string name="error_invalid_password">Strong passwords have at least 6 characters and a mix of letters and numbers
     </string>
     <string name="btn_register_with_google">Register with Google</string>
-    <string name="error_invalid_name">Name must have at least 3 characters.</string>
+    <string name="error_invalid_name_too_short">Name must have at least 3 characters.</string>
+    <string name="error_invalid_name_not_letters">Name must have only letters.</string>
     <string name="tab_today">Today</string>
     <string name="tab_week">Week</string>
     <string name="tab_month">Month</string>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
+
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
 
@@ -16,9 +18,20 @@ public class InputValidation {
 
     public static int NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD = 6;
 
+    public static String REGEX_EMAIL = "";
+    public static String REGEX_ONLY_LETTERS = "[a-zA-Z]+";
+
     public static boolean nameValidation(Context context, TextInputEditText tiet) {
-        if (tiet.getText().toString().trim().length() < 3) {
-            tiet.setError(context.getString(R.string.error_invalid_name));
+        if (tiet.getText() == null) {
+            throw new NullPointerException();
+        }
+        String name = tiet.getText().toString().trim();
+
+        if (name.length() < 3) {
+            tiet.setError(context.getString(R.string.error_invalid_name_too_short));
+            return false;
+        } else if (!isMatching(REGEX_ONLY_LETTERS, name)) {
+            tiet.setError(context.getString(R.string.error_invalid_name_not_letters));
             return false;
         } else {
             tiet.setError(null);
@@ -26,22 +39,21 @@ public class InputValidation {
         }
     }
 
-    private static boolean isValidEmail(String email) {
-        if (email == null) {
+    private static boolean isMatching(String regex, String string) {
+        if (string == null) {
             return false;
         }
-
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        return pattern.matcher(email).matches();
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(string).matches();
     }
 
     public static boolean emailValidation(Context context, TextInputEditText tiet) {
-        if (Patterns.EMAIL_ADDRESS.matcher(tiet.getText().toString().trim()).matches()
-                && isValidEmail(tiet.getText().toString().trim())) {
+        if (tiet.getText() == null) {
+            throw new NullPointerException();
+        }
+        String email = tiet.getText().toString().trim();
+        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                && isMatching(REGEX_EMAIL, email)) {
             tiet.setError(null);
             return true;
         } else {
@@ -52,12 +64,15 @@ public class InputValidation {
     }
 
     public static boolean passwordValidation(Context context, TextInputEditText tiet) {
-        if (tiet.getText().toString().trim().length() < NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD) {
-            tiet.setError(context.getString(R.string.error_invalid_password));
-            return false;
-        } else {
+        if (tiet.getText() == null) {
+            throw new NullPointerException();
+        }
+        if (tiet.getText().toString().trim().length() >= NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD) {
             tiet.setError(null);
             return true;
+        } else {
+            tiet.setError(context.getString(R.string.error_invalid_password));
+            return false;
         }
     }
 
@@ -70,12 +85,15 @@ public class InputValidation {
         return nameValidation(context, name) && emailValidation(context, email) && passwordValidation(context, password);
     }
 
-    public static boolean availableAmountValidation(Context context, TextInputEditText available_amount) {
-        if (Double.parseDouble(available_amount.getText().toString()) >= 0.0) {
-            available_amount.setError(null);
+    public static boolean availableAmountValidation(Context context, TextInputEditText tiet) {
+        if (tiet.getText() == null) {
+            throw new NullPointerException();
+        }
+        if (Double.parseDouble(tiet.getText().toString()) >= 0.0) {
+            tiet.setError(null);
             return true;
         } else {
-            available_amount.setError(context.getString(R.string.invalid_available_amount));
+            tiet.setError(context.getString(R.string.invalid_available_amount));
             return false;
         }
 
@@ -99,13 +117,16 @@ public class InputValidation {
                 && transfer.getBalance_from().getAvailable_amount() >= transfer.getAmount();
     }
 
-    public static boolean amountValidation(TextInputEditText tiet_amount) {
-        if (tiet_amount.getText().toString() == null
-                || tiet_amount.getText().toString().trim().isEmpty()) {
-            tiet_amount.setError("Insert an amount greater than 0.");
+    public static boolean amountValidation(TextInputEditText tiet) {
+        if (tiet.getText() == null) {
+            throw new NullPointerException();
+        }
+        if (tiet.getText().toString() == null
+                || tiet.getText().toString().trim().isEmpty()) {
+            tiet.setError("Insert an amount greater than 0.");
             return false;
         }
-        tiet_amount.setError(null);
+        tiet.setError(null);
         return true;
     }
 
