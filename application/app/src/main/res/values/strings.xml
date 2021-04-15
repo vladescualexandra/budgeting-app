@@ -13,7 +13,7 @@
     <string name="error_invalid_password">Strong passwords have at least 6 characters and a mix of letters and numbers
     </string>
     <string name="btn_register_with_google">Register with Google</string>
-    <string name="error_invalid_name_too_short">Name must have at least 3 characters.</string>
+    <string name="error_invalid_name_length">Name must have between 3 and 12 characters.</string>
     <string name="error_invalid_name_not_letters">Name must have only letters.</string>
     <string name="tab_today">Today</string>
     <string name="tab_week">Week</string>
@@ -53,7 +53,7 @@
     <string name="default_amount">0.00$</string>
     <string name="balance_name">Balance name</string>
     <string name="available_amount">Available amount</string>
-    <string name="invalid_available_amount">Available amount must be a positive number.</string>
+    <string name="invalid_available_amount">Available amount must be a number bigger than 0 and smaller than 1 million.</string>
     <string name="default_transaction_details">Transaction details</string>
     <string name="add_transaction_amount">Amount</string>
     <string name="today">TODAY</string>

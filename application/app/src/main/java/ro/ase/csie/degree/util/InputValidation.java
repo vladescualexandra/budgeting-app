@@ -18,7 +18,14 @@ public class InputValidation {
 
     public static int NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD = 6;
 
+    public static int MINIMUM_NUMBER_OF_CHARACTERS_NAME = 3;
+    public static int MAXIMUM_NUMBER_OF_CHARACTERS_NAME = 12;
+
     public static String REGEX_ONLY_LETTERS = "[a-zA-Z]+";
+
+    public static double MINIMUM_BALANCE = 0.0;
+    public static double MAXIMUM_BALANCE = 1_000_000.0;
+
 
     public static boolean nameValidation(Context context, TextInputEditText tiet) {
         if (tiet.getText() == null) {
@@ -26,8 +33,8 @@ public class InputValidation {
         }
         String name = tiet.getText().toString().trim();
 
-        if (name.length() < 3) {
-            tiet.setError(context.getString(R.string.error_invalid_name_too_short));
+        if (name.length() < MINIMUM_NUMBER_OF_CHARACTERS_NAME || name.length() > MAXIMUM_NUMBER_OF_CHARACTERS_NAME) {
+            tiet.setError(context.getString(R.string.error_invalid_name_length));
             return false;
         } else if (!isMatching(REGEX_ONLY_LETTERS, name)) {
             tiet.setError(context.getString(R.string.error_invalid_name_not_letters));
@@ -93,14 +100,14 @@ public class InputValidation {
             text = "0";
         }
 
-        if (Double.parseDouble(text) > 0.0) {
+        double amount = Double.parseDouble(text);
+        if (amount > MINIMUM_BALANCE && amount < MAXIMUM_BALANCE) {
             tiet.setError(null);
             return true;
         } else {
             tiet.setError(context.getString(R.string.invalid_available_amount));
             return false;
         }
-
     }
 
     public static boolean expenseValidation(Transaction expense) {
