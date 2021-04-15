@@ -9,8 +9,12 @@ import ro.ase.csie.degree.model.Transaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.regex.Pattern;
+
 
 public class InputValidation {
+
+    public static int NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD = 6;
 
     public static boolean nameValidation(Context context, TextInputEditText tiet) {
         if (tiet.getText().toString().trim().length() < 3) {
@@ -22,18 +26,33 @@ public class InputValidation {
         }
     }
 
-    public static boolean emailValidation(Context context, TextInputEditText tiet) {
-        if (!Patterns.EMAIL_ADDRESS.matcher(tiet.getText().toString().trim()).matches()) {
-            tiet.setError(context.getString(R.string.error_invalid_email));
+    private static boolean isValidEmail(String email) {
+        if (email == null) {
             return false;
-        } else {
+        }
+
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+
+    public static boolean emailValidation(Context context, TextInputEditText tiet) {
+        if (Patterns.EMAIL_ADDRESS.matcher(tiet.getText().toString().trim()).matches()
+                && isValidEmail(tiet.getText().toString().trim())) {
             tiet.setError(null);
             return true;
+        } else {
+            tiet.setError(context.getString(R.string.error_invalid_email));
+            return false;
         }
+
     }
 
     public static boolean passwordValidation(Context context, TextInputEditText tiet) {
-        if (tiet.getText().toString().trim().length() < 8) {
+        if (tiet.getText().toString().trim().length() < NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD) {
             tiet.setError(context.getString(R.string.error_invalid_password));
             return false;
         } else {

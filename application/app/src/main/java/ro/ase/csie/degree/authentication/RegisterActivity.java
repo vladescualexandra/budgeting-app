@@ -92,7 +92,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private boolean validate() {
-
         return InputValidation.registerValidation(getApplicationContext(), tiet_name, tiet_email, tiet_password);
     }
 

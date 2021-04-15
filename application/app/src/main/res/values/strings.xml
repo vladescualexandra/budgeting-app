@@ -10,7 +10,8 @@
     <string name="toast_invalid_account">Invalid account.</string>
 
     <string name="error_invalid_email">Invalid e-mail address.</string>
-    <string name="error_invalid_password">Password mush have at least 8 characters.</string>
+    <string name="error_invalid_password">Strong passwords have at least 6 characters and a mix of letters and numbers
+    </string>
     <string name="btn_register_with_google">Register with Google</string>
     <string name="error_invalid_name">Name must have at least 3 characters.</string>
     <string name="tab_today">Today</string>
