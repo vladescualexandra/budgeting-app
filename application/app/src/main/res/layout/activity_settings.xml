@@ -112,7 +112,7 @@
             android:layout_row="5"
             android:layout_column="0"
             android:gravity="start|center"
-            android:text="@string/settings_customize_categories"
+            android:text="@string/settings_categories"
             android:textAlignment="textStart" />
 
         <Button

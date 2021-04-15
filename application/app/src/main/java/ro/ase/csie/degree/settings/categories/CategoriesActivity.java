@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import ro.ase.csie.degree.R;
 
@@ -31,6 +32,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ADD_CATEGORY = 201;
     private BottomNavigationView menu_categories;
     private FloatingActionButton fab_add;
+    private TextView tv_header;
     private ListView lv_categories;
 
     private List<Category> expenses_categories = new ArrayList<>();
@@ -52,6 +54,9 @@ public class CategoriesActivity extends AppCompatActivity {
         menu_categories = findViewById(R.id.categories_bottom_menu);
         menu_categories.setOnNavigationItemSelectedListener(changeCategoryEventListener());
 
+        tv_header = findViewById(R.id.categories_header);
+        setHeader();
+
         lv_categories = findViewById(R.id.categories_list);
         menu_categories.getMenu().getItem(0).setChecked(true); // Expenses
         setAdapter(expenses_categories);
@@ -59,6 +64,14 @@ public class CategoriesActivity extends AppCompatActivity {
 
         fab_add = findViewById(R.id.setting_categories_add_new);
         fab_add.setOnClickListener(addCategoryEventListener());
+    }
+
+    private void setHeader() {
+        if (isExpense) {
+            tv_header.setText(getResources().getString(R.string.categories_expenses));
+        } else {
+            tv_header.setText(getResources().getString(R.string.categories_income));
+        }
     }
 
     private AdapterView.OnItemLongClickListener deleteCategoryEventListener() {
@@ -115,9 +128,13 @@ public class CategoriesActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener changeCategoryEventListener() {
         return item -> {
             if (item.getItemId() == R.id.menu_categories_expenses) {
+                isExpense = true;
+                setHeader();
                 setAdapter(expenses_categories);
                 return true;
             } else if (item.getItemId() == R.id.menu_categories_income) {
+                isExpense = false;
+                setHeader();
                 setAdapter(income_categories);
                 return true;
             }

@@ -50,6 +50,15 @@ public class AddCategoryActivity extends AppCompatActivity {
         isExpense = intent.getBooleanExtra(CategoriesActivity.CATEGORY_TYPE, true);
 
         tiet_name = findViewById(R.id.add_category_select_name);
+
+        if (isExpense) {
+            tiet_name.setHint(getResources()
+                    .getString(R.string.expense_category_name));
+        } else {
+            tiet_name.setHint(getResources()
+                    .getString(R.string.income_category_name));
+        }
+
         gv_icons = findViewById(R.id.add_category_select_icon);
         btn_save = findViewById(R.id.add_category_save);
         btn_save.setOnClickListener(saveCategoryEventListener());

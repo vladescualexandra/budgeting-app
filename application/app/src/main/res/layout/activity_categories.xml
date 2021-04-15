@@ -4,14 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ro.ase.csie.degree.settings.categories.CategoriesActivity">
 
+    <TextView
+        android:id="@+id/categories_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/categories_expenses"
+        style="@style/total_balance_text"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:padding="16sp"/>
 
     <ListView
         android:id="@+id/categories_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64sp"
         android:paddingBottom="64sp"
+        app:layout_anchor="@id/categories_header"
+        app:layout_anchorGravity="bottom|end"
         />
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -19,7 +32,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@color/rally_dark_grey"
         android:backgroundTint="@color/rally_dark_grey"
+        android:backgroundTintMode="screen"
         app:fabCradleMargin="10sp"
         app:fabCradleRoundedCornerRadius="10sp"
         app:fabCradleVerticalOffset="10sp">
