@@ -18,7 +18,6 @@ public class InputValidation {
 
     public static int NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD = 6;
 
-    public static String REGEX_EMAIL = "";
     public static String REGEX_ONLY_LETTERS = "[a-zA-Z]+";
 
     public static boolean nameValidation(Context context, TextInputEditText tiet) {
@@ -52,8 +51,7 @@ public class InputValidation {
             throw new NullPointerException();
         }
         String email = tiet.getText().toString().trim();
-        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()
-                && isMatching(REGEX_EMAIL, email)) {
+        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             tiet.setError(null);
             return true;
         } else {
