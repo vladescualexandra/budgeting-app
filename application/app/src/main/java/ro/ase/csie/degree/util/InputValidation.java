@@ -92,6 +92,7 @@ public class InputValidation {
         if (text.isEmpty()) {
             text = "0";
         }
+
         if (Double.parseDouble(text) > 0.0) {
             tiet.setError(null);
             return true;
