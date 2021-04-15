@@ -23,7 +23,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText tiet_password;
     private TextView tv_redirect_to_login;
     private Button btn_register_email;
-    private SignInButton btn_register_google;
 
     Intent intent;
 
@@ -39,21 +38,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         emailAuthentication = new EmailAuthentication(getApplicationContext());
         googleAuthentication = new GoogleAuthentication(getApplicationContext());
-
-    }
-
-    private View.OnClickListener googleAuthEventListener() {
-        return v -> {
-            Intent intent = googleAuthentication.getSignInIntent();
-            startActivityForResult(intent, REQUEST_CODE_SIGN_IN);
-        };
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SIGN_IN && data != null) {
-            Log.e("RegisterActivity", "onActivityResult");
             googleAuthentication.handleSignInResult(data);
         }
     }
@@ -66,11 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
         tiet_password = findViewById(R.id.register_password);
         tv_redirect_to_login = findViewById(R.id.login_redirect_to_login);
         btn_register_email = findViewById(R.id.register_create_account_btn);
-        btn_register_google = findViewById(R.id.register_google_btn);
 
         tv_redirect_to_login.setOnClickListener(returnToLoginEventListener());
         btn_register_email.setOnClickListener(emailAuthEventListener());
-        btn_register_google.setOnClickListener(googleAuthEventListener());
     }
 
 
@@ -89,7 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
     }
-
 
     private boolean validate() {
         return InputValidation.registerValidation(getApplicationContext(), tiet_name, tiet_email, tiet_password);

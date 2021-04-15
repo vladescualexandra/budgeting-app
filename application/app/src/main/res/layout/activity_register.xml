@@ -77,15 +77,5 @@
             android:layout_marginRight="32sp"
             android:text="@string/text_register" />
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/register_google_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="32sp"
-            android:layout_marginRight="32sp"
-            android:text="@string/btn_register_with_google" />
-
-
     </LinearLayout>
 </ScrollView>
