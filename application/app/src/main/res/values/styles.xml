@@ -33,33 +33,38 @@
     <style name="total_balance_text">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/rally_white</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="row_balance_text">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/rally_white</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
 
     <style name="row_transaction_category">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/rally_white</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="row_transaction_details">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/rally_white</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="row_transaction_amount">
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
-
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="row_transaction_balance">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/rally_white</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="convert_edit_text">
@@ -70,22 +75,26 @@
         <item name="android:textSize">32sp</item>
         <item name="background">@null</item>
         <item name="android:textStyle">bold</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="convert_text_view">
         <item name="android:textColor">@color/rally_white</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="settings_card_text">
         <item name="android:textColor">@color/rally_white</item>
         <item name="android:textSize">16sp</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
     <style name="row_item_template_text">
         <item name="android:textColor">@color/rally_dark_grey</item>
         <item name="android:textSize">16sp</item>
+        <item name="autoSizeTextType">uniform</item>
     </style>
 
 </resources>

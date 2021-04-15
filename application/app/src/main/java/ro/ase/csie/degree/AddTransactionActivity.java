@@ -295,7 +295,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             transaction.setDetails(tiet_details.getText().toString().trim());
         }
 
-        if (InputValidation.amountValidation(tiet_amount)) {
+        if (InputValidation.amountValidation(getApplicationContext(), tiet_amount)) {
             double amount = Double.parseDouble(tiet_amount.getText().toString());
             transaction.setAmount(amount);
         }

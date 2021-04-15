@@ -128,17 +128,26 @@ public class InputValidation {
                 && transfer.getBalance_from().getAvailable_amount() >= transfer.getAmount();
     }
 
-    public static boolean amountValidation(TextInputEditText tiet) {
+    public static boolean amountValidation(Context context, TextInputEditText tiet) {
         if (tiet.getText() == null) {
             throw new NullPointerException();
         }
-        if (tiet.getText().toString() == null
-                || tiet.getText().toString().trim().isEmpty()) {
-            tiet.setError("Insert an amount greater than 0.");
+
+        double amount = MINIMUM_BALANCE;
+
+        String text = tiet.getText().toString().trim();
+        if (!text.isEmpty()) {
+            amount = Double.parseDouble(text);
+        }
+
+        if (amount > MINIMUM_BALANCE && amount < MAXIMUM_BALANCE) {
+            tiet.setError(null);
+            return true;
+        } else {
+            tiet.setError(context.getString(R.string.invalid_available_amount));
             return false;
         }
-        tiet.setError(null);
-        return true;
     }
+
 
 }

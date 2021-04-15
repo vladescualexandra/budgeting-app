@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,11 +23,12 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Currency;
 import ro.ase.csie.degree.network.CurrenciesManager;
 import ro.ase.csie.degree.util.CurrencyJSONParser;
+import ro.ase.csie.degree.util.InputValidation;
 
 public class ConverterActivity extends AppCompatActivity {
 
     private ImageButton btn_back;
-    private EditText et_amount_from;
+    private TextInputEditText tiet_amount_from;
     private Spinner spn_currency_from;
     private TextView tv_amount_to;
     private Spinner spn_currency_to;
@@ -47,7 +49,7 @@ public class ConverterActivity extends AppCompatActivity {
     private void initComponents() {
         btn_back = findViewById(R.id.converter_back);
         btn_back.setOnClickListener(v -> finish());
-        et_amount_from = findViewById(R.id.converter_amount_from);
+        tiet_amount_from = findViewById(R.id.converter_amount_from);
         spn_currency_from = findViewById(R.id.converter_currency_from);
         tv_amount_to = findViewById(R.id.converter_amount_to);
         spn_currency_to = findViewById(R.id.converter_currency_to);
@@ -57,12 +59,14 @@ public class ConverterActivity extends AppCompatActivity {
 
     private View.OnClickListener convertEventListener() {
         return v -> {
-            double amount_from = Double.parseDouble(et_amount_from.getText().toString().trim());
-            String from = ((Currency) spn_currency_from.getSelectedItem()).getCode();
-            String to = ((Currency) spn_currency_to.getSelectedItem()).getCode();
+            if (InputValidation.amountValidation(getApplicationContext(), tiet_amount_from)) {
+                double amount_from = Double.parseDouble(tiet_amount_from.getText().toString().trim());
+                String from = ((Currency) spn_currency_from.getSelectedItem()).getCode();
+                String to = ((Currency) spn_currency_to.getSelectedItem()).getCode();
 
-            CurrenciesManager
-                    .getConversionFromURL(from, to, conversionCallback(amount_from, from, to));
+                CurrenciesManager
+                        .getConversionFromURL(from, to, conversionCallback(amount_from, from, to));
+            }
         };
     }
 
