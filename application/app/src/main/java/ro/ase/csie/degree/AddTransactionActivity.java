@@ -73,12 +73,17 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         intent = getIntent();
         Transaction transaction = intent.getParcelableExtra(TemplatesActivity.USE_TEMPLATE);
+
+        boolean isTemplate = intent.getBooleanExtra(TemplatesActivity.NEW_TEMPLATE, false);
+        if (isTemplate) {
+            btn_save.setText(R.string.save_template);
+        }
+
         if (transaction != null) {
             buildTransaction(transaction);
             transaction.setId(null);
             this.transaction.setId(null);
             isTransaction = true;
-            Log.e("onCreate", transaction.toString());
         }
 
     }
@@ -261,16 +266,14 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private View.OnClickListener saveTransactionEventListener() {
         return v -> {
-            buildTransaction();
 
-            Log.e("saveTransaction", transaction.toString());
+            if (InputValidation.amountValidation(getApplicationContext(), tiet_amount)) {
 
-            if (validate(rg_type.getCheckedRadioButtonId(), transaction)) {
-                close();
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "Invalid transaction.",
-                        Toast.LENGTH_LONG).show();
+                buildTransaction();
+
+                if (validate(rg_type.getCheckedRadioButtonId(), transaction)) {
+                    close();
+                }
             }
         };
 
@@ -278,15 +281,15 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private boolean validate(int id, Transaction transaction) {
         if (id == R.id.add_transaction_type_expense) {
-            return InputValidation.expenseValidation(transaction);
+            return InputValidation.expenseValidation(getApplicationContext(), transaction);
         } else if (id == R.id.add_transaction_type_income) {
-            return InputValidation.incomeValidation(transaction);
+            return InputValidation.incomeValidation(getApplicationContext(), transaction);
         } else {
-            if (spn_balances_from.getSelectedItemId() == spn_balances_to.getSelectedItemId()) {
-                return false;
-            }
+//            if (spn_balances_from.getSelectedItemId() == spn_balances_to.getSelectedItemId()) {
+//                return false;
+//            }
             transaction.setCategory(Transfer.getTransferCategory());
-            return InputValidation.transferValidation(transaction);
+            return InputValidation.transferValidation(getApplicationContext(), transaction);
         }
     }
 

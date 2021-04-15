@@ -83,4 +83,16 @@
     <string name="row_item_transaction_expand_details">Details: %s</string>
     <string name="row_item_transaction_expand_balance_from">From: %s</string>
     <string name="row_item_transaction_expand_balance_to">To: %s</string>
+    <string name="error_invalid_balance_from">You must select the balance to withdraw from.</string>
+    <string name="error_invalid_balance_to">You must select the balance to deposit to.</string>
+    <string name="error_same_balances_transfer">Balances should be different.</string>
+    <string name="error_amount_negative">Amount should be a positive number.</string>
+    <string name="error_amount_not_available">Amount not available.</string>
+    <string name="save_transaction">Save transaction</string>
+    <string name="save_template">Save template</string>
+    <string name="header_delete">Delete</string>
+    <string name="dialog_delete_balance">Are you sure you want to delete this balance?</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="dialog_delete_template">Are you sure you want to delete this template?</string>
 </resources>

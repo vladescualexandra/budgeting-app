@@ -22,11 +22,13 @@ import androidx.cardview.widget.CardView;
 import java.util.List;
 
 import ro.ase.csie.degree.AddTransactionActivity;
+import ro.ase.csie.degree.CustomDialog;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.settings.TemplatesActivity;
+import ro.ase.csie.degree.settings.balances.BalancesActivity;
 
 public class TemplateAdapter extends ArrayAdapter<Transaction> {
 
@@ -68,26 +70,15 @@ public class TemplateAdapter extends ArrayAdapter<Transaction> {
 
     private View.OnLongClickListener deleteTemplateListener(int position) {
         return v -> {
-            AlertDialog dialog = new AlertDialog.Builder(context)
-                    .setTitle("Delete")
-                    .setMessage("Are you sure you want to delete this template?")
-                    .setPositiveButton("Yes", (dialog12, which) -> {
+
+            CustomDialog.show(context,
+                    R.string.header_delete,
+                    R.string.dialog_delete_template,
+                    (dialog1, which) -> {
                         TemplateService templateService = new TemplateService();
                         templateService.delete(templates.get(position));
-                    })
-                    .setNegativeButton("Cancel", (dialog1, which) -> {
-                    })
-                    .create();
+                    });
 
-
-            dialog.show();
-
-            dialog
-                    .getButton(DialogInterface.BUTTON_NEGATIVE)
-                    .setTextColor(context.getResources().getColor(R.color.rally_dark_green));
-            dialog
-                    .getButton(DialogInterface.BUTTON_POSITIVE)
-                    .setTextColor(context.getResources().getColor(R.color.rally_dark_green));
             return false;
         };
     }

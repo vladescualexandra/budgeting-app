@@ -1,10 +1,8 @@
 package ro.ase.csie.degree.util;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Patterns;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
@@ -23,8 +21,8 @@ public class InputValidation {
 
     public static String REGEX_ONLY_LETTERS = "[a-zA-Z]+";
 
-    public static double MINIMUM_BALANCE = 0.0;
-    public static double MAXIMUM_BALANCE = 1_000_000.0;
+    public static double MINIMUM_AMOUNT = 0.0;
+    public static double MAXIMUM_AMOUNT = 1_000_000.0;
 
 
     public static boolean nameValidation(Context context, TextInputEditText tiet) {
@@ -101,7 +99,7 @@ public class InputValidation {
         }
 
         double amount = Double.parseDouble(text);
-        if (amount > MINIMUM_BALANCE && amount < MAXIMUM_BALANCE) {
+        if (amount > MINIMUM_AMOUNT && amount < MAXIMUM_AMOUNT) {
             tiet.setError(null);
             return true;
         } else {
@@ -110,22 +108,78 @@ public class InputValidation {
         }
     }
 
-    public static boolean expenseValidation(Transaction expense) {
+    public static boolean expenseValidation(Context context, Transaction expense) {
         expense.setBalance_to(null);
-        return expense.getAmount() > 0 && expense.getBalance_from().getAvailable_amount() >= expense.getAmount();
+
+        String error = null;
+        if (expense.getBalance_from() == null) {
+            error = context.getResources().getString(R.string.error_invalid_balance_from);
+        }
+        if (expense.getAmount() <= MINIMUM_AMOUNT || expense.getAmount() >= MAXIMUM_AMOUNT) {
+            error = context.getResources().getString(R.string.invalid_available_amount);
+        }
+        if (expense.getBalance_from().getAvailable_amount() < expense.getAmount()) {
+            error = context.getResources().getString(R.string.error_amount_not_available);
+        }
+
+        if (error != null) {
+            Toast.makeText(context,
+                    error,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public static boolean incomeValidation(Transaction income) {
+    public static boolean incomeValidation(Context context, Transaction income) {
         income.setBalance_from(null);
-        return income.getAmount() > 0;
+
+        String error = null;
+        if (income.getBalance_to() == null) {
+            error = context.getResources().getString(R.string.error_invalid_balance_to);
+        }
+
+        if (income.getAmount() <= MINIMUM_AMOUNT || income.getAmount() >= MAXIMUM_AMOUNT) {
+            error = context.getResources().getString(R.string.invalid_available_amount);
+        }
+
+        if (error != null) {
+            Toast.makeText(context,
+                    error,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public static boolean transferValidation(Transaction transfer) {
-        return transfer.getBalance_from() != null
-                && transfer.getBalance_to() != null
-                && !transfer.getBalance_from().getId().equals(transfer.getBalance_to().getId())
-                && transfer.getAmount() > 0
-                && transfer.getBalance_from().getAvailable_amount() >= transfer.getAmount();
+    public static boolean transferValidation(Context context, Transaction transfer) {
+        String error = null;
+        if (transfer.getBalance_from() == null) {
+            error = context.getResources().getString(R.string.error_invalid_balance_from);
+        }
+        if (transfer.getBalance_to() == null) {
+            error = context.getResources().getString(R.string.error_invalid_balance_to);
+        }
+        if (transfer.getBalance_from().getId().equals(transfer.getBalance_to().getId())) {
+            error = context.getResources().getString(R.string.error_same_balances_transfer);
+        }
+        if (transfer.getAmount() <= MINIMUM_AMOUNT) {
+            error = context.getResources().getString(R.string.error_amount_negative);
+        }
+        if (transfer.getBalance_from().getAvailable_amount() < transfer.getAmount()) {
+            error = context.getResources().getString(R.string.error_amount_not_available);
+        }
+
+        if (error != null) {
+            Toast.makeText(context,
+                    error,
+                    Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public static boolean amountValidation(Context context, TextInputEditText tiet) {
@@ -133,14 +187,14 @@ public class InputValidation {
             throw new NullPointerException();
         }
 
-        double amount = MINIMUM_BALANCE;
+        double amount = MINIMUM_AMOUNT;
 
         String text = tiet.getText().toString().trim();
         if (!text.isEmpty()) {
             amount = Double.parseDouble(text);
         }
 
-        if (amount > MINIMUM_BALANCE && amount < MAXIMUM_BALANCE) {
+        if (amount > MINIMUM_AMOUNT && amount < MAXIMUM_AMOUNT) {
             tiet.setError(null);
             return true;
         } else {

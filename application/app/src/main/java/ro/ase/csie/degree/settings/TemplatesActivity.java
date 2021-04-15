@@ -25,6 +25,7 @@ public class TemplatesActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_CREATE_TEMPLATE = 201;
     public static final int REQUEST_CODE_USE_TEMPLATE = 202;
     public static final String USE_TEMPLATE = "use_template";
+    public static final String NEW_TEMPLATE = "new_template";
     private ImageButton ib_back;
     private ImageButton ib_add;
     private ListView lv_templates;
@@ -83,6 +84,7 @@ public class TemplatesActivity extends AppCompatActivity {
     private View.OnClickListener addTemplateEventListener() {
         return v -> {
             Intent intent = new Intent(getApplicationContext(), AddTransactionActivity.class);
+            intent.putExtra(NEW_TEMPLATE, true);
             startActivityForResult(intent, REQUEST_CODE_CREATE_TEMPLATE);
         };
     }
