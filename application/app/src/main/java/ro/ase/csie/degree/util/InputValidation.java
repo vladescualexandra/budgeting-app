@@ -87,7 +87,12 @@ public class InputValidation {
         if (tiet.getText() == null) {
             throw new NullPointerException();
         }
-        if (Double.parseDouble(tiet.getText().toString()) >= 0.0) {
+
+        String text = tiet.getText().toString();
+        if (text.isEmpty()) {
+            text = "0";
+        }
+        if (Double.parseDouble(text) > 0.0) {
             tiet.setError(null);
             return true;
         } else {
