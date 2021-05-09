@@ -1,11 +1,16 @@
 package ro.ase.csie.degree.settings;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +18,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
@@ -22,6 +29,8 @@ import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
+import ro.ase.csie.degree.util.LanguageManager;
+import ro.ase.csie.degree.util.Languages;
 import ro.ase.csie.degree.util.Notifications;
 import ro.ase.csie.degree.util.Streak;
 
@@ -46,10 +55,13 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_contact;
     private Button btn_sign_out;
 
-
     SharedPreferences settings;
     SharedPreferences.Editor settingsEditor;
 
+    private Context context;
+    private Resources resources;
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
         tv_streak.setText(Streak.days + " days streak");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initEventListeners() {
         btn_back.setOnClickListener(v -> finish());
 
@@ -166,9 +179,30 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private View.OnClickListener languageEventListener() {
         return v -> {
+            new AlertDialog.Builder(this)
+                    .setSingleChoiceItems(new CharSequence[]{Languages.ENGLISH.toString(), Languages.ROMANIAN.toString()},
+                            0, (dialog, which) -> {
+                                String selectedLanguage = Languages.ENGLISH.toString();
+                                if (which == 1) {
+                                    selectedLanguage = Languages.ROMANIAN.toString();
+                                }
+                                context = LanguageManager.setLanguage(this, selectedLanguage);
 
+                                getBaseContext().getResources().updateConfiguration(LanguageManager.configuration,
+                                        getBaseContext().getResources().getDisplayMetrics());
+
+                                resources = context.getResources();
+
+                                setContentView(R.layout.activity_settings);
+
+                                Toast.makeText(getApplicationContext(),
+                                        selectedLanguage,
+                                        Toast.LENGTH_LONG).show();
+                            })
+                    .show();
         };
     }
 

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">budgeting-app</string>
+    <string name="text_email">E-mail</string>
+    <string name="text_password">Parolă</string>
+    <string name="login_register_text">Nu ai cont? Creează unul nou!</string>
+    <string name="text_login">Autentificare</string>
+    <string name="text_name">Nume</string>
+    <string name="text_redirect_login">Ai un cont deja? Autentifică-te!</string>
+    <string name="text_register">Creează cont</string>
+    <string name="toast_invalid_account">Cont invalid</string>
+
+    <string name="error_invalid_email">Adresă de e-mail invalidă.</string>
+    <string name="error_invalid_password">
+            Parolele puternice ar trebui să aibă cel puțin 6 caractere și să aibă un mix de litere și numere.
+    </string>
+    <string name="btn_register_with_google">Autentificare cu Google.</string>
+    <string name="error_invalid_name_length">
+        Numele trebuie să aibă între 3 și 12 caractere.</string>
+    <string name="error_invalid_name_not_letters">
+        Numele trebuie să conțină doar litere.</string>
+    <string name="tab_today">Azi</string>
+    <string name="tab_week">Săpămână</string>
+    <string name="tab_month">Lună</string>
+    <string name="tab_total">Total</string>
+    <string name="tab_day">Zi</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_year">An</string>
+    <string name="menu_new_transaction">Tranzacție nouă</string>
+    <string name="menu_settings">Setări</string>
+    <string name="placeholder_name">placeholder_name</string>
+    <string name="placeholder_email">placeholder_email</string>
+
+    <string name="settings_balances">Balanțe</string>
+    <string name="settings_templates">Șabloane</string>
+    <string name="settings_theme">Temă</string>
+    <string name="settings_language">Limbă</string>
+    <string name="settings_sign_out">Deconectare</string>
+    <string name="settings_contact">Contact</string>
+    <string name="settings_reminders">Notificări</string>
+    <string name="settings_categories">Categorii</string>
+    <string name="settings_back">Înapoi</string>
+    <string name="categories_expenses">Cheltuieli</string>
+    <string name="categories_income">Venituri</string>
+    <string name="add_new_category">Adaugă o categorie nouă</string>
+    <string name="default_category_name">default category name</string>
+    <string name="dialog_cancel">Anulează</string>
+    <string name="dialog_save">Salvează</string>
+    <string name="category_name">Nume categorie</string>
+    <string name="invalid_category_name">
+        Numele categoriei trebuie să aibă cel puțin 3 caractere.</string>
+    <string name="plus_sign">+</string>
+    <string name="default_total_balance">Balanță totală: 0.00</string>
+    <string name="default_balance_name">Default balance name</string>
+    <string name="default_amount">0.00$</string>
+    <string name="balance_name">Nume balanță</string>
+    <string name="available_amount">Sumă disponibilă</string>
+    <string name="invalid_available_amount">
+        Suma disponibilă trebuie să fie un număr mai mare decât 0 și mai mic decât 1 milion.</string>
+    <string name="default_transaction_details">Detalii tranzacție</string>
+    <string name="expense_category_name">Nume categorie cheltuieli</string>
+    <string name="income_category_name">Nume categorie venituri</string>
+
+    <string name="add_transaction_amount">Valoare</string>
+    <string name="today">Azi</string>
+    <string name="transaction_details_optional">Detalii (opțional)</string>
+    <string name="invalid_amount">Valoare indisponibilă</string>
+    <string name="date_month_year_selector">date/month/year selector</string>
+    <string name="default_date">Default date</string>
+    <string name="select_category">Selectează categorie</string>
+    <string name="select_balance">Selectează balanță</string>
+    <string name="settings_currency">Valută</string>
+    <string name="settings_converter">Conversie valută</string>
+    <string name="search">Caută</string>
+    <string name="placeholder_currency">placeholder_currency</string>
+    <string name="converter_convert">Convertește</string>
+    <string name="categories_transfer">Transfer</string>
+    <string name="_0">0</string>
+    <string name="default_currency">default currency</string>
+    <string name="spinner_balance_from">Din balanța</string>
+    <string name="spinner_category">Categorie</string>
+    <string name="spinner_balance_to">Către balanța</string>
+    <string name="login_forgot_password">Ai uitat parola?</string>
+    <string name="placeholder_streak">placeholder_streak</string>
+
+    <string name="row_item_transaction_expand_date">Data: %s</string>
+    <string name="row_item_transaction_expand_details">Detalii: %s</string>
+    <string name="row_item_transaction_expand_balance_from">Din: %s</string>
+    <string name="row_item_transaction_expand_balance_to">În: %s</string>
+    <string name="error_invalid_balance_from">
+        Trebuie să selectezi balanța din care extragi.</string>
+    <string name="error_invalid_balance_to">
+            Trebuie să selectezi balanța în care depui.</string>
+    <string name="error_same_balances_transfer">
+        Balanțele trebuie să fie diferite.</string>
+    <string name="error_amount_negative">
+        Valoarea trebuie să fie un număr pozitiv.</string>
+    <string name="error_amount_not_available">Valoare indisponibilă.</string>
+    <string name="save_transaction">Salvează tranzacția</string>
+    <string name="save_template">Salvează șablonul</string>
+    <string name="header_delete">Șterge</string>
+    <string name="dialog_delete_balance">Ești sigur(ă) că vrei să ștergi tranzacția?</string>
+    <string name="button_yes">Da</string>
+    <string name="button_cancel">Anulează</string>
+    <string name="dialog_delete_template">Ești sigur(ă) că vrei să ștergi șablonul?</string>
+</resources>
