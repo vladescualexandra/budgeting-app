@@ -55,7 +55,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocaleHelper.getSettings(getBaseContext());
         setContentView(R.layout.activity_settings);
 
         initComponents();
@@ -181,8 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                                 LocaleHelper.setLanguage(getBaseContext(), selectedLanguage);
                                 LocaleHelper.apply(getBaseContext());
-                                setContentView(R.layout.activity_settings);
-                                initComponents();
+                                recreate();
                             })
                     .show();
         };
