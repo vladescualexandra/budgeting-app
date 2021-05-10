@@ -1,9 +1,11 @@
 package ro.ase.csie.degree.settings.categories;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,7 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
+import ro.ase.csie.degree.util.LocaleHelper;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +47,7 @@ public class CategoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocaleHelper.getSettings(getBaseContext());
         setContentView(R.layout.activity_categories);
 
         initMenu();

@@ -6,22 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
@@ -29,15 +27,13 @@ import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.LanguageManager;
+import ro.ase.csie.degree.util.LocaleHelper;
 import ro.ase.csie.degree.util.Languages;
 import ro.ase.csie.degree.util.Notifications;
 import ro.ase.csie.degree.util.Streak;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public static final String REMINDERS = "reminders";
-    public static final String PREFS_SETTINGS = "settings";
     private TextView tv_user_name;
     private TextView tv_user_email;
     private TextView tv_user_currency;
@@ -55,24 +51,16 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_contact;
     private Button btn_sign_out;
 
-    SharedPreferences settings;
-    SharedPreferences.Editor settingsEditor;
 
-    private Context context;
-    private Resources resources;
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocaleHelper.getSettings(getBaseContext());
         setContentView(R.layout.activity_settings);
-
-        settings = getSharedPreferences(PREFS_SETTINGS, Context.MODE_PRIVATE);
 
         initComponents();
         setAccount();
         initEventListeners();
-
     }
 
     private void initComponents() {
@@ -105,7 +93,6 @@ public class SettingsActivity extends AppCompatActivity {
         tv_streak.setText(Streak.days + " days streak");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initEventListeners() {
         btn_back.setOnClickListener(v -> finish());
 
@@ -117,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_theme.setOnClickListener(themeEventListener());
         btn_language.setOnClickListener(languageEventListener());
 
-        switch_reminder.setChecked(settings.getBoolean(REMINDERS, false));
+        switch_reminder.setChecked(LocaleHelper.getSelectedReminders(getApplicationContext()));
         switch_reminder.setOnCheckedChangeListener(remindersEventListener());
 
         btn_contact.setOnClickListener(contactEventListener());
@@ -179,28 +166,23 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private View.OnClickListener languageEventListener() {
         return v -> {
+            CharSequence[] languages = {Languages.ENGLISH.toString(), Languages.ROMANIAN.toString()};
+            int checkedLanguage = LocaleHelper.getSelectedLanguage(getApplicationContext()).equals(Languages.ENGLISH.toString()) ? 0 : 1;
             new AlertDialog.Builder(this)
-                    .setSingleChoiceItems(new CharSequence[]{Languages.ENGLISH.toString(), Languages.ROMANIAN.toString()},
-                            0, (dialog, which) -> {
+                    .setSingleChoiceItems(languages,
+                            checkedLanguage, (dialog, which) -> {
+
                                 String selectedLanguage = Languages.ENGLISH.toString();
                                 if (which == 1) {
                                     selectedLanguage = Languages.ROMANIAN.toString();
                                 }
-                                context = LanguageManager.setLanguage(this, selectedLanguage);
 
-                                getBaseContext().getResources().updateConfiguration(LanguageManager.configuration,
-                                        getBaseContext().getResources().getDisplayMetrics());
-
-                                resources = context.getResources();
-
+                                LocaleHelper.setLanguage(getBaseContext(), selectedLanguage);
+                                LocaleHelper.apply(getBaseContext());
                                 setContentView(R.layout.activity_settings);
-
-                                Toast.makeText(getApplicationContext(),
-                                        selectedLanguage,
-                                        Toast.LENGTH_LONG).show();
+                                initComponents();
                             })
                     .show();
         };
@@ -214,9 +196,10 @@ public class SettingsActivity extends AppCompatActivity {
                 Notifications.cancelNotification(this);
             }
 
-            settingsEditor = settings.edit();
-            settingsEditor.putBoolean(REMINDERS, isChecked);
-            settingsEditor.apply();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(LocaleHelper.SELECTED_REMINDERS, isChecked);
+            editor.apply();
         };
     }
 
