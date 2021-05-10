@@ -1,15 +1,13 @@
 package ro.ase.csie.degree.settings;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import ro.ase.csie.degree.R;
@@ -27,10 +24,11 @@ import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.LocaleHelper;
+import ro.ase.csie.degree.util.managers.LanguageManagers;
 import ro.ase.csie.degree.util.Languages;
 import ro.ase.csie.degree.util.Notifications;
 import ro.ase.csie.degree.util.Streak;
+import ro.ase.csie.degree.util.managers.ThemeManager;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -103,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_theme.setOnClickListener(themeEventListener());
         btn_language.setOnClickListener(languageEventListener());
 
-        switch_reminder.setChecked(LocaleHelper.getSelectedReminders(getApplicationContext()));
+        switch_reminder.setChecked(LanguageManagers.getSelectedReminders(getApplicationContext()));
         switch_reminder.setOnCheckedChangeListener(remindersEventListener());
 
         btn_contact.setOnClickListener(contactEventListener());
@@ -159,16 +157,18 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
+    boolean isNight = false;
     private View.OnClickListener themeEventListener() {
         return v -> {
-
+            ThemeManager.setSelectedTheme(getApplicationContext(), isNight);
+            isNight = !isNight;
         };
     }
 
     private View.OnClickListener languageEventListener() {
         return v -> {
             CharSequence[] languages = {Languages.ENGLISH.toString(), Languages.ROMANIAN.toString()};
-            int checkedLanguage = LocaleHelper.getSelectedLanguage(getApplicationContext()).equals(Languages.ENGLISH.toString()) ? 0 : 1;
+            int checkedLanguage = LanguageManagers.getSelectedLanguage(getApplicationContext()).equals(Languages.ENGLISH.toString()) ? 0 : 1;
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(languages,
                             checkedLanguage, (dialog, which) -> {
@@ -178,8 +178,8 @@ public class SettingsActivity extends AppCompatActivity {
                                     selectedLanguage = Languages.ROMANIAN.toString();
                                 }
 
-                                LocaleHelper.setLanguage(getBaseContext(), selectedLanguage);
-                                LocaleHelper.apply(getBaseContext());
+                                LanguageManagers.setLanguage(getBaseContext(), selectedLanguage);
+                                LanguageManagers.apply(getBaseContext());
                                 recreate();
                             })
                     .show();
@@ -196,7 +196,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(LocaleHelper.SELECTED_REMINDERS, isChecked);
+            editor.putBoolean(LanguageManagers.SELECTED_REMINDERS, isChecked);
             editor.apply();
         };
     }

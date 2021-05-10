@@ -1,13 +1,10 @@
 package ro.ase.csie.degree.settings.categories;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,12 +13,11 @@ import android.widget.TextView;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.firebase.services.CategoryService;
-import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
-import ro.ase.csie.degree.util.LocaleHelper;
+import ro.ase.csie.degree.util.managers.LanguageManagers;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,7 +43,7 @@ public class CategoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocaleHelper.getSettings(getBaseContext());
+        LanguageManagers.getSettings(getBaseContext());
         setContentView(R.layout.activity_categories);
 
         initMenu();

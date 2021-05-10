@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util;
+package ro.ase.csie.degree.util.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,12 +13,13 @@ import androidx.annotation.RequiresApi;
 
 import java.util.Locale;
 
-public class LocaleHelper {
+import ro.ase.csie.degree.util.Languages;
+
+public class LanguageManagers {
 
     public static Configuration configuration;
 
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
-    private static final String SELECTED_THEME = "Locale.Helper.Selected.Theme";
     public static final String SELECTED_REMINDERS = "Locale.Helper.Selected.Reminders";
 
     public static String getSelectedLanguage(Context context) {
@@ -28,15 +29,6 @@ public class LocaleHelper {
             language = Languages.ENGLISH.toString();
         }
         return language;
-    }
-
-    public static String getSelectedTheme(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String theme = preferences.getString(SELECTED_THEME, null);
-        if (theme == null) {
-            theme = Themes.NIGHT.toString();
-        }
-        return theme;
     }
 
     public static boolean getSelectedReminders(Context context) {
@@ -49,7 +41,6 @@ public class LocaleHelper {
                 getSelectedLanguage(context),
                 Toast.LENGTH_LONG).show();
         setLanguage(context, getSelectedLanguage(context));
-        setTheme(context, getSelectedTheme(context));
     }
 
     public static void apply(Context context) {
@@ -66,13 +57,6 @@ public class LocaleHelper {
         }
         return updateResourcesLegacy(context, language);
     }
-
-    public static Context setTheme(Context context, String theme) {
-        persist(context, SELECTED_THEME, theme);
-
-        return null;
-    }
-
 
     private static Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
