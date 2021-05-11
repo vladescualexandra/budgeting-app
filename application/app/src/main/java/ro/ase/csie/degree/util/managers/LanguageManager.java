@@ -15,7 +15,7 @@ import java.util.Locale;
 
 import ro.ase.csie.degree.util.Languages;
 
-public class LanguageManagers {
+public class LanguageManager {
 
     public static Configuration configuration;
 
@@ -37,9 +37,6 @@ public class LanguageManagers {
     }
 
     public static void getSettings(Context context) {
-        Toast.makeText(context,
-                getSelectedLanguage(context),
-                Toast.LENGTH_LONG).show();
         setLanguage(context, getSelectedLanguage(context));
     }
 

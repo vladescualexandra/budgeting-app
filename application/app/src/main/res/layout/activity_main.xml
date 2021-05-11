@@ -9,8 +9,7 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/rally_dark_grey">
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/main_refresh"
@@ -42,7 +41,6 @@
             android:layout_row="0"
             android:layout_column="2"
             android:layout_columnSpan="1"
-            android:background="@color/rally_dark_grey"
             android:padding="10sp"
             android:src="@drawable/ic_baseline_add_24" />
 
@@ -53,7 +51,6 @@
             android:layout_row="0"
             android:layout_column="3"
             android:layout_columnSpan="1"
-            android:background="@color/rally_dark_grey"
             android:padding="10sp"
             android:src="@drawable/ic_baseline_settings_24" />
 
@@ -64,8 +61,7 @@
             android:layout_row="1"
             android:layout_column="0"
             android:layout_columnSpan="4"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/rally_white">
+            app:tabMode="fixed">
 
 
             <com.google.android.material.tabs.TabItem
@@ -145,8 +141,8 @@
     <ExpandableListView
         android:id="@+id/main_expandable_list_transactions"
         android:layout_width="match_parent"
-        android:divider="@null"
+        android:layout_height="match_parent"
         android:choiceMode="singleChoice"
-        android:layout_height="match_parent"/>
+        android:divider="@null" />
 
 </LinearLayout>

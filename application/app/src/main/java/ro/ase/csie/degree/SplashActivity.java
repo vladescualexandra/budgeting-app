@@ -10,6 +10,8 @@ import android.os.Handler;
 import ro.ase.csie.degree.authentication.LoginActivity;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.util.Streak;
+import ro.ase.csie.degree.util.managers.LanguageManager;
+import ro.ase.csie.degree.util.managers.ThemeManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -21,6 +23,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        LanguageManager.getSettings(getBaseContext());
+        LanguageManager.apply(getBaseContext());
+        ThemeManager.setSelectedTheme(getApplicationContext(), ThemeManager.getTheme(getBaseContext()));
 
         KEY = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
                 .getString(Account.USER_KEY, null);
@@ -37,7 +43,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
         }, DISPLAY_DURATION);
     }
-
 
 
 }

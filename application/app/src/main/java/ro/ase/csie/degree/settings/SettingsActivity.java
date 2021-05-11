@@ -2,12 +2,10 @@ package ro.ase.csie.degree.settings;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -24,7 +22,8 @@ import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.managers.LanguageManagers;
+import ro.ase.csie.degree.util.Themes;
+import ro.ase.csie.degree.util.managers.LanguageManager;
 import ro.ase.csie.degree.util.Languages;
 import ro.ase.csie.degree.util.Notifications;
 import ro.ase.csie.degree.util.Streak;
@@ -101,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_theme.setOnClickListener(themeEventListener());
         btn_language.setOnClickListener(languageEventListener());
 
-        switch_reminder.setChecked(LanguageManagers.getSelectedReminders(getApplicationContext()));
+        switch_reminder.setChecked(LanguageManager.getSelectedReminders(getApplicationContext()));
         switch_reminder.setOnCheckedChangeListener(remindersEventListener());
 
         btn_contact.setOnClickListener(contactEventListener());
@@ -157,18 +156,30 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
-    boolean isNight = false;
     private View.OnClickListener themeEventListener() {
         return v -> {
-            ThemeManager.setSelectedTheme(getApplicationContext(), isNight);
-            isNight = !isNight;
+            CharSequence[] themes = {Themes.LIGHT.toString(), Themes.NIGHT.toString()};
+            int checkedTheme = ThemeManager.getTheme(getApplicationContext()).equals(Themes.LIGHT) ? 0 : 1;
+            new AlertDialog.Builder(this)
+                    .setSingleChoiceItems(themes,
+                            checkedTheme, (dialog, which) -> {
+
+                                Themes selectedTheme = Themes.NIGHT;
+                                if (which == 0) {
+                                    selectedTheme = Themes.LIGHT;
+                                }
+
+                                ThemeManager.setSelectedTheme(getBaseContext(), selectedTheme);
+                                recreate();
+                            })
+                    .show();
         };
     }
 
     private View.OnClickListener languageEventListener() {
         return v -> {
             CharSequence[] languages = {Languages.ENGLISH.toString(), Languages.ROMANIAN.toString()};
-            int checkedLanguage = LanguageManagers.getSelectedLanguage(getApplicationContext()).equals(Languages.ENGLISH.toString()) ? 0 : 1;
+            int checkedLanguage = LanguageManager.getSelectedLanguage(getApplicationContext()).equals(Languages.ENGLISH.toString()) ? 0 : 1;
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(languages,
                             checkedLanguage, (dialog, which) -> {
@@ -178,8 +189,8 @@ public class SettingsActivity extends AppCompatActivity {
                                     selectedLanguage = Languages.ROMANIAN.toString();
                                 }
 
-                                LanguageManagers.setLanguage(getBaseContext(), selectedLanguage);
-                                LanguageManagers.apply(getBaseContext());
+                                LanguageManager.setLanguage(getBaseContext(), selectedLanguage);
+                                LanguageManager.apply(getBaseContext());
                                 recreate();
                             })
                     .show();
@@ -196,7 +207,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(LanguageManagers.SELECTED_REMINDERS, isChecked);
+            editor.putBoolean(LanguageManager.SELECTED_REMINDERS, isChecked);
             editor.apply();
         };
     }

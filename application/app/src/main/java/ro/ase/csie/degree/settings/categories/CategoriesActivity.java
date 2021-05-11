@@ -17,7 +17,7 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
-import ro.ase.csie.degree.util.managers.LanguageManagers;
+import ro.ase.csie.degree.util.managers.LanguageManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,7 +43,7 @@ public class CategoriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LanguageManagers.getSettings(getBaseContext());
+        LanguageManager.getSettings(getBaseContext());
         setContentView(R.layout.activity_categories);
 
         initMenu();
