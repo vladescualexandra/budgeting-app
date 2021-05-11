@@ -14,6 +14,7 @@
 
     <style name="settings_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="textAllCaps">false</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">16sp</item>
     </style>

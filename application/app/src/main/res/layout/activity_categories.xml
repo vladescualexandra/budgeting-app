@@ -32,8 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/rally_dark_grey"
-        android:backgroundTint="@color/rally_dark_grey"
         android:backgroundTintMode="screen"
         app:fabCradleMargin="10sp"
         app:fabCradleRoundedCornerRadius="10sp"

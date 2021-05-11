@@ -13,7 +13,6 @@
         android:layout_row="0"
         android:layout_column="0"
         android:layout_columnSpan="1"
-        android:background="@color/rally_grey"
         android:contentDescription="@string/settings_back"
         android:padding="8sp"
         android:src="@drawable/abc_vector_test" />
@@ -25,8 +24,7 @@
         android:layout_margin="10sp"
         android:hint="@string/search"
         android:padding="10sp"
-        android:textColor="@color/rally_white"
-        android:textColorHint="@color/rally_white" />
+      />
 
     <ListView
         android:id="@+id/currency_list"

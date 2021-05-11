@@ -16,7 +16,6 @@
             android:id="@+id/contact_mail"
             android:layout_width="match_parent"
             android:layout_height="100sp"
-            android:background="@color/rally_grey"
             android:scaleType="centerInside"
             android:src="@drawable/gmail"
             android:layout_margin="50sp"/>
@@ -26,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="100sp"
             android:layout_margin="50sp"
-            android:background="@color/rally_grey"
+
             android:scaleType="centerInside"
             android:src="@drawable/github" />
 
@@ -35,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="100sp"
             android:layout_margin="50sp"
-            android:background="@color/rally_grey"
+
             android:scaleType="centerInside"
             android:src="@drawable/linkedin" />
 

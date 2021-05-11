@@ -23,7 +23,7 @@
             android:checked="true"
             android:padding="8sp"
             android:text="@string/categories_expenses"
-            android:textColor="@color/rally_dark_green" />
+          />
 
         <RadioButton
             android:id="@+id/add_transaction_type_income"

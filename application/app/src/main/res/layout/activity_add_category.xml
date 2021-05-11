@@ -24,8 +24,7 @@
             android:id="@+id/add_category_select_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/rally_white"
-            android:textColorHint="@color/rally_white"/>
+       />
     </com.google.android.material.textfield.TextInputLayout>
 
 

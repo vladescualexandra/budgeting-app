@@ -19,6 +19,5 @@
         android:text="@string/default_category_name"
         android:textSize="20sp"
         android:layout_margin="8sp"
-        android:textColor="@color/rally_white"
         android:gravity="left|center" />
 </LinearLayout>
