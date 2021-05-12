@@ -44,7 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_templates;
     private Button btn_theme;
     private Button btn_language;
-    private Button btn_reminders;
     private SwitchCompat switch_reminder;
     private Button btn_contact;
     private Button btn_sign_out;
@@ -73,7 +72,6 @@ public class SettingsActivity extends AppCompatActivity {
         btn_templates = findViewById(R.id.settings_templates);
         btn_theme = findViewById(R.id.settings_theme);
         btn_language = findViewById(R.id.settings_language);
-        btn_reminders = findViewById(R.id.settings_reminders);
         switch_reminder = findViewById(R.id.settings_switch_reminders);
         btn_contact = findViewById(R.id.settings_contact);
         btn_sign_out = findViewById(R.id.settings_sign_out);
