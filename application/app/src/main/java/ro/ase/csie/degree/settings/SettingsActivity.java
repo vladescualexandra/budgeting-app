@@ -22,12 +22,12 @@ import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.Themes;
-import ro.ase.csie.degree.util.managers.LanguageManager;
-import ro.ase.csie.degree.util.Languages;
-import ro.ase.csie.degree.util.Notifications;
+import ro.ase.csie.degree.util.theme.Themes;
+import ro.ase.csie.degree.util.language.LanguageManager;
+import ro.ase.csie.degree.util.language.Languages;
+import ro.ase.csie.degree.util.notifications.Notifications;
 import ro.ase.csie.degree.util.Streak;
-import ro.ase.csie.degree.util.managers.ThemeManager;
+import ro.ase.csie.degree.util.theme.ThemeManager;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -82,11 +82,14 @@ public class SettingsActivity extends AppCompatActivity {
         tv_user_name.setText(Account.getInstance().getName());
         tv_user_email.setText(Account.getInstance().getEmail());
         if (Account.getInstance().getCurrency() != null) {
-            tv_user_currency.setText("Currency: " + Account.getInstance().getCurrency().toString());
+            String account_currency = getResources().getString(R.string.settings_account_currency,
+                    Account.getInstance().getCurrency().toString());
+            tv_user_currency.setText(account_currency);
         } else {
             tv_user_currency.setText("");
         }
-        tv_streak.setText(Streak.days + " days streak");
+        String account_streak = getResources().getString(R.string.settings_account_streak, Streak.days);
+        tv_streak.setText(account_streak);
     }
 
     private void initEventListeners() {

@@ -1,18 +1,13 @@
-package ro.ase.csie.degree.util.managers;
+package ro.ase.csie.degree.util.theme;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.android.material.theme.MaterialComponentsViewInflater;
-
-import ro.ase.csie.degree.util.Themes;
+import ro.ase.csie.degree.util.theme.Themes;
 
 public class ThemeManager {
 

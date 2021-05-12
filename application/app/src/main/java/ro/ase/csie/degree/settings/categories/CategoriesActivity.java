@@ -17,7 +17,7 @@ import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.adapters.CategoryAdapter;
-import ro.ase.csie.degree.util.managers.LanguageManager;
+import ro.ase.csie.degree.util.language.LanguageManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -28,7 +28,7 @@
             android:layout_column="1"
             android:layout_gravity="center"
             android:padding="10sp"
-            android:text="@string/date_month_year_selector"
+            android:text="@string/placeholder_date"
             android:textSize="20sp" />
 
 

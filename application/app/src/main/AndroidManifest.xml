@@ -34,12 +34,12 @@
         </activity>
 
         <receiver
-            android:name=".util.ReminderReceiver"
+            android:name=".util.notifications.ReminderReceiver"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name=".util.ReminderIntentService"
+            android:name=".util.notifications.ReminderIntentService"
             android:exported="false" />
     </application>
 

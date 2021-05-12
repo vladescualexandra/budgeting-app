@@ -12,7 +12,7 @@
         android:id="@+id/add_category_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_save" />
+        android:text="@string/save" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/login_register_input"
@@ -23,8 +23,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_category_select_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-       />
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
 

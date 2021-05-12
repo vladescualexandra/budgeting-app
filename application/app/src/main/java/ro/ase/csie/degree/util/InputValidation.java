@@ -103,7 +103,7 @@ public class InputValidation {
             tiet.setError(null);
             return true;
         } else {
-            tiet.setError(context.getString(R.string.invalid_available_amount));
+            tiet.setError(context.getString(R.string.error_invalid_amount));
             return false;
         }
     }
@@ -116,7 +116,7 @@ public class InputValidation {
             error = context.getResources().getString(R.string.error_invalid_balance_from);
         }
         if (expense.getAmount() <= MINIMUM_AMOUNT || expense.getAmount() >= MAXIMUM_AMOUNT) {
-            error = context.getResources().getString(R.string.invalid_available_amount);
+            error = context.getResources().getString(R.string.error_invalid_amount);
         }
         if (expense.getBalance_from().getAvailable_amount() < expense.getAmount()) {
             error = context.getResources().getString(R.string.error_amount_not_available);
@@ -141,7 +141,7 @@ public class InputValidation {
         }
 
         if (income.getAmount() <= MINIMUM_AMOUNT || income.getAmount() >= MAXIMUM_AMOUNT) {
-            error = context.getResources().getString(R.string.invalid_available_amount);
+            error = context.getResources().getString(R.string.error_invalid_amount);
         }
 
         if (error != null) {
@@ -198,7 +198,7 @@ public class InputValidation {
             tiet.setError(null);
             return true;
         } else {
-            tiet.setError(context.getString(R.string.invalid_available_amount));
+            tiet.setError(context.getString(R.string.error_invalid_amount));
             return false;
         }
     }

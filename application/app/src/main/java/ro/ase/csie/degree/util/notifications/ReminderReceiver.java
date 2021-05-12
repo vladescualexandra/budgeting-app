@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util;
+package ro.ase.csie.degree.util.notifications;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

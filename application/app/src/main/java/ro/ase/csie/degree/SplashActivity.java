@@ -10,8 +10,8 @@ import android.os.Handler;
 import ro.ase.csie.degree.authentication.LoginActivity;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.util.Streak;
-import ro.ase.csie.degree.util.managers.LanguageManager;
-import ro.ase.csie.degree.util.managers.ThemeManager;
+import ro.ase.csie.degree.util.language.LanguageManager;
+import ro.ase.csie.degree.util.theme.ThemeManager;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -1,10 +1,8 @@
 package ro.ase.csie.degree.settings.balances;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,11 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.ase.csie.degree.CustomDialog;
+import ro.ase.csie.degree.util.CustomDialog;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.services.BalanceService;
-import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.adapters.BalanceAdapter;
 import ro.ase.csie.degree.model.Currency;
@@ -76,7 +73,7 @@ public class BalancesActivity extends AppCompatActivity {
         return (parent, view, position, id) -> {
 
             CustomDialog.show(BalancesActivity.this,
-                    R.string.header_delete,
+                    R.string.dialog_delete_header,
                     R.string.dialog_delete_balance,
                     (dialog1, which) -> {
                         balanceService.delete(balanceList.get(position));

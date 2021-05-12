@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="@string/default_total_balance" />
+            android:text="@string/placeholder_total_balance" />
 
         <ImageButton
             android:id="@+id/balances_add"

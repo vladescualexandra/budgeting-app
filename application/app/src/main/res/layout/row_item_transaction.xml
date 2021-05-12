@@ -22,7 +22,7 @@
         android:layout_marginLeft="18sp"
         android:gravity="start"
         android:layout_weight="2"
-        android:text="@string/default_category_name"
+        android:text="@string/placeholder_category"
         android:textAlignment="viewStart" />
 
     <TextView
@@ -33,5 +33,5 @@
         android:gravity="end"
         android:layout_weight="2"
         android:textAlignment="viewEnd"
-        android:text="@string/default_amount" />
+        android:text="@string/placeholder_amount" />
 </LinearLayout>

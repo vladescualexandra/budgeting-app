@@ -151,20 +151,21 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
 
         tv_category.setText(transaction.getCategory().getName());
 
-        String sign;
+        int resId;
         switch (transaction.getCategory().getType()) {
             case EXPENSE:
-                sign = "-";
+                resId = R.string.row_item_transaction_expense;
                 break;
             case INCOME:
-                sign = "+";
+                resId = R.string.row_item_transaction_income;
                 break;
             default:
-                sign = "";
+                resId = R.string.row_item_transaction_transfer;
                 break;
         }
 
-        tv_amount.setText(sign + transaction.getAmount());
+        String transaction_amount = context.getResources().getString(resId, transaction.getAmount());
+        tv_amount.setText(transaction_amount);
         iv_bar.setBackgroundColor(context.getResources().getColor(transaction.getCategory().getColor()));
         tv_amount.setTextColor(context.getResources().getColor(transaction.getCategory().getColor()));
     }

@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util;
+package ro.ase.csie.degree.util.notifications;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -17,8 +17,8 @@ public class Notifications {
     private static Notification buildNotification(Context context) {
         return new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
-                .setContentTitle("Making transactions?")
-                .setContentText("Don't forget to budget!")
+                .setContentTitle(context.getResources().getString(R.string.notification_content_title))
+                .setContentText(context.getResources().getString(R.string.notification_content_text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .build();

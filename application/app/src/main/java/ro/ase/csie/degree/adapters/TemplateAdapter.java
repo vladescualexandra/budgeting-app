@@ -2,33 +2,26 @@ package ro.ase.csie.degree.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 
 import java.util.List;
 
 import ro.ase.csie.degree.AddTransactionActivity;
-import ro.ase.csie.degree.CustomDialog;
+import ro.ase.csie.degree.util.CustomDialog;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.services.TemplateService;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.settings.TemplatesActivity;
-import ro.ase.csie.degree.settings.balances.BalancesActivity;
 
 public class TemplateAdapter extends ArrayAdapter<Transaction> {
 
@@ -72,7 +65,7 @@ public class TemplateAdapter extends ArrayAdapter<Transaction> {
         return v -> {
 
             CustomDialog.show(context,
-                    R.string.header_delete,
+                    R.string.dialog_delete_header,
                     R.string.dialog_delete_template,
                     (dialog1, which) -> {
                         TemplateService templateService = new TemplateService();

@@ -6,5 +6,5 @@
     android:layout_height="wrap_content"
     android:padding="16sp"
     android:singleLine="true"
-    android:text="@string/default_currency"
+    android:text="@string/placeholder_currency"
     android:textSize="16sp" />
