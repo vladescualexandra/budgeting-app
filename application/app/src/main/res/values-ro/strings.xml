@@ -48,8 +48,8 @@
     <!--    Dates-->
     <string name="date_format_dd_mm_yyyy">$d/$d/%d</string>
     <string name="date_format_dd_month_yyyy">%d %s %d</string>
-    <string name="format_month_yyyy">%s %d</string>
-    <string name="format_year_yyyy">Year %d</string>
+    <string name="date_format_month_yyyy">%s %d</string>
+    <string name="date_format_year_yyyy">Anul %d</string>
 
     <!--    Settings-->
     <string name="settings_account_currency">Valută: %s</string>
@@ -66,6 +66,7 @@
     <string name="settings_converter">Conversie</string>
 
     <!--    Balances-->
+    <string name="balances_total">Balanță totală: %.2f</string>
     <string name="add_balance_name">Nume</string>
     <string name="add_balance_amount">Valoare</string>
 
@@ -74,13 +75,17 @@
     <string name="_0">0</string>
 
     <!--    Categories-->
-    <string name="categories_expenses">Chieltuieli</string>
+    <string name="categories_expenses">Cheltuieli</string>
     <string name="categories_income">Venituri</string>
     <string name="categories_transfer">Transfer</string>
 
     <string name="category_name">Nume</string>
     <string name="expense_category_name">Nume categorie cheltuială</string>
     <string name="income_category_name">Nume categorie venit</string>
+
+    <!-- Theme-->
+    <string name="theme_light">Luminoasă</string>
+    <string name="theme_dark">Întunecată</string>
 
     <!--    Language-->
     <string name="language_en">Engleză</string>

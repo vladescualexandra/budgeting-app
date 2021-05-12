@@ -1,5 +1,7 @@
 package ro.ase.csie.degree.firebase;
 
+import android.content.Context;
+
 import ro.ase.csie.degree.util.DateConverter;
 
 public enum DateDisplayType {
@@ -31,14 +33,14 @@ public enum DateDisplayType {
         }
     }
 
-    public static String display(DateDisplayType type, int day, int month, int year) {
+    public static String display(Context context, DateDisplayType type, int day, int month, int year) {
         switch (type) {
             case DAY_MONTH_YEAR:
-                return DateConverter.toDisplayDate(day, month, year);
+                return DateConverter.toDisplayDate(context, day, month, year);
             case MONTH_YEAR:
-                return DateConverter.toMonthYear(month, year);
+                return DateConverter.toMonthYear(context, month, year);
             case YEAR:
-                return DateConverter.toYear(year);
+                return DateConverter.toYear(context, year);
             default:
                 return "";
         }

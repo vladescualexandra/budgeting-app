@@ -40,7 +40,7 @@
     <!--    Transactions-->
     <string name="add_transaction_amount">Amount</string>
     <string name="add_transaction_details">Details (optional)</string>
-    <string name="today">Azi</string>
+    <string name="today">Today</string>
     <string name="error_invalid_account">Invalid account.</string>
     <string name="add_transaction_spinner_prompt_categories">Categories</string>
     <string name="add_transaction_spinner_prompt_balance_from">Balance from</string>
@@ -49,8 +49,8 @@
     <!--    Dates-->
     <string name="date_format_dd_mm_yyyy">$d/$d/%d</string>
     <string name="date_format_dd_month_yyyy">%d %s %d</string>
-    <string name="format_month_yyyy">%s %d</string>
-    <string name="format_year_yyyy">Year %d</string>
+    <string name="date_format_month_yyyy">%s %d</string>
+    <string name="date_format_year_yyyy">Year %d</string>
 
     <!--    Settings-->
     <string name="settings_account_currency">Currency: %s</string>
@@ -63,11 +63,11 @@
     <string name="settings_contact">Contact</string>
     <string name="settings_reminders">Reminders</string>
     <string name="settings_categories">Categories</string>
-    <string name="settings_back">Back</string>
     <string name="settings_currency">Currency</string>
     <string name="settings_converter">Converter</string>
 
     <!--    Balances-->
+    <string name="balances_total">Total balance: %.2f</string>
     <string name="add_balance_name">Name</string>
     <string name="add_balance_amount">Amount</string>
 
@@ -80,10 +80,13 @@
     <string name="categories_income">Income</string>
     <string name="categories_transfer">Transfer</string>
 
-    <string name="add_new_category">Add new category</string>
     <string name="category_name">Category name</string>
     <string name="expense_category_name">Expense category name</string>
     <string name="income_category_name">Income category name</string>
+
+    <!-- Theme-->
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 
     <!--    Language-->
     <string name="language_en">English</string>

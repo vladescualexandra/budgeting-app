@@ -13,10 +13,11 @@ public class ThemeManager {
 
     private static final String SELECTED_THEME = "Locale.Helper.Selected.Theme";
 
+    public static void getSettings(Context context) {
+        setSelectedTheme(context, getTheme(context));
+    }
+
     public static void setSelectedTheme(Context context, Themes theme) {
-        Toast.makeText(context,
-                theme.toString(),
-                Toast.LENGTH_LONG).show();
         if (theme.equals(Themes.NIGHT)) {
             AppCompatDelegate.setDefaultNightMode(
                     AppCompatDelegate.MODE_NIGHT_YES

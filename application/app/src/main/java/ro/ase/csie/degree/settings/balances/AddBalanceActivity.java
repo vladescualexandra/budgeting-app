@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,7 +18,7 @@ public class AddBalanceActivity extends AppCompatActivity {
     public static final String NEW_BALANCE = "new_balance";
 
     private TextInputEditText tiet_name;
-    private TextInputEditText tiet_available_amount;
+    private TextInputEditText tiet_amount;
     private Button btn_save;
 
     private Balance balance = new Balance();
@@ -31,13 +30,12 @@ public class AddBalanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_balance);
 
         initComponents();
-
     }
 
     private void initComponents() {
         intent = getIntent();
         tiet_name = findViewById(R.id.add_balance_name);
-        tiet_available_amount = findViewById(R.id.add_balance_available_amount);
+        tiet_amount = findViewById(R.id.add_balance_available_amount);
         btn_save = findViewById(R.id.add_balance_save);
 
         btn_save.setOnClickListener(saveBalanceEventListener());
@@ -48,8 +46,8 @@ public class AddBalanceActivity extends AppCompatActivity {
             if (InputValidation.nameValidation(getApplicationContext(), tiet_name)) {
                 balance = new Balance();
                 balance.setName(tiet_name.getText().toString().trim());
-                if (InputValidation.availableAmountValidation(getApplicationContext(), tiet_available_amount)) {
-                    balance.setAvailable_amount(Double.parseDouble(tiet_available_amount.getText().toString().trim()));
+                if (InputValidation.availableAmountValidation(getApplicationContext(), tiet_amount)) {
+                    balance.setAvailable_amount(Double.parseDouble(tiet_amount.getText().toString().trim()));
                     saveBalance();
                 }
             }

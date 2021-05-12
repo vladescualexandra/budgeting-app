@@ -124,6 +124,6 @@ public class BalancesActivity extends AppCompatActivity {
     }
 
     private void setTotal(TextView tv_total_text, double totalAmount) {
-        tv_total_text.setText("Total balance: " + String.format("%.2f", totalAmount));
+        tv_total_text.setText(getResources().getString(R.string.balances_total, totalAmount));
     }
 }

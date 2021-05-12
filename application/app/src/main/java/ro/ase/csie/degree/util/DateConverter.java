@@ -1,10 +1,13 @@
 package ro.ase.csie.degree.util;
 
+import android.content.Context;
+
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.DateDisplayType;
 
 public class DateConverter {
@@ -50,16 +53,20 @@ public class DateConverter {
         return null;
     }
 
-    public static String toMonthYear(int month, int year) {
-        return new DateFormatSymbols().getMonths()[month] + " " + year;
+    public static String toMonthYear(Context context, int month, int year) {
+        return context.getResources().getString(R.string.date_format_month_yyyy,
+                new DateFormatSymbols().getMonths()[month], year);
     }
 
-    public static String toYear(int selectedYear) {
-        return "Year " + selectedYear;
+    public static String toYear(Context context, int selectedYear) {
+        return context.getResources().getString(R.string.date_format_year_yyyy, selectedYear);
     }
 
-    public static String toDisplayDate(int day, int month, int year) {
-        return day + " " + new DateFormatSymbols().getMonths()[month] + " " + year;
+    public static String toDisplayDate(Context context, int day, int month, int year) {
+        return context
+                .getResources()
+                .getString(R.string.date_format_dd_month_yyyy,
+                        day, new DateFormatSymbols().getMonths()[month], year);
 
     }
 
@@ -76,7 +83,7 @@ public class DateConverter {
         int[] pieces = toPieces(date);
         int[] filters = toPieces(filter);
 
-        for (int i=1; i<pieces.length; i++) {
+        for (int i = 1; i < pieces.length; i++) {
             if (pieces[i] != filters[i]) {
                 return false;
             }
@@ -88,7 +95,7 @@ public class DateConverter {
         int[] pieces = toPieces(date);
         int[] filters = toPieces(filter);
 
-        for (int i=type.getType(); i<pieces.length; i++) {
+        for (int i = type.getType(); i < pieces.length; i++) {
             if (pieces[i] != filters[i]) {
                 return false;
             }

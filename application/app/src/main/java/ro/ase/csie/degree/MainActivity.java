@@ -27,6 +27,7 @@ import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.Streak;
+import ro.ase.csie.degree.util.language.LanguageManager;
 
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         View parentLayout = findViewById(android.R.id.content);
         Snackbar.make(parentLayout,
-                Streak.days + " streak days.",
+                getResources().getString(R.string.settings_account_streak, Streak.days),
                 BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
@@ -282,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFilterText() {
-        tv_date_filter.setText(DateDisplayType.display(dateDisplayType, day, month, year));
+        tv_date_filter.setText(DateDisplayType.display(getApplicationContext(), dateDisplayType, day, month, year));
     }
 
     private void show() {

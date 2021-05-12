@@ -35,6 +35,7 @@ public class LanguageManager {
 
     public static void getSettings(Context context) {
         setLanguage(context, getSelectedLanguage(context));
+        apply(context);
     }
 
     public static void apply(Context context) {

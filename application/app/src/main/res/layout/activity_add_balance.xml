@@ -18,7 +18,7 @@
             style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/placeholder_balance" />
+            android:hint="@string/add_balance_name" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -32,7 +32,7 @@
             style="@style/text_style_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/placeholder_amount"
+            android:hint="@string/add_balance_amount"
             android:inputType="numberDecimal" />
 
 

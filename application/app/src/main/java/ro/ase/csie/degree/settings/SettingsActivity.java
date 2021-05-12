@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
@@ -161,8 +162,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private View.OnClickListener themeEventListener() {
         return v -> {
-            CharSequence[] themes = {Themes.LIGHT.toString(), Themes.NIGHT.toString()};
-            int checkedTheme = ThemeManager.getTheme(getApplicationContext()).equals(Themes.LIGHT) ? 0 : 1;
+            CharSequence[] themes = {getResources().getString(R.string.theme_light),
+                    getResources().getString(R.string.theme_dark)};
+            int checkedTheme = ThemeManager.getTheme(getApplicationContext()).equals(Themes.NIGHT) ? 1 : 0;
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(themes,
                             checkedTheme, (dialog, which) -> {
@@ -173,7 +175,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
 
                                 ThemeManager.setSelectedTheme(getBaseContext(), selectedTheme);
-                                recreate();
                             })
                     .show();
         };
@@ -181,7 +182,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private View.OnClickListener languageEventListener() {
         return v -> {
-            CharSequence[] languages = {Languages.ENGLISH.toString(), Languages.ROMANIAN.toString()};
+            CharSequence[] languages = {getResources().getString(R.string.language_en),
+                    getResources().getString(R.string.language_ro)};
             int checkedLanguage = LanguageManager.getSelectedLanguage(getApplicationContext()).equals(Languages.ENGLISH.toString()) ? 0 : 1;
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(languages,
