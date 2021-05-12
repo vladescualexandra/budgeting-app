@@ -216,6 +216,9 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private RadioGroup.OnCheckedChangeListener changeTypeEventListener() {
         return (group, checkedId) -> {
+            if (transaction.getCategory() == null) {
+                transaction.setCategory(new Category());
+            }
             switch (checkedId) {
                 case R.id.add_transaction_type_expense:
                     spn_balances_from.setVisibility(View.VISIBLE);
@@ -285,9 +288,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         } else if (id == R.id.add_transaction_type_income) {
             return InputValidation.incomeValidation(getApplicationContext(), transaction);
         } else {
-//            if (spn_balances_from.getSelectedItemId() == spn_balances_to.getSelectedItemId()) {
-//                return false;
-//            }
             transaction.setCategory(Transfer.getTransferCategory());
             return InputValidation.transferValidation(getApplicationContext(), transaction);
         }
@@ -334,10 +334,10 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 R.layout.row_spinner_simple,
                                 getCategoriesByType());
         spn_category.setAdapter(adapter);
-        spn_category.setPrompt("Categories");
-
-        spn_category.setSelection(getCategoryPosition(transaction.getCategory(), expenseCategories));
-
+        spn_category.setPrompt(getString(R.string.add_transaction_spinner_prompt_categories));
+        if (transaction.getCategory() != null) {
+            spn_category.setSelection(getCategoryPosition(transaction.getCategory(), expenseCategories));
+        }
     }
 
     private void setBalanceAdapter() {
@@ -348,11 +348,16 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 balances);
         spn_balances_from.setAdapter(adapter);
         spn_balances_to.setAdapter(adapter);
-        spn_balances_from.setPrompt("Balance from");
-        spn_balances_to.setPrompt("Balance to");
+        spn_balances_from.setPrompt(getString(R.string.add_transaction_spinner_prompt_balance_from));
+        spn_balances_to.setPrompt(getString(R.string.add_transaction_spinner_prompt_balance_to));
 
-        spn_balances_from.setSelection(getBalancePosition(transaction.getBalance_from(), balances));
-        spn_balances_to.setSelection(getBalancePosition(transaction.getBalance_to(), balances));
+        if (transaction.getBalance_from() != null) {
+            spn_balances_from.setSelection(getBalancePosition(transaction.getBalance_from(), balances));
+        }
+
+        if (transaction.getBalance_to() != null) {
+            spn_balances_to.setSelection(getBalancePosition(transaction.getBalance_to(), balances));
+        }
     }
 
     private List<Category> getCategoriesByType() {

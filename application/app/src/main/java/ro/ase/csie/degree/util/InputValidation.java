@@ -121,6 +121,9 @@ public class InputValidation {
         if (expense.getBalance_from().getAvailable_amount() < expense.getAmount()) {
             error = context.getResources().getString(R.string.error_amount_not_available);
         }
+        if (expense.getCategory() == null) {
+            error = context.getResources().getString(R.string.error_invalid_category);
+        }
 
         if (error != null) {
             Toast.makeText(context,
@@ -142,6 +145,10 @@ public class InputValidation {
 
         if (income.getAmount() <= MINIMUM_AMOUNT || income.getAmount() >= MAXIMUM_AMOUNT) {
             error = context.getResources().getString(R.string.error_invalid_amount);
+        }
+
+        if (income.getCategory() == null) {
+            error = context.getResources().getString(R.string.error_invalid_category);
         }
 
         if (error != null) {

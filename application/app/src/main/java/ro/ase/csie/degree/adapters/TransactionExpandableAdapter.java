@@ -78,7 +78,7 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
         childList.add(context
                 .getResources()
                 .getString(id,
-                        balance.toString()));
+                        balance.getName()));
     }
 
     @Override

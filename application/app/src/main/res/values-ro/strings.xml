@@ -52,8 +52,8 @@
     <string name="cancel">Anulează</string>
     <string name="save">Salvează</string>
     <string name="category_name">Nume categorie</string>
-    <string name="sign_plus">+</string>
-    <string name="sign_minus">-</string>
+    <string name="add_transaction_spinner_prompt_categories">Categories</string>
+
     <string name="placeholder_total_balance">Balanță totală: 0.00</string>
     <string name="placeholder_balance">Default balance name</string>
     <string name="placeholder_amount">0.00$</string>
@@ -83,9 +83,6 @@
     <string name="converter_convert">Convertește</string>
     <string name="categories_transfer">Transfer</string>
     <string name="_0">0</string>
-    <string name="spinner_balance_from">Din balanța</string>
-    <string name="spinner_category">Categorie</string>
-    <string name="spinner_balance_to">Către balanța</string>
     <string name="forgot_password">Ai uitat parola?</string>
     <string name="placeholder_streak">placeholder_streak</string>
 
@@ -108,4 +105,7 @@
     <string name="dialog_delete_balance">Ești sigur(ă) că vrei să ștergi tranzacția?</string>
     <string name="yes">Da</string>
     <string name="dialog_delete_template">Ești sigur(ă) că vrei să ștergi șablonul?</string>
+    <string name="add_transaction_spinner_prompt_balance_from">Balance from</string>
+    <string name="add_transaction_spinner_prompt_balance_to">Balance to</string>
+    <string name="error_invalid_category">You mush select a category</string>
 </resources>
