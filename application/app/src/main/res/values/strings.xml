@@ -32,17 +32,14 @@
     <string name="redirect_to_login">Already have an account? Log in.</string>
 
     <!--    Main-->
-    <string name="tab_day">DAY</string>
-    <string name="tab_week">Week</string>
+    <string name="tab_day">Day</string>
     <string name="tab_month">Month</string>
-    <string name="tab_total">Total</string>
     <string name="tab_year">Year</string>
-    <string name="menu_new_transaction">New transaction</string>
-    <string name="menu_settings">Settings</string>
+    <string name="tab_total">Total</string>
 
     <!--    Transactions-->
     <string name="add_transaction_amount">Amount</string>
-    <string name="transaction_details_optional">Details (optional)</string>
+    <string name="add_transaction_details">Details (optional)</string>
     <string name="today">Azi</string>
     <string name="error_invalid_account">Invalid account.</string>
     <string name="add_transaction_spinner_prompt_categories">Categories</string>
@@ -112,7 +109,7 @@
 
     <!--    Errors-->
     <string name="error_invalid_email">Invalid e-mail address.</string>
-    <string name="error_invalid_password">Strong passwords have at least 6 characters and a mix of letters and numbers</string>
+    <string name="error_invalid_password">Strong passwords have at least 6 characters and a mix of letters and numbers.</string>
     <string name="error_invalid_balance_from">You must select the balance to withdraw from.</string>
     <string name="error_invalid_balance_to">You must select the balance to deposit to.</string>
     <string name="error_same_balances_transfer">Balances should be different.</string>
