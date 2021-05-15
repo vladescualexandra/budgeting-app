@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16sp"
-    android:orientation="vertical"
     tools:context="ro.ase.csie.degree.settings.categories.AddCategoryActivity">
-
 
     <ImageButton
         android:id="@+id/add_category_save"
+        style="@style/image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16sp"
-        android:text="@string/save"
-        style="@style/image_button"
-        android:src="@drawable/ic_baseline_save_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_gravity="center|end"
+        android:padding="16sp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:src="@drawable/ic_baseline_save_24" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/text_box"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/add_category_save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_row="0"
+        android:layout_column="0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_category_select_name"
             style="@style/text_box"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,11 +39,10 @@
         android:id="@+id/add_category_select_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numColumns="4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:numColumns="4" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</GridLayout>

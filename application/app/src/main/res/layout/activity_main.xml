@@ -34,22 +34,22 @@
 
         <ImageButton
             android:id="@+id/main_add_transaction"
+            style="@style/image_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_columnSpan="1"
-            style="@style/image_button"
             android:src="@drawable/ic_baseline_add_24" />
 
         <ImageButton
             android:id="@+id/main_settings"
+            style="@style/image_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3"
             android:layout_columnSpan="1"
-            style="@style/image_button"
             android:src="@drawable/ic_baseline_settings_24" />
 
         <com.google.android.material.tabs.TabLayout
@@ -96,7 +96,8 @@
             android:layout_rowSpan="3"
             android:layout_column="0"
             android:layout_columnSpan="3"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:padding="10sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -109,25 +110,25 @@
 
             <ImageButton
                 android:id="@+id/main_chart_pie"
+                style="@style/image_button"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
-                style="@style/image_button"
                 android:src="@drawable/ic_baseline_pie_chart_24" />
 
             <ImageButton
                 android:id="@+id/main_chart_bar"
+                style="@style/image_button"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
                 android:layout_gravity="right"
-                style="@style/image_button"
                 android:src="@drawable/ic_baseline_bar_chart_24" />
 
             <ImageButton
                 android:id="@+id/main_chart_line"
+                style="@style/image_button"
                 android:layout_width="50sp"
                 android:layout_height="50sp"
                 android:layout_gravity="right"
-                style="@style/image_button"
                 android:src="@drawable/ic_baseline_timeline_24" />
         </LinearLayout>
     </GridLayout>

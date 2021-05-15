@@ -49,7 +49,7 @@ public class ColorAdapter extends ArrayAdapter<Integer> {
             if (position < colors.size()) {
                 buildColor(view, colors.get(position));
                 if (position == selectedIndex) {
-                    view.setBackgroundColor(Color.argb(20, 238, 238, 238));
+                    view.setBackgroundColor(Color.argb(20, 238, 0, 0));
                 }
             }
         }
