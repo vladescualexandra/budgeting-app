@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import ro.ase.csie.degree.MainActivity;
@@ -162,17 +163,17 @@ public class SettingsActivity extends AppCompatActivity {
         return v -> {
             CharSequence[] themes = {getResources().getString(R.string.theme_light),
                     getResources().getString(R.string.theme_dark)};
-            int checkedTheme = ThemeManager.getTheme(getApplicationContext()).equals(Themes.NIGHT) ? 1 : 0;
+            int checkedTheme = ThemeManager.getTheme(getApplicationContext()) ? 1 : 0;
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(themes,
                             checkedTheme, (dialog, which) -> {
 
-                                Themes selectedTheme = Themes.NIGHT;
+                                boolean isNightTheme = true;
                                 if (which == 0) {
-                                    selectedTheme = Themes.LIGHT;
+                                    isNightTheme = false;
                                 }
 
-                                ThemeManager.setSelectedTheme(getBaseContext(), selectedTheme);
+                                ThemeManager.setSelectedTheme(getBaseContext(), isNightTheme);
                             })
                     .show();
         };
