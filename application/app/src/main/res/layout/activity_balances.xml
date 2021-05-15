@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="16sp"
+            style="@style/image_button"
             android:src="@drawable/ic_baseline_add_24" />
 
     </LinearLayout>

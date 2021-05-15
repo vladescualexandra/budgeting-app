@@ -10,6 +10,12 @@
 
     </style>
 
+    <style name="image_button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">10sp</item>
+    </style>
+
+
     <style name="text_style_redirect"></style>
 
     <style name="settings_button" parent="Widget.AppCompat.Button.Borderless">
