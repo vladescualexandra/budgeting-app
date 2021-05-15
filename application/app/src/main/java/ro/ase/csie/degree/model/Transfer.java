@@ -31,6 +31,18 @@ public class Transfer extends Transaction {
         balanceService.upsert(transfer.getBalance_to());
     }
 
+    public static void deleteTransfer(Transfer transfer) {
+        transfer.getBalance_from().deposit(transfer.getAmount());
+        transfer.getBalance_to().withdraw(transfer.getAmount());
+
+        TransactionService transactionService = new TransactionService();
+        transactionService.delete(transfer);
+
+        BalanceService balanceService = new BalanceService();
+        balanceService.upsert(transfer.getBalance_from());
+        balanceService.upsert(transfer.getBalance_to());
+    }
+
     @Override
     public String toString() {
         return "Transfer{" +

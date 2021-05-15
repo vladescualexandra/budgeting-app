@@ -96,8 +96,8 @@
     <string name="notification_content_text">Nu uita să îți gestionezi bugetul!</string>
 
     <!--row item transaction-->
-    <string name="row_item_transaction_expense">- %.2f</string>
-    <string name="row_item_transaction_income">- %.2f</string>
+    <string name="row_item_transaction_expense">-%.2f</string>
+    <string name="row_item_transaction_income">+%.2f</string>
     <string name="row_item_transaction_transfer">%.2f</string>
     <string name="row_item_transaction_expand_date">Data: %s</string>
     <string name="row_item_transaction_expand_details">Detalii: %s</string>
@@ -108,6 +108,7 @@
     <string name="dialog_delete_header">Șterge</string>
     <string name="dialog_delete_balance">Ești sigur(ă) că vrei să ștergi balanța?</string>
     <string name="dialog_delete_template">Ești sigur(ă) că vrei să ștergi șablonul?</string>
+    <string name="dialog_delete_transaction">Ești sigur(ă) că vrei să ștergi tranzacția?</string>
 
     <!--    Errors-->
     <string name="error_invalid_email">Adresă de e-mail invalidă.</string>

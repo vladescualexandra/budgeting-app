@@ -157,6 +157,20 @@ public class Transaction extends FirebaseObject implements Parcelable, Cloneable
         }
     }
 
+    public static void deleteTransaction(Transaction transaction) {
+        switch (transaction.getCategory().getType()) {
+            case EXPENSE:
+                Expense.deleteExpense(new Expense(transaction));
+                break;
+            case INCOME:
+                Income.deleteIncome(new Income(transaction));
+                break;
+            case TRANSFER:
+                Transfer.deleteTransfer(new Transfer(transaction));
+                break;
+        }
+    }
+
     @NonNull
     @Override
     public Object clone() throws CloneNotSupportedException {

@@ -20,4 +20,14 @@ public class Income extends Transaction{
         balanceService.upsert(income.getBalance_to());
     }
 
+    public static void deleteIncome(Income income) {
+        income.getBalance_to().withdraw(income.getAmount());
+
+        TransactionService transactionService = new TransactionService();
+        transactionService.delete(income);
+
+        BalanceService balanceService = new BalanceService();
+        balanceService.upsert(income.getBalance_to());
+    }
+
 }

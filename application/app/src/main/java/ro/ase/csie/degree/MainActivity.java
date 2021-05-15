@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ro.ase.csie.degree.adapters.TransactionExpandableAdapter;
 import ro.ase.csie.degree.async.Callback;
@@ -25,6 +27,7 @@ import ro.ase.csie.degree.firebase.services.CategoryService;
 import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.settings.SettingsActivity;
+import ro.ase.csie.degree.util.CustomDialog;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.Streak;
 import ro.ase.csie.degree.util.language.LanguageManager;
@@ -128,6 +131,25 @@ public class MainActivity extends AppCompatActivity {
             }
             lastPosition[0] = groupPosition;
         });
+
+
+        elv_transactions.setOnItemLongClickListener(deleteTransactionEventListener());
+    }
+
+    private AdapterView.OnItemLongClickListener deleteTransactionEventListener() {
+        return (parent, view, position, id) -> {
+            CustomDialog.show(this,
+                    R.string.dialog_delete_header,
+                    R.string.dialog_delete_transaction,
+                    deleteTransaction(position));
+            return false;
+        };
+    }
+
+    private DialogInterface.OnClickListener deleteTransaction(int position) {
+        return (dialog, which) -> {
+            Transaction.deleteTransaction(transactionList.get(position));
+        };
     }
 
 

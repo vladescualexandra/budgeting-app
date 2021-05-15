@@ -18,4 +18,14 @@ public class Expense extends Transaction{
         BalanceService balanceService = new BalanceService();
         balanceService.upsert(expense.getBalance_from());
     }
+
+    public static void deleteExpense(Expense expense) {
+        expense.getBalance_from().deposit(expense.getAmount());
+
+        TransactionService transactionService = new TransactionService();
+        transactionService.delete(expense);
+
+        BalanceService balanceService = new BalanceService();
+        balanceService.upsert(expense.getBalance_from());
+    }
 }
