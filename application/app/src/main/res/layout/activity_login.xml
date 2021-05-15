@@ -13,13 +13,13 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/login_register_input"
+            style="@style/text_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_email"
-                style="@style/text_style_input"
+                style="@style/text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
@@ -28,13 +28,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/login_register_input"
+            style="@style/text_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
-                style="@style/text_style_input"
+                style="@style/text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
@@ -44,7 +44,6 @@
 
         <TextView
             android:id="@+id/login_forgot_password"
-            style="@style/text_style_redirect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -55,7 +54,6 @@
 
         <TextView
             android:id="@+id/login_redirect_to_register"
-            style="@style/text_style_redirect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

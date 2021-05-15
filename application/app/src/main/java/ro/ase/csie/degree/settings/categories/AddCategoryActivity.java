@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import ro.ase.csie.degree.R;
 
@@ -27,7 +27,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private TextInputEditText tiet_name;
     private GridView gv_icons;
-    private Button btn_save;
+    private ImageButton ib_save;
 
     private Intent intent;
     private Category category = new Category();
@@ -60,8 +60,8 @@ public class AddCategoryActivity extends AppCompatActivity {
         }
 
         gv_icons = findViewById(R.id.add_category_select_icon);
-        btn_save = findViewById(R.id.add_category_save);
-        btn_save.setOnClickListener(saveCategoryEventListener());
+        ib_save = findViewById(R.id.add_category_save);
+        ib_save.setOnClickListener(saveCategoryEventListener());
 
         getColors();
         setAdapter();

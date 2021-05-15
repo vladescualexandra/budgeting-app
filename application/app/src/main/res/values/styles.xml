@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="login_register_input" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+    <style name="text_box" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="android:layout_margin">8sp</item>
         <item name="cornerRadius">0dp</item>
     </style>
 
-    <style name="text_style_input">
-
-    </style>
 
     <style name="image_button">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:padding">10sp</item>
     </style>
-
-
-    <style name="text_style_redirect"></style>
-
+    
     <style name="settings_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="textAllCaps">false</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>

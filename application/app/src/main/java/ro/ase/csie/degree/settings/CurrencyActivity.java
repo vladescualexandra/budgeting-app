@@ -8,10 +8,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import ro.ase.csie.degree.util.CurrencyJSONParser;
 public class CurrencyActivity extends AppCompatActivity {
 
     private ImageButton ib_back;
-    private EditText et_search;
+    private TextInputEditText tiet_search;
     private ListView lv_currencies;
 
     private List<Currency> currencyList = new ArrayList<>();
@@ -46,8 +47,8 @@ public class CurrencyActivity extends AppCompatActivity {
         ib_back = findViewById(R.id.currency_back);
         ib_back.setOnClickListener(v -> finish());
 
-        et_search = findViewById(R.id.currency_search);
-        et_search.addTextChangedListener(textChangedEventListener());
+        tiet_search = findViewById(R.id.currency_search);
+        tiet_search.addTextChangedListener(textChangedEventListener());
 
         lv_currencies = findViewById(R.id.currency_list);
         lv_currencies.setOnItemClickListener((parent, view, position, id) -> {

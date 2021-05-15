@@ -8,18 +8,21 @@
     android:orientation="vertical"
     tools:context="ro.ase.csie.degree.settings.categories.AddCategoryActivity">
 
-    <Button
+
+    <ImageButton
         android:id="@+id/add_category_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16sp"
         android:text="@string/save"
+        style="@style/image_button"
+        android:src="@drawable/ic_baseline_save_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/login_register_input"
+        style="@style/text_box"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16sp"
@@ -29,6 +32,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_category_select_name"
+            style="@style/text_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>

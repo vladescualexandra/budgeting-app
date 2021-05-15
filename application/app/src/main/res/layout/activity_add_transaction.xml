@@ -47,13 +47,13 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_style_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        style="@style/text_box">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_transaction_details"
-            style="@style/text_style_input"
+            style="@style/text_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_transaction_details" />
@@ -61,13 +61,13 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/text_style_input"
+        style="@style/text_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/add_transaction_amount"
-            style="@style/text_style_input"
+            style="@style/text_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_transaction_amount"
