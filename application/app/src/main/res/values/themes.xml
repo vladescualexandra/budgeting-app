@@ -3,6 +3,7 @@
     <style name="Theme.Budgeting.App" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+
         <item name="colorPrimary">@color/rally_dark_green</item>
         <item name="colorPrimaryVariant">@color/rally_white</item>
         <item name="colorOnPrimary">@color/black</item>

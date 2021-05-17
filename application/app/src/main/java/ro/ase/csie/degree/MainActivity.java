@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +47,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
+    private static final int SNACKBAR_DELAY = 2000;
 
     private ImageButton ib_refresh;
     private TextView tv_date_filter;
@@ -79,11 +81,16 @@ public class MainActivity extends AppCompatActivity {
         initComponents();
         setDefaultDate();
 
-        View parentLayout = findViewById(android.R.id.content);
-        Snackbar.make(parentLayout,
-                getResources().getString(R.string.settings_account_streak, Streak.days),
-                BaseTransientBottomBar.LENGTH_LONG).show();
+        displayStreakDays();
+    }
 
+    private void displayStreakDays() {
+        new Handler().postDelayed(() -> {
+            View parentLayout = findViewById(android.R.id.content);
+            Snackbar.make(parentLayout,
+                    getResources().getString(R.string.settings_account_streak, Streak.days),
+                    BaseTransientBottomBar.LENGTH_LONG).show();
+        }, SNACKBAR_DELAY);
     }
 
     private void setDefaultDate() {
