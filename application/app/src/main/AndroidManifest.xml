@@ -11,6 +11,7 @@
         android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App"
@@ -25,7 +26,15 @@
         <activity android:name=".settings.categories.AddCategoryActivity" />
         <activity android:name=".settings.categories.CategoriesActivity" />
         <activity android:name=".settings.SettingsActivity" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name=".authentication.LoginActivity" />
         <activity android:name=".authentication.RegisterActivity" />
         <activity android:name=".SplashActivity">
