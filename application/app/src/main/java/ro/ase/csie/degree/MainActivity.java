@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(parentLayout,
                 getResources().getString(R.string.settings_account_streak, Streak.days),
                 BaseTransientBottomBar.LENGTH_LONG).show();
+
     }
 
     private void setDefaultDate() {

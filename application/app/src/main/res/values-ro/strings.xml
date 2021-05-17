@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">budgeting-app</string>
+    <string name="app_name">iBudget</string>
+    <string name="app_motto">Budgeting done right.</string>
 
     <string name="placeholder_name">placeholder_name</string>
     <string name="placeholder_email">placeholder_email</string>

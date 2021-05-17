@@ -161,8 +161,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private View.OnClickListener themeEventListener() {
         return v -> {
-            CharSequence[] themes = {getResources().getString(R.string.theme_light),
-                    getResources().getString(R.string.theme_dark)};
+            CharSequence[] themes = {getResources().getString(R.string.theme_light), getResources().getString(R.string.theme_dark)};
             int checkedTheme = ThemeManager.getTheme(getApplicationContext()) ? 1 : 0;
             new AlertDialog.Builder(this)
                     .setSingleChoiceItems(themes,
