@@ -7,13 +7,13 @@
         <item name="colorPrimary">@color/rally_dark_green</item>
         <item name="colorPrimaryVariant">@color/rally_white</item>
         <item name="colorOnPrimary">@color/black</item>
-
         <item name="android:windowBackground">@color/rally_white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/rally_dark_grey</item>
     </style>
 
     <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">

@@ -93,7 +93,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initEventListeners() {
-        btn_back.setOnClickListener(v -> finish());
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
 
         btn_balances.setOnClickListener(balancesEventListener());
         btn_categories.setOnClickListener(categoriesEventListener());

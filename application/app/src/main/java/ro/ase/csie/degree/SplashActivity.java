@@ -2,6 +2,7 @@ package ro.ase.csie.degree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,14 +23,14 @@ public class SplashActivity extends AppCompatActivity {
     public static String KEY;
     Intent intent;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         LanguageManager.getSettings(getBaseContext());
-        ThemeManager.getTheme(getApplicationContext());
+        ThemeManager.getSettings(getApplicationContext());
 
         KEY = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
                 .getString(Account.USER_KEY, null);
