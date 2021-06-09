@@ -9,13 +9,13 @@
 
     <TextView
         android:id="@+id/categories_header"
+        style="@style/total_balance_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/categories_expenses"
-        style="@style/total_balance_text"
-        android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:padding="16sp"/>
+        android:padding="16sp"
+        android:text="@string/categories_expenses"
+        android:textAlignment="center" />
 
     <ListView
         android:id="@+id/categories_list"
@@ -24,27 +24,22 @@
         android:layout_marginTop="64sp"
         android:paddingBottom="64sp"
         app:layout_anchor="@id/categories_header"
-        app:layout_anchorGravity="bottom|end"
-        />
+        app:layout_anchorGravity="bottom|end" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/categories_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTintMode="screen"
-        app:fabCradleMargin="10sp"
-        app:fabCradleRoundedCornerRadius="10sp"
-        app:fabCradleVerticalOffset="10sp">
+         app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/categories_bottom_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="16sp"
-            android:layout_marginRight="16sp"
             android:background="@android:color/transparent"
-            android:outlineSpotShadowColor="@android:color/transparent"
             app:menu="@menu/bottom_navigation_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 

@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -16,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.LongFunction;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
@@ -51,17 +54,19 @@ public class CurrencyActivity extends AppCompatActivity {
         tiet_search.addTextChangedListener(textChangedEventListener());
 
         lv_currencies = findViewById(R.id.currency_list);
-        lv_currencies.setOnItemClickListener((parent, view, position, id) -> {
-            currency = currencyList.get(position);
-            Account.getInstance().setCurrency(currency);
-            Account.updateAccount();
+        lv_currencies.setOnItemClickListener(setCurrency());
 
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-        });
 
         lv_currencies.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         lv_currencies.setSelector(R.color.rally_dark_green);
+    }
+
+    private AdapterView.OnItemClickListener setCurrency() {
+        return (parent, view, position, id) -> {
+            currency = currencyList.get(position);
+            Account.getInstance().setCurrency(currency);
+            Account.updateAccount();
+        };
     }
 
     private void setAdapter() {
@@ -70,7 +75,6 @@ public class CurrencyActivity extends AppCompatActivity {
                         R.layout.row_item_currency,
                         currencyList);
         lv_currencies.setAdapter(adapter);
-
     }
 
     private Callback<String> currenciesCallback() {
