@@ -8,7 +8,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,15 +18,8 @@ import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.DateConverter;
-import ro.ase.csie.degree.util.language.LanguageManager;
-import ro.ase.csie.degree.util.language.Languages;
 
 public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
-
-    private static final String DATE_RO = "Dată: ";
-    private static final String DETAILS_RO = "Detalii: ";
-    private static final String BALANCE_FROM = "Sursă: ";
-    private static final String BALANCE_TO = "Destinație: ";
 
     private final Context context;
     private List<? extends Transaction> transactionList;
@@ -50,49 +42,34 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
     private void prepareDetails() {
         for (Transaction transaction : transactionList) {
             List<String> childList = new ArrayList<>();
-            if (LanguageManager.getSelectedLanguage(context).equals(Languages.ENGLISH)) {
+            childList.add(context
+                    .getResources()
+                    .getString(R.string.row_item_transaction_expand_date,
+                            DateConverter.toString(transaction.getDate())));
+            if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
                 childList.add(context
                         .getResources()
-                        .getString(R.string.row_item_transaction_expand_date,
-                                DateConverter.toString(transaction.getDate())));
-                if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
-                    childList.add(context
-                            .getResources()
-                            .getString(R.string.row_item_transaction_expand_details,
-                                    transaction.getDetails()));
-                }
-
-                if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
-                    addBalance(childList,
-                            R.string.row_item_transaction_expand_balance_from,
-                            transaction.getBalance_from());
-                } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
-                    addBalance(childList,
-                            R.string.row_item_transaction_expand_balance_to,
-                            transaction.getBalance_to());
-                } else {
-                    addBalance(childList,
-                            R.string.row_item_transaction_expand_balance_from,
-                            transaction.getBalance_from());
-                    addBalance(childList,
-                            R.string.row_item_transaction_expand_balance_to,
-                            transaction.getBalance_from());
-                }
-
-            } else {
-                childList.add(DATE_RO + DateConverter.toString(transaction.getDate()));
-                if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
-                    childList.add(DETAILS_RO + transaction.getDetails());
-                }
-
-                if (transaction.getBalance_from() != null) {
-                    childList.add(BALANCE_FROM + transaction.getBalance_from());
-                }
-
-                if (transaction.getBalance_to() != null) {
-                    childList.add(BALANCE_TO + transaction.getBalance_to());
-                }
+                        .getString(R.string.row_item_transaction_expand_details,
+                                transaction.getDetails()));
             }
+
+            if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_from,
+                        transaction.getBalance_from());
+            } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_to,
+                        transaction.getBalance_to());
+            } else {
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_from,
+                        transaction.getBalance_from());
+                addBalance(childList,
+                        R.string.row_item_transaction_expand_balance_to,
+                        transaction.getBalance_from());
+            }
+
             this.expandableDetails.put(transaction, childList);
         }
     }
