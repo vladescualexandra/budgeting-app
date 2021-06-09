@@ -1,19 +1,24 @@
 package ro.ase.csie.degree.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.DateDisplayType;
+import ro.ase.csie.degree.util.language.LanguageManager;
+import ro.ase.csie.degree.util.language.Languages;
 
 public class DateConverter {
 
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
 
     public static String format(int day, int month, int year) {
         return day + "/" + (month + 1) + "/" + year;
@@ -54,19 +59,23 @@ public class DateConverter {
     }
 
     public static String toMonthYear(Context context, int month, int year) {
-        return context.getResources().getString(R.string.date_format_month_yyyy,
-                new DateFormatSymbols().getMonths()[month], year);
+        return Month.getMonth(LanguageManager.getSelectedLanguage(context), month) + " " + year;
     }
 
     public static String toYear(Context context, int selectedYear) {
-        return context.getResources().getString(R.string.date_format_year_yyyy, selectedYear);
+        if (LanguageManager.getSelectedLanguage(context).equals(Languages.ENGLISH)) {
+            return "Year " + selectedYear;
+        } else {
+            return "Anul " + selectedYear;
+        }
     }
 
     public static String toDisplayDate(Context context, int day, int month, int year) {
+        String lang = LanguageManager.getSelectedLanguage(context);
         return context
                 .getResources()
                 .getString(R.string.date_format_dd_month_yyyy,
-                        day, new DateFormatSymbols().getMonths()[month], year);
+                        day, Month.getMonth(lang, month), year);
 
     }
 
@@ -79,17 +88,17 @@ public class DateConverter {
         return pieces;
     }
 
-    public static boolean filterMonthYear(Date date, Date filter) {
-        int[] pieces = toPieces(date);
-        int[] filters = toPieces(filter);
-
-        for (int i = 1; i < pieces.length; i++) {
-            if (pieces[i] != filters[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    public static boolean filterMonthYear(Date date, Date filter) {
+//        int[] pieces = toPieces(date);
+//        int[] filters = toPieces(filter);
+//
+//        for (int i = 1; i < pieces.length; i++) {
+//            if (pieces[i] != filters[i]) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     public static boolean filter(DateDisplayType type, Date date, Date filter) {
         int[] pieces = toPieces(date);

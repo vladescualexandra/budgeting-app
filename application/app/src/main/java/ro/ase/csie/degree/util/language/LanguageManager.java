@@ -19,6 +19,7 @@ public class LanguageManager {
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
     public static final String SELECTED_REMINDERS = "Locale.Helper.Selected.Reminders";
 
+
     public static String getSelectedLanguage(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String language = preferences.getString(SELECTED_LANGUAGE, null);
