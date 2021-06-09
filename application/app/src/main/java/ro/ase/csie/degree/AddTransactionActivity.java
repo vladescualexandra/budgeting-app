@@ -71,6 +71,10 @@ public class AddTransactionActivity extends AppCompatActivity {
         initDefaults();
         retrieveDataFromFirebase();
 
+
+    }
+
+    private void handleTransaction() {
         intent = getIntent();
         Transaction transaction = intent.getParcelableExtra(TemplatesActivity.USE_TEMPLATE);
 
@@ -85,7 +89,6 @@ public class AddTransactionActivity extends AppCompatActivity {
             this.transaction.setId(null);
             isTransaction = true;
         }
-
     }
 
     private int getCategoryPosition(Category category, List<Category> categories) {
@@ -135,6 +138,36 @@ public class AddTransactionActivity extends AppCompatActivity {
             btn_date.setText(DateConverter.toString(transaction.getDate()));
         }
 
+        if (transaction.getCategory() != null) {
+            if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+                spn_category.setSelection(expenseCategories.indexOf(transaction.getCategory()));
+            } else {
+                spn_category.setSelection(incomeCategories.indexOf(transaction.getCategory()));
+            }
+        }
+
+        if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)
+                || transaction.getCategory().getType().equals(TransactionType.TRANSFER)) {
+            if (transaction.getBalance_from() != null) {
+                for (int i = 0; i < balances.size(); i++) {
+                    if (transaction.getBalance_from().getId().equals(balances.get(i).getId())) {
+                        spn_balances_from.setSelection(i);
+                    }
+                }
+            }
+        }
+
+        if (transaction.getCategory().getType().equals(TransactionType.INCOME)
+                || transaction.getCategory().getType().equals(TransactionType.TRANSFER)) {
+            if (transaction.getBalance_to() != null) {
+                for (int i = 0; i < balances.size(); i++) {
+                    if (transaction.getBalance_to().getId().equals(balances.get(i).getId())) {
+                        spn_balances_to.setSelection(i);
+                    }
+                }
+            }
+        }
+
         try {
             this.transaction = (Transaction) transaction.clone();
         } catch (CloneNotSupportedException e) {
@@ -152,7 +185,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private Callback<List<Category>> updateCategoriesCallback() {
         return result -> {
-
             if (result != null) {
                 for (Category category : result) {
                     if (category != null) {
@@ -176,6 +208,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                 balances.addAll(result);
                 setBalanceAdapter();
             }
+            handleTransaction();
         };
     }
 

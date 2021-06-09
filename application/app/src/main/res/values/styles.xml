@@ -73,6 +73,7 @@
     <style name="row_item_template_text">
         <item name="android:textSize">16sp</item>
         <item name="autoSizeTextType">uniform</item>
+        <item name="android:textColor">@color/rally_white</item>
     </style>
 
 </resources>
