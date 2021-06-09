@@ -88,18 +88,6 @@ public class DateConverter {
         return pieces;
     }
 
-//    public static boolean filterMonthYear(Date date, Date filter) {
-//        int[] pieces = toPieces(date);
-//        int[] filters = toPieces(filter);
-//
-//        for (int i = 1; i < pieces.length; i++) {
-//            if (pieces[i] != filters[i]) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
     public static boolean filter(DateDisplayType type, Date date, Date filter) {
         int[] pieces = toPieces(date);
         int[] filters = toPieces(filter);
