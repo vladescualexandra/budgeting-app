@@ -74,11 +74,13 @@ public class ConverterActivity extends AppCompatActivity {
     private Callback<String> conversionCallback(double amount_from, String from, String to) {
         return result -> {
             if (result != null) {
-                String json = from + "_" + to;
+                String node = from + "_" + to;
                 try {
                     JSONObject object = new JSONObject(result);
-                    double rate = object.getDouble(json);
+
+                    double rate = object.getDouble(node);
                     double amount_to = rate * amount_from;
+
                     tv_amount_to.setText(String.valueOf(amount_to));
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 import ro.ase.csie.degree.firebase.FirebaseObject;
 
@@ -79,7 +80,9 @@ public class Balance extends FirebaseObject implements Parcelable {
 
     @Override
     public String toString() {
-        return this.name + " - " + this.available_amount;
+        DecimalFormat df = new DecimalFormat("#.##");
+        return this.name + " - " +
+                df.format(this.available_amount);
     }
 
     @Override

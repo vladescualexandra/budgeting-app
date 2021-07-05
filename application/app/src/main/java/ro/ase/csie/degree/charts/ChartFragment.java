@@ -29,6 +29,6 @@ public abstract class ChartFragment extends Fragment {
             transactionList = getArguments().getParcelableArrayList(TRANSACTIONS);
         }
     }
-
-
 }
+
+

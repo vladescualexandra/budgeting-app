@@ -50,6 +50,4 @@ public class GoogleAuthentication {
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
     }
-
-
 }

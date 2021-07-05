@@ -70,8 +70,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         initComponents();
         initDefaults();
         retrieveDataFromFirebase();
-
-
     }
 
     private void handleTransaction() {
