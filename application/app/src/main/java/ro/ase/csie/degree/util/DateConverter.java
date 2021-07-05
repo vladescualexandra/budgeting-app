@@ -9,6 +9,8 @@ import java.util.Date;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.DateDisplayType;
+import ro.ase.csie.degree.util.language.LanguageManager;
+import ro.ase.csie.degree.util.language.Languages;
 
 public class DateConverter {
 
@@ -59,7 +61,12 @@ public class DateConverter {
     }
 
     public static String toYear(Context context, int selectedYear) {
-        return context.getResources().getString(R.string.date_format_year_yyyy, selectedYear);
+        String language = LanguageManager.getSelectedLanguage(context);
+        if (language.equals("ro")) {
+            return "Anul " + selectedYear;
+        } else {
+            return context.getResources().getString(R.string.date_format_year_yyyy, selectedYear);
+        }
     }
 
     public static String toDisplayDate(Context context, int day, int month, int year) {

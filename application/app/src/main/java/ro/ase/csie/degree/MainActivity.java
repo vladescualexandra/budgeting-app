@@ -85,11 +85,8 @@ public class MainActivity extends AppCompatActivity {
         displayStreakDays();
 
         boolean isNightTheme = ThemeManager.getTheme(getApplicationContext());
-        Log.e("test", "isNight: " + isNightTheme);
-
         String language = LanguageManager.getSelectedLanguage(getApplicationContext());
-        Log.e("test", "lang: " + language);
-
+        Log.e("onCreate", "isNight: " + isNightTheme + "/ lang: " + language);
     }
 
     private void displayStreakDays() {
@@ -290,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener settingsEventListener() {
         return v -> {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            finish();
             startActivity(intent);
         };
     }
@@ -339,4 +337,9 @@ public class MainActivity extends AppCompatActivity {
         finishAffinity();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

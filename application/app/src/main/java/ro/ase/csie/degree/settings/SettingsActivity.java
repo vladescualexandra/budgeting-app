@@ -96,7 +96,8 @@ public class SettingsActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishAffinity();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -199,10 +200,8 @@ public class SettingsActivity extends AppCompatActivity {
 
                                 LanguageManager.setLanguage(getBaseContext(), selectedLanguage);
                                 LanguageManager.apply(getBaseContext());
-                                recreate();
 
-                                Intent refresh = new Intent(this, SettingsActivity.class);
-                                finish();
+                                Intent refresh = new Intent(getApplicationContext(), SettingsActivity.class);
                                 startActivity(refresh);
                             })
                     .show();
@@ -234,6 +233,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }
