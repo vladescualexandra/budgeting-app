@@ -200,6 +200,10 @@ public class SettingsActivity extends AppCompatActivity {
                                 LanguageManager.setLanguage(getBaseContext(), selectedLanguage);
                                 LanguageManager.apply(getBaseContext());
                                 recreate();
+
+                                Intent refresh = new Intent(this, SettingsActivity.class);
+                                finish();
+                                startActivity(refresh);
                             })
                     .show();
         };
@@ -227,5 +231,9 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

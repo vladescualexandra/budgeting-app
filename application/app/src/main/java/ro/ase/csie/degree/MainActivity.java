@@ -32,6 +32,7 @@ import ro.ase.csie.degree.util.CustomDialog;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.Streak;
 import ro.ase.csie.degree.util.language.LanguageManager;
+import ro.ase.csie.degree.util.theme.ThemeManager;
 
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -82,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
         setDefaultDate();
 
         displayStreakDays();
+
+        boolean isNightTheme = ThemeManager.getTheme(getApplicationContext());
+        Log.e("test", "isNight: " + isNightTheme);
+
+        String language = LanguageManager.getSelectedLanguage(getApplicationContext());
+        Log.e("test", "lang: " + language);
+
     }
 
     private void displayStreakDays() {
@@ -131,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setExpandableListView() {
         elv_transactions = findViewById(R.id.main_expandable_list_transactions);
+        setAdapter();
         final int[] lastPosition = {-1};
         elv_transactions.setOnGroupExpandListener(groupPosition -> {
             if (lastPosition[0] != -1
@@ -139,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
             }
             lastPosition[0] = groupPosition;
         });
-
 
         elv_transactions.setOnItemLongClickListener(deleteTransactionEventListener());
     }
@@ -287,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        TransactionExpandableAdapter adapter = new TransactionExpandableAdapter(getApplicationContext(), transactionList);
+        TransactionExpandableAdapter adapter = new TransactionExpandableAdapter(MainActivity.this, transactionList);
         elv_transactions.setAdapter(adapter);
     }
 

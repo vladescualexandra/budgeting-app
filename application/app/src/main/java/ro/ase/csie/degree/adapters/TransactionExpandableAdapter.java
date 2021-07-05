@@ -1,6 +1,7 @@
 package ro.ase.csie.degree.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.DateConverter;
+import ro.ase.csie.degree.util.language.LanguageManager;
+import ro.ase.csie.degree.util.language.Languages;
+import ro.ase.csie.degree.util.theme.ThemeManager;
 
 public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
 
@@ -27,7 +31,20 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
     private List<Transaction> headers = new ArrayList<>();
     private HashMap<Transaction, List<String>> expandableDetails = new HashMap<>();
 
+    Languages lang;
+
     public TransactionExpandableAdapter(Context context, List<Transaction> transactionList) {
+        boolean isNightTheme = ThemeManager.getTheme(context);
+        Log.e("test", "isNight-adapter: " + isNightTheme);
+
+        String language = LanguageManager.getSelectedLanguage(context);
+        Log.e("test", "lang-adapter: " + language);
+        if (language.equals("ro")) {
+            lang = Languages.ROMANIAN;
+        } else {
+            lang = Languages.ENGLISH;
+        }
+
         this.context = context;
         this.transactionList = transactionList;
         prepareHeaders();
@@ -39,38 +56,64 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
         this.headers.addAll(this.transactionList);
     }
 
+    private String DETAILS_RO_DETAILS = "Detalii: ";
+    private String DETAILS_RO_SOURCE = "Sursă: ";
+    private String DETAILS_RO_DESTINATION = "Destinație: ";
+
     private void prepareDetails() {
         for (Transaction transaction : transactionList) {
             List<String> childList = new ArrayList<>();
+            if (lang.equals(Languages.ROMANIAN)) {
+                detailsRo(transaction, childList);
+            } else {
+                detailsEn(transaction, childList);
+            }
+            this.expandableDetails.put(transaction, childList);
+
+        }
+    }
+
+    private void detailsEn(Transaction transaction, List<String> childList) {
+        childList.add(context
+                .getResources()
+                .getString(R.string.row_item_transaction_expand_date,
+                        DateConverter.toString(transaction.getDate())));
+        if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
             childList.add(context
                     .getResources()
-                    .getString(R.string.row_item_transaction_expand_date,
-                            DateConverter.toString(transaction.getDate())));
-            if (transaction.getDetails() != null && !transaction.getDetails().isEmpty()) {
-                childList.add(context
-                        .getResources()
-                        .getString(R.string.row_item_transaction_expand_details,
-                                transaction.getDetails()));
-            }
+                    .getString(R.string.row_item_transaction_expand_details,
+                            transaction.getDetails()));
+        }
 
-            if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
-                addBalance(childList,
-                        R.string.row_item_transaction_expand_balance_from,
-                        transaction.getBalance_from());
-            } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
-                addBalance(childList,
-                        R.string.row_item_transaction_expand_balance_to,
-                        transaction.getBalance_to());
-            } else {
-                addBalance(childList,
-                        R.string.row_item_transaction_expand_balance_from,
-                        transaction.getBalance_from());
-                addBalance(childList,
-                        R.string.row_item_transaction_expand_balance_to,
-                        transaction.getBalance_from());
-            }
+        if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+            addBalance(childList,
+                    R.string.row_item_transaction_expand_balance_from,
+                    transaction.getBalance_from());
+        } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
+            addBalance(childList,
+                    R.string.row_item_transaction_expand_balance_to,
+                    transaction.getBalance_to());
+        } else {
+            addBalance(childList,
+                    R.string.row_item_transaction_expand_balance_from,
+                    transaction.getBalance_from());
+            addBalance(childList,
+                    R.string.row_item_transaction_expand_balance_to,
+                    transaction.getBalance_from());
+        }
+    }
 
-            this.expandableDetails.put(transaction, childList);
+    private void detailsRo(Transaction transaction, List<String> childList) {
+        if (transaction.getDetails() != null) {
+            childList.add(DETAILS_RO_DETAILS + transaction.getDetails());
+        }
+        if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+            childList.add(DETAILS_RO_DESTINATION + transaction.getBalance_from().getName());
+        } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
+            childList.add(DETAILS_RO_SOURCE + transaction.getBalance_to().getName());
+        } else {
+            childList.add(DETAILS_RO_DESTINATION + transaction.getBalance_from().getName());
+            childList.add(DETAILS_RO_SOURCE + transaction.getBalance_to().getName());
         }
     }
 
