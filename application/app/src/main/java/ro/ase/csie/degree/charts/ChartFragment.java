@@ -43,6 +43,16 @@ public abstract class ChartFragment extends Fragment {
             return getResources().getColor(R.color.rally_dark_grey);
         }
     }
+
+
+    protected List<Integer> getColors() {
+        int spendingsColor = R.color.rally_dark_red;
+        int savingsColor = R.color.rally_dark_green;
+        List<Integer> colors = new ArrayList<>();
+        colors.add(spendingsColor);
+        colors.add(savingsColor);
+        return colors;
+    }
 }
 
 

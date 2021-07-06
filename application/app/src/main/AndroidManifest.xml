@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Budgeting.App"
         tools:replace="android:icon">
+        <activity android:name=".settings.target.TargetActivity"></activity>
         <activity android:name=".settings.TemplatesActivity" />
         <activity android:name=".settings.ContactActivity" />
         <activity android:name=".settings.ConverterActivity" />

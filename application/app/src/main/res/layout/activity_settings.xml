@@ -70,6 +70,32 @@
             android:textAlignment="textStart" />
 
         <Button
+            android:id="@+id/settings_categories"
+            style="@style/settings_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:text="@string/settings_categories"
+            android:textAlignment="textStart" />
+
+        <Button
+            android:id="@+id/settings_target"
+            style="@style/settings_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:text="@string/target"
+            android:textAlignment="textStart" />
+        <Button
+            android:id="@+id/settings_templates"
+            style="@style/settings_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:text="@string/settings_templates"
+            android:textAlignment="textStart" />
+
+        <Button
             android:id="@+id/settings_currency"
             style="@style/settings_button"
             android:layout_width="match_parent"
@@ -85,24 +111,6 @@
             android:layout_height="wrap_content"
             android:gravity="start|center"
             android:text="@string/settings_converter"
-            android:textAlignment="textStart" />
-
-        <Button
-            android:id="@+id/settings_categories"
-            style="@style/settings_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start|center"
-            android:text="@string/settings_categories"
-            android:textAlignment="textStart" />
-
-        <Button
-            android:id="@+id/settings_templates"
-            style="@style/settings_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start|center"
-            android:text="@string/settings_templates"
             android:textAlignment="textStart" />
 
         <Button

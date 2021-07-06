@@ -124,5 +124,15 @@
     <string name="error_invalid_name_not_letters">Name must have only letters, numbers and spaces.</string>
     <string name="error_invalid_amount">Available amount must be a number bigger than 0 and smaller than 1 million.</string>
     <string name="error_invalid_category">You mush select a category</string>
+    <string name="target">Target</string>
+
+    <!--    Target-->
+    <string name="target_target_header">TARGET</string>
+    <string name="target_actual_header">ACTUAL</string>
+    <string name="target_target_time_period">Period of time: current month</string>
+    <string name="target_target_spendings">SPENDINGS: %d \%</string>
+    <string name="target_target_savings">string %s</string>
+    <string name="target_actual_spendings_percentage">Actual spendings: %.2f %</string>
+    <string name="target_actual_spendings">You spent %.2f out of %.2f.</string>
 
 </resources>

@@ -65,6 +65,7 @@
     <string name="settings_categories">Categorii</string>
     <string name="settings_currency">Valută</string>
     <string name="settings_converter">Conversie</string>
+    <string name="target">Misiune</string>
 
     <!--    Balances-->
     <string name="balances_total">Balanță totală: %.2f</string>
@@ -124,5 +125,15 @@
     <string name="error_invalid_amount">Suma disponibilă trebuie să fie mai mare decât 0 și mai mică decât 1 milion.</string>
     <string name="error_invalid_category">Trebuie să selectezi o categorie.</string>
     <string name="error_invalid_account">Cont invalid.</string>
+
+    <!--    Target-->
+    <string name="target_target_header">TARGET</string>
+    <string name="target_actual_header">ACTUAL</string>
+    <string name="target_target_time_period">Period of time: current month</string>
+    <string name="target_target_spendings">SPENDINGS: %d</string>
+    <string name="target_target_savings">SAVINGS: %d %</string>
+    <string name="target_actual_spendings_percentage">Actual spendings: %.2f %</string>
+    <string name="target_actual_spendings">You spent %.2f out of %.2f.</string>
+
 
 </resources>

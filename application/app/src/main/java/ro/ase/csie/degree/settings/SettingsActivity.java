@@ -8,28 +8,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.allyants.notifyme.NotifyMe;
-
-import java.util.Calendar;
 
 import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;
 
 import ro.ase.csie.degree.SplashActivity;
+import ro.ase.csie.degree.settings.target.TargetActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.theme.Themes;
 import ro.ase.csie.degree.util.language.LanguageManager;
 import ro.ase.csie.degree.util.language.Languages;
 import ro.ase.csie.degree.util.notifications.Notifications;
@@ -47,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_converter;
     private Button btn_balances;
     private Button btn_categories;
+    private Button btn_target;
     private Button btn_templates;
     private Button btn_theme;
     private Button btn_language;
@@ -75,6 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_converter = findViewById(R.id.settings_converter);
         btn_balances = findViewById(R.id.settings_balances);
         btn_categories = findViewById(R.id.settings_categories);
+        btn_target = findViewById(R.id.settings_target);
         btn_templates = findViewById(R.id.settings_templates);
         btn_theme = findViewById(R.id.settings_theme);
         btn_language = findViewById(R.id.settings_language);
@@ -110,6 +106,7 @@ public class SettingsActivity extends AppCompatActivity {
         btn_categories.setOnClickListener(categoriesEventListener());
         btn_currency.setOnClickListener(currencyEventListener());
         btn_converter.setOnClickListener(converterEventListener());
+        btn_target.setOnClickListener(targetEventListener());
         btn_templates.setOnClickListener(templatesEventListener());
         btn_theme.setOnClickListener(themeEventListener());
         btn_language.setOnClickListener(languageEventListener());
@@ -119,6 +116,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         btn_contact.setOnClickListener(contactEventListener());
         btn_sign_out.setOnClickListener(signOutClickListener());
+    }
+
+    private View.OnClickListener targetEventListener() {
+        return v -> {
+            Intent intent = new Intent(getApplicationContext(), TargetActivity.class);
+            startActivity(intent);
+        };
     }
 
     private View.OnClickListener signOutClickListener() {
