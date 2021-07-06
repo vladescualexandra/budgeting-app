@@ -170,11 +170,13 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
+    AlertDialog themeDialog;
+
     private View.OnClickListener themeEventListener() {
         return v -> {
             CharSequence[] themes = {getResources().getString(R.string.theme_light), getResources().getString(R.string.theme_dark)};
             int checkedTheme = ThemeManager.getTheme(getApplicationContext()) ? 1 : 0;
-            new AlertDialog.Builder(this)
+            themeDialog = new AlertDialog.Builder(this)
                     .setSingleChoiceItems(themes,
                             checkedTheme, (dialog, which) -> {
 
@@ -187,6 +189,14 @@ public class SettingsActivity extends AppCompatActivity {
                             })
                     .show();
         };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (themeDialog != null && themeDialog.isShowing()) {
+            themeDialog.cancel();
+        }
     }
 
     private View.OnClickListener languageEventListener() {
