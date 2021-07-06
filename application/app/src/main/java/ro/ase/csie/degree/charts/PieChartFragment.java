@@ -54,9 +54,7 @@ public class PieChartFragment extends ChartFragment {
 
     private void buildPieChart(View view) {
         pieChart = view.findViewById(R.id.main_fragment_chart_pie);
-        pieChart.setDrawEntryLabels(false);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.getLegend().setTextColor(getResources().getColor(R.color.rally_white));
+        chartSettings();
 
         this.categoriesMap = buildMap();
         this.pieEntries = buildPieEntries();
@@ -67,6 +65,12 @@ public class PieChartFragment extends ChartFragment {
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
+    }
+
+    private void chartSettings() {
+        pieChart.setDrawEntryLabels(false);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setTextColor(getTextColor());
     }
 
 

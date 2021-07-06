@@ -50,9 +50,7 @@ public class BarChartFragment extends ChartFragment {
 
     private void buildBarChart(View view) {
         barChart = view.findViewById(R.id.main_fragment_chart_bar);
-        barChart.getDescription().setEnabled(false);
-        barChart.getLegend().setEnabled(true);
-        barChart.getLegend().setTextColor(getResources().getColor(R.color.rally_white));
+        chartSettings();
 
         this.map = buildMap();
         this.barEntries = buildEntries();
@@ -68,6 +66,18 @@ public class BarChartFragment extends ChartFragment {
 
         barChart.setData(barData);
         barChart.invalidate();
+    }
+
+    private void chartSettings() {
+        barChart.getDescription().setEnabled(false);
+        barChart.getLegend().setEnabled(true);
+        barChart.getLegend().setTextColor(getTextColor());
+        barChart.getXAxis().setTextColor(getTextColor());
+        barChart.getXAxis().setGridColor(getTextColor());
+        barChart.getAxisLeft().setTextColor(getTextColor());
+        barChart.getAxisLeft().setGridColor(getTextColor());
+        barChart.getAxisRight().setTextColor(getTextColor());
+        barChart.getAxisRight().setGridColor(getTextColor());
     }
 
     private ArrayList<BarEntry> buildEntries() {

@@ -48,9 +48,7 @@ public class LineChartFragment extends ChartFragment {
 
     private void buildLineChart(View view) {
         lineChart = view.findViewById(R.id.main_fragment_chart_line);
-        lineChart.getDescription().setEnabled(false);
-        lineChart.getLegend().setEnabled(false);
-        lineChart.getLegend().setTextColor(getResources().getColor(R.color.rally_white));
+        chartSettings();
 
         this.entries = buildEntries();
 
@@ -59,6 +57,18 @@ public class LineChartFragment extends ChartFragment {
 
         lineChart.setData(lineData);
         lineChart.invalidate();
+    }
+
+    private void chartSettings() {
+        lineChart.getDescription().setEnabled(false);
+        lineChart.getLegend().setEnabled(false);
+        lineChart.getLegend().setTextColor(getTextColor());
+        lineChart.getXAxis().setTextColor(getTextColor());
+        lineChart.getXAxis().setGridColor(getTextColor());
+        lineChart.getAxisLeft().setTextColor(getTextColor());
+        lineChart.getAxisLeft().setGridColor(getTextColor());
+        lineChart.getAxisRight().setTextColor(getTextColor());
+        lineChart.getAxisRight().setGridColor(getTextColor());
     }
 
     private List<Entry> buildEntries() {

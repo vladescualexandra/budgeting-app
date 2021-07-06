@@ -72,7 +72,7 @@ public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
                         transaction.getBalance_from());
                 addBalance(childList,
                         R.string.row_item_transaction_expand_balance_to,
-                        transaction.getBalance_from());
+                        transaction.getBalance_to());
             }
             this.expandableDetails.put(transaction, childList);
         }
