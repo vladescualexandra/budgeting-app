@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -15,6 +16,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.allyants.notifyme.NotifyMe;
+
+import java.util.Calendar;
 
 import ro.ase.csie.degree.MainActivity;
 import ro.ase.csie.degree.R;
@@ -210,10 +215,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     private CompoundButton.OnCheckedChangeListener remindersEventListener() {
         return (buttonView, isChecked) -> {
+            Notifications notifications;
             if (isChecked) {
-                Notifications.scheduleNotification(this);
+                notifications = new Notifications(getApplicationContext());
             } else {
-                Notifications.cancelNotification(this);
+                notifications = null;
             }
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
