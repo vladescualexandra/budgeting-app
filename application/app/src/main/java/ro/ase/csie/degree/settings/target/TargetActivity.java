@@ -1,13 +1,19 @@
 package ro.ase.csie.degree.settings.target;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,33 +26,15 @@ import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.util.Streak;
 
 public class TargetActivity extends AppCompatActivity {
 
-    /*
-     * TARGET
-     * * Period of time: Current month (edit maybe?)
-     * * MAX SPENDINGS: 80%          GRAFIC DEMONSTRATIV
-     * * SAVINGS: 20%
-     * ********* edit
-     *
-     * The actual case:
-     * Spendings: x %
-     *
-     * You spent x.xx out of y.yy.
-     * You have z.zz to spend before reaching your targeted limit.
-     *
-     *   GRAFIC DEMONSTRATIV
-     *
-     * */
 
-
+    TextView tv_current_balance;
+    TextView tv_initial_balance;
     TextView tv_target_spendings;
-    TextView tv_target_savings;
-
-    TextView tv_actual_spendings_percentage;
-    TextView tv_actual_spendings;
+    TextView tv_current_spendings;
+    Button btn_change_target;
 
     Target target;
     TransactionService transactionService;
@@ -66,10 +54,36 @@ public class TargetActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
+        btn_change_target = findViewById(R.id.target_change_target);
+        btn_change_target.setOnClickListener(changeTargetEventListener());
+        tv_current_spendings = findViewById(R.id.target_current_spendings);
+        tv_current_balance = findViewById(R.id.target_current_balance);
+        tv_initial_balance = findViewById(R.id.target_initial_balance);
         tv_target_spendings = findViewById(R.id.target_target_spendings);
-        tv_target_savings = findViewById(R.id.target_target_savings);
-        tv_actual_spendings_percentage = findViewById(R.id.target_actual_spendings_percentage);
-        tv_actual_spendings = findViewById(R.id.target_actual_spendings);
+    }
+
+    private View.OnClickListener changeTargetEventListener() {
+        return v -> {
+            if (target != null) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(TargetActivity.this);
+                alert.setTitle(getResources().getString(R.string.change_target));
+                final EditText input = new EditText(getApplicationContext());
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                input.setRawInputType(Configuration.KEYBOARD_12KEY);
+                alert.setView(input);
+                alert.setPositiveButton(getResources().getString(R.string.ok), (dialog, whichButton) -> {
+                    float percent = Float.parseFloat(input.getText().toString());
+                    if (percent > 0 && percent < 100) {
+                        target.changeTarget(percent);
+                        updateTarget();
+                    } else {
+
+                    }
+                });
+                alert.setNegativeButton(getResources().getString(R.string.cancel), null);
+                alert.show();
+            }
+        };
     }
 
     private void setTarget() {
@@ -87,14 +101,29 @@ public class TargetActivity extends AppCompatActivity {
 
     private void updateTarget() {
         target.update();
+        displayText();
+        setChart();
+    }
 
-        tv_target_spendings.setText("SPENDINGS: " + Target.TARGET_SPENDINGS  + " %");
-        tv_target_savings.setText("SAVINGS: " + Target.TARGET_SAVINGS + "%");
-        tv_actual_spendings_percentage.setText("Spendings: " + target.getSpendingsPercent() + "%");
-        tv_actual_spendings.setText("You spent " + target.getSpendings() + " out of " + target.getTargetSpendings());
+    private void displayText() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        String initial_balance_amount = df.format(target.getInitialBalance());
+        String target_spendings_amount = df.format(target.getTargetSpendings());
+        String target_spendins_percent = df.format(Target.TARGET_SPENDINGS) + "%";
+        String current_spendings_amount = df.format(target.getSpendings());
+        String current_spendings_percent = df.format(target.getSpendingsPercent()) + "%";
 
-        setTargetChart();
-        setActualChart();
+        String inital_balance = getResources().getString(R.string.target_initial_balance, target.getInitialBalance());
+        String current_balance = getResources().getString(R.string.target_current_balance, target.getCurrentBalance());
+        String target_spendings = getResources().getString(R.string.target_target_spendings,
+                target_spendings_amount, initial_balance_amount, target_spendins_percent);
+        String current_spendings = getResources().getString(R.string.target_current_spendings,
+                current_spendings_amount, current_spendings_percent, target_spendings_amount, target_spendins_percent);
+
+        tv_initial_balance.setText(inital_balance);
+        tv_current_balance.setText(current_balance);
+        tv_target_spendings.setText(target_spendings);
+        tv_current_spendings.setText(current_spendings);
     }
 
     private Callback<List<Transaction>> getAllTransactionsCallback() {
@@ -117,18 +146,8 @@ public class TargetActivity extends AppCompatActivity {
         };
     }
 
-
-    private void setTargetChart() {
-        Fragment fragment = new TargetChartFragment(target.buildTargetMap());
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.target_frame_chart_target, fragment)
-                .commitAllowingStateLoss();
-    }
-
-    private void setActualChart() {
-        Fragment fragment = new ActualChartFragment(target.buildActualMap());
+    private void setChart() {
+        Fragment fragment = new ActualChartFragment(target.buildMap());
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()

@@ -2,7 +2,6 @@ package ro.ase.csie.degree.settings.target;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +25,6 @@ public class Target {
     private Context context;
     private List<Transaction> transactionList;
     private List<Balance> balancesList;
-    private Map<String, Float> targetMap = new HashMap<>();
     private Map<String, Float> actualMap = new HashMap<>();
 
 
@@ -62,9 +60,10 @@ public class Target {
         this.target_spendings = (TARGET_SPENDINGS / 100) * this.initial_balance;
     }
 
-    public static void changeTarget(int value) {
+    public void changeTarget(float value) {
         TARGET_SPENDINGS = value;
         TARGET_SAVINGS = 100 - TARGET_SPENDINGS;
+        persist();
     }
 
     private void persist() {
@@ -74,18 +73,12 @@ public class Target {
         editor.apply();
     }
 
-    private int getUserTargetSpendings() {
+    private float getUserTargetSpendings() {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_TARGET, Context.MODE_PRIVATE);
-        return prefs.getInt(PREFS_TARGET_SPENDINGS, -1);
+        return prefs.getFloat(PREFS_TARGET_SPENDINGS, -1.0f);
     }
 
-    public Map<String, Float> buildTargetMap() {
-        this.targetMap.put(Targets.SPENDINGS.toString(), TARGET_SPENDINGS);
-        this.targetMap.put(Targets.SAVINGS.toString(), TARGET_SAVINGS);
-        return this.targetMap;
-    }
-
-    public Map<String, Float> buildActualMap() {
+    public Map<String, Float> buildMap() {
         this.actualMap.put(Targets.SPENDINGS.toString(), spendings);
         this.actualMap.put(Targets.SAVINGS.toString(), savings);
         return this.actualMap;
@@ -93,7 +86,6 @@ public class Target {
 
     public float getSpendingsValue() {
         float spendings = 0.0f;
-
         for (Transaction transaction : transactionList) {
             if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
                 spendings += transaction.getAmount();
@@ -110,17 +102,9 @@ public class Target {
         return amount;
     }
 
-    public float getPercentage() {
-        return getSpendingsValue() / (getBalancesValue() + getSpendingsValue());
-    }
-
-    public float getActualTargetSpendings() {
-        return (TARGET_SPENDINGS / 100) * (getBalancesValue() + getSpendingsValue());
-    }
-
     public void update() {
         calcs();
-        buildActualMap();
+        buildMap();
     }
 
     public float getTargetSpendings() {

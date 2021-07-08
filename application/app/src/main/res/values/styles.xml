@@ -6,12 +6,11 @@
         <item name="cornerRadius">0dp</item>
     </style>
 
-
     <style name="image_button">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:padding">10sp</item>
     </style>
-    
+
     <style name="settings_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="textAllCaps">false</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
@@ -74,6 +73,10 @@
         <item name="android:textSize">16sp</item>
         <item name="autoSizeTextType">uniform</item>
         <item name="android:textColor">@color/rally_white</item>
+    </style>
+
+    <style name="target_text">
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

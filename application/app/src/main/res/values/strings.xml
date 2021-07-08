@@ -13,6 +13,7 @@
     <string name="placeholder_balance">placeholder_balance</string>
     <string name="placeholder_amount">placeholder_amount</string>
 
+    <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
     <string name="search">Search</string>
@@ -127,12 +128,9 @@
     <string name="target">Target</string>
 
     <!--    Target-->
-    <string name="target_target_header">TARGET</string>
-    <string name="target_actual_header">ACTUAL</string>
-    <string name="target_target_time_period">Period of time: current month</string>
-    <string name="target_target_spendings">SPENDINGS: %d \%</string>
-    <string name="target_target_savings">string %s</string>
-    <string name="target_actual_spendings_percentage">Actual spendings: %.2f %</string>
-    <string name="target_actual_spendings">You spent %.2f out of %.2f.</string>
-
+    <string name="target_initial_balance">Initial balance: %.2f</string>
+    <string name="target_current_balance">Current balance: %.2f</string>
+    <string name="target_target_spendings">Target spendings: %s out of %s (%s)</string>
+    <string name="target_current_spendings">This month you spent %s (%s) out of %s (%s)</string>
+    <string name="change_target">Change target</string>
 </resources>
