@@ -3,6 +3,7 @@ package ro.ase.csie.degree.charts;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.firebase.services.CategoryService;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 
@@ -27,9 +30,8 @@ public class PieChartFragment extends ChartFragment {
     private Map<String, Float> categoriesMap;
     private ArrayList<PieEntry> pieEntries;
     private PieChart pieChart;
-    private ArrayList<Integer> colors = new ArrayList<>();
+    private List<Integer> colors = new ArrayList<>();
 
-    private HashMap<Integer, Float> colorsMap = new HashMap<>();
 
     public PieChartFragment() {
         super();
@@ -93,18 +95,33 @@ public class PieChartFragment extends ChartFragment {
                         Float newValue = (currentValue != null ? currentValue : 0.0f)
                                 + (float) transaction.getAmount();
                         source.put(key, newValue);
-                        this.colorsMap.put(color, newValue);
                     } else {
                         source.put(key, (float) transaction.getAmount());
-                        this.colorsMap.put(color, (float) transaction.getAmount());
                     }
                 }
             }
-
-
-            this.colors = sortByValue(this.colorsMap);
+            this.colors = getCategoriesColors(source, this.transactionList);
             return source;
         }
+    }
+
+    private List<Integer> getCategoriesColors(Map<String, Float> source,
+                                              List<Transaction> transactions) {
+        List<Integer> colorsList = new ArrayList<>();
+        if (source != null || !source.isEmpty()) {
+            for (String key : source.keySet()) {
+                for (int i = 0; i < transactions.size(); i++) {
+                    if (key.equals(transactions.get(i).getCategory().getName())) {
+                        int id = transactions.get(i).getCategory().getColor();
+                        int color = getResources().getColor(id);
+                        if (!colorsList.contains(color)) {
+                            colorsList.add(color);
+                        }
+                    }
+                }
+            }
+        }
+        return colorsList;
     }
 
     private ArrayList<PieEntry> buildPieEntries() {
@@ -118,17 +135,5 @@ public class PieChartFragment extends ChartFragment {
             }
             return pieEntries;
         }
-    }
-
-    private ArrayList<Integer> sortByValue(HashMap<Integer, Float> source) {
-        List<Map.Entry<Integer, Float>> list = new ArrayList<>(source.entrySet());
-        Collections.sort(list, (e1, e2) -> (e1.getValue().compareTo(e2.getValue())));
-        Collections.reverse(list);
-
-        for (Map.Entry<Integer, Float> entry : list) {
-            this.colors.add(getResources().getColor(entry.getKey()));
-        }
-
-        return this.colors;
     }
 }
