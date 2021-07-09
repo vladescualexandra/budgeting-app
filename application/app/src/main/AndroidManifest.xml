@@ -22,14 +22,14 @@
         <activity android:name=".settings.ContactActivity" />
         <activity android:name=".settings.ConverterActivity" />
         <activity android:name=".settings.CurrencyActivity" />
-        <activity android:name=".AddTransactionActivity" />
+        <activity android:name=".main.AddTransactionActivity" />
         <activity android:name=".settings.balances.AddBalanceActivity" />
         <activity android:name=".settings.balances.BalancesActivity" />
         <activity android:name=".settings.categories.AddCategoryActivity" />
         <activity android:name=".settings.categories.CategoriesActivity" />
         <activity android:name=".settings.SettingsActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
@@ -39,7 +39,7 @@
         </activity>
         <activity android:name=".authentication.LoginActivity" />
         <activity android:name=".authentication.RegisterActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

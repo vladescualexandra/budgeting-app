@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util.language;
+package ro.ase.csie.degree.settings.language;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,8 +9,6 @@ import android.preference.PreferenceManager;
 
 
 import java.util.Locale;
-
-import ro.ase.csie.degree.util.language.Languages;
 
 public class LanguageManager {
 

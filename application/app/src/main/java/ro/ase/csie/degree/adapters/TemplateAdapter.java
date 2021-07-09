@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import ro.ase.csie.degree.AddTransactionActivity;
+import ro.ase.csie.degree.main.AddTransactionActivity;
 import ro.ase.csie.degree.util.CustomDialog;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.services.TemplateService;

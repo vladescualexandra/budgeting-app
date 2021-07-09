@@ -1,13 +1,6 @@
-package ro.ase.csie.degree.util.notifications;
+package ro.ase.csie.degree.settings.notifications;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-
-import androidx.core.app.NotificationCompat;
 
 import com.allyants.notifyme.NotifyMe;
 

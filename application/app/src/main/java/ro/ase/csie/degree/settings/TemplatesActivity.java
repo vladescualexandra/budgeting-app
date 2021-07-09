@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.ase.csie.degree.AddTransactionActivity;
+import ro.ase.csie.degree.main.AddTransactionActivity;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.adapters.TemplateAdapter;
 import ro.ase.csie.degree.async.Callback;

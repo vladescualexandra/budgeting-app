@@ -1,7 +1,6 @@
 package ro.ase.csie.degree.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,9 +17,6 @@ import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
 import ro.ase.csie.degree.model.TransactionType;
 import ro.ase.csie.degree.util.DateConverter;
-import ro.ase.csie.degree.util.language.LanguageManager;
-import ro.ase.csie.degree.util.language.Languages;
-import ro.ase.csie.degree.util.theme.ThemeManager;
 
 public class TransactionExpandableAdapter extends BaseExpandableListAdapter {
 

@@ -1,4 +1,4 @@
-package ro.ase.csie.degree;
+package ro.ase.csie.degree.main;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,14 +10,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.adapters.TransactionExpandableAdapter;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.DateDisplayType;
@@ -31,8 +30,8 @@ import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.CustomDialog;
 import ro.ase.csie.degree.util.DateConverter;
 import ro.ase.csie.degree.util.Streak;
-import ro.ase.csie.degree.util.language.LanguageManager;
-import ro.ase.csie.degree.util.theme.ThemeManager;
+import ro.ase.csie.degree.settings.language.LanguageManager;
+import ro.ase.csie.degree.settings.theme.ThemeManager;
 
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;

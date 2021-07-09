@@ -1,4 +1,4 @@
-package ro.ase.csie.degree;
+package ro.ase.csie.degree.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,14 +6,11 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -21,11 +18,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
-import ro.ase.csie.degree.firebase.FirebaseService;
 import ro.ase.csie.degree.firebase.services.BalanceService;
 import ro.ase.csie.degree.firebase.services.CategoryService;
-import ro.ase.csie.degree.firebase.services.TransactionService;
 import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Category;
 import ro.ase.csie.degree.model.Transaction;

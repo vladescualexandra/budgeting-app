@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
-import ro.ase.csie.degree.util.theme.ThemeManager;
+import ro.ase.csie.degree.settings.theme.ThemeManager;
 
 public abstract class ChartFragment extends Fragment {
 

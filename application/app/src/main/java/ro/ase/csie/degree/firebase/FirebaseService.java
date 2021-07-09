@@ -4,7 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import ro.ase.csie.degree.SplashActivity;
+import ro.ase.csie.degree.main.SplashActivity;
 
 public class FirebaseService<T extends FirebaseObject> {
     public static final String ATTRIBUTE_USER = "user";

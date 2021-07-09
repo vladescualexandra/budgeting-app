@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ro.ase.csie.degree.MainActivity;
+import ro.ase.csie.degree.main.MainActivity;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.util.InputValidation;
 

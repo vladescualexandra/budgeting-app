@@ -4,16 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import java.io.Serializable;
-
-import ro.ase.csie.degree.MainActivity;
-import ro.ase.csie.degree.SplashActivity;
+import ro.ase.csie.degree.main.MainActivity;
+import ro.ase.csie.degree.main.SplashActivity;
 import ro.ase.csie.degree.async.Callback;
 import ro.ase.csie.degree.firebase.FirebaseObject;
 import ro.ase.csie.degree.firebase.services.AccountService;

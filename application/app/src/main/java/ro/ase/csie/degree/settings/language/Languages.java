@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util.language;
+package ro.ase.csie.degree.settings.language;
 
 public enum Languages {
 

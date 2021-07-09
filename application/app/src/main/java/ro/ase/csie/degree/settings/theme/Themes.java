@@ -1,4 +1,4 @@
-package ro.ase.csie.degree.util.theme;
+package ro.ase.csie.degree.settings.theme;
 
 public enum Themes {
 

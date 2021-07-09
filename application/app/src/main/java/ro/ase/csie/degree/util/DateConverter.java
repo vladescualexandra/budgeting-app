@@ -9,8 +9,7 @@ import java.util.Date;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.DateDisplayType;
-import ro.ase.csie.degree.util.language.LanguageManager;
-import ro.ase.csie.degree.util.language.Languages;
+import ro.ase.csie.degree.settings.language.LanguageManager;
 
 public class DateConverter {
 

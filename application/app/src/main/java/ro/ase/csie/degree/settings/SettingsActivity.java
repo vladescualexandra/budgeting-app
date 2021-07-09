@@ -15,20 +15,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-import ro.ase.csie.degree.MainActivity;
+import ro.ase.csie.degree.main.MainActivity;
 import ro.ase.csie.degree.R;
 
-import ro.ase.csie.degree.SplashActivity;
+import ro.ase.csie.degree.main.SplashActivity;
 import ro.ase.csie.degree.settings.target.TargetActivity;
 import ro.ase.csie.degree.authentication.GoogleAuthentication;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.settings.balances.BalancesActivity;
 import ro.ase.csie.degree.settings.categories.CategoriesActivity;
-import ro.ase.csie.degree.util.language.LanguageManager;
-import ro.ase.csie.degree.util.language.Languages;
-import ro.ase.csie.degree.util.notifications.Notifications;
+import ro.ase.csie.degree.settings.language.LanguageManager;
+import ro.ase.csie.degree.settings.language.Languages;
+import ro.ase.csie.degree.settings.notifications.Notifications;
 import ro.ase.csie.degree.util.Streak;
-import ro.ase.csie.degree.util.theme.ThemeManager;
+import ro.ase.csie.degree.settings.theme.ThemeManager;
 
 public class SettingsActivity extends AppCompatActivity {
 

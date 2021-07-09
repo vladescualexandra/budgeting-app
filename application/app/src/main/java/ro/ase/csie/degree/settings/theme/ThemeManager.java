@@ -1,14 +1,10 @@
-package ro.ase.csie.degree.util.theme;
+package ro.ase.csie.degree.settings.theme;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
-
-import ro.ase.csie.degree.util.theme.Themes;
 
 public class ThemeManager {
 
