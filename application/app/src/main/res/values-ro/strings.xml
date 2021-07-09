@@ -134,5 +134,6 @@
     <string name="target_target_spendings">Cheltuieli dorite: %s out of %s (%s)</string>
     <string name="target_current_spendings">Luna aceasta ai cheltuit %s (%s) din %s (%s)</string>
     <string name="change_target">Schimbă procentul cheltuielilor</string>
+    <string name="target_change_target_error">Trebuie să introduci un procent între 0 și 100.</string>
 
 </resources>

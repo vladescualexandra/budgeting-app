@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
         boolean isNightTheme = ThemeManager.getTheme(getApplicationContext());
         String language = LanguageManager.getSelectedLanguage(getApplicationContext());
-        Log.e("onCreate", "isNight: " + isNightTheme + "/ lang: " + language);
     }
 
     private void displayStreakDays() {

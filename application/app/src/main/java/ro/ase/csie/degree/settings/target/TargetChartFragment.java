@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -16,23 +15,22 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.charts.ChartFragment;
 
-public class ActualChartFragment extends ChartFragment {
+public class TargetChartFragment extends ChartFragment {
 
     private Map<String, Float> actualMap;
     private PieChart pieChart;
     private ArrayList<PieEntry> pieEntries;
 
 
-    public ActualChartFragment() {
+    public TargetChartFragment() {
     }
 
-    public ActualChartFragment(Map<String, Float> actualMap) {
+    public TargetChartFragment(Map<String, Float> actualMap) {
         this.actualMap = actualMap;
     }
 
@@ -40,7 +38,7 @@ public class ActualChartFragment extends ChartFragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_actual_chart, container, false);
+        View view = inflater.inflate(R.layout.fragment_target_chart, container, false);
 
         if (this.actualMap != null && !this.actualMap.isEmpty()) {
             buildPieChart(view);

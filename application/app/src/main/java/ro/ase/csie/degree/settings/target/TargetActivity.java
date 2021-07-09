@@ -7,11 +7,15 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -28,7 +32,6 @@ import ro.ase.csie.degree.model.Balance;
 import ro.ase.csie.degree.model.Transaction;
 
 public class TargetActivity extends AppCompatActivity {
-
 
     TextView tv_current_balance;
     TextView tv_initial_balance;
@@ -67,23 +70,37 @@ public class TargetActivity extends AppCompatActivity {
             if (target != null) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(TargetActivity.this);
                 alert.setTitle(getResources().getString(R.string.change_target));
-                final EditText input = new EditText(getApplicationContext());
+                final TextInputEditText input = new TextInputEditText(TargetActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                 input.setRawInputType(Configuration.KEYBOARD_12KEY);
                 alert.setView(input);
                 alert.setPositiveButton(getResources().getString(R.string.ok), (dialog, whichButton) -> {
-                    float percent = Float.parseFloat(input.getText().toString());
-                    if (percent > 0 && percent < 100) {
-                        target.changeTarget(percent);
-                        updateTarget();
+                    if (input.getText() != null && !input.getText().toString().isEmpty()) {
+                        float percent = Float.parseFloat(input.getText().toString());
+                        if (percent > 0 && percent < 100) {
+                            target.changeTarget(percent);
+                            updateTarget();
+                        } else {
+                            displayChangeTargetError();
+                        }
                     } else {
-
+                        displayChangeTargetError();
                     }
+
                 });
                 alert.setNegativeButton(getResources().getString(R.string.cancel), null);
                 alert.show();
             }
         };
+    }
+
+    private void displayChangeTargetError() {
+        new Handler().postDelayed(() -> {
+            View parentLayout = findViewById(android.R.id.content);
+            Snackbar.make(parentLayout,
+                    getResources().getString(R.string.target_change_target_error),
+                    BaseTransientBottomBar.LENGTH_LONG).show();
+        }, 0);
     }
 
     private void setTarget() {
@@ -147,7 +164,7 @@ public class TargetActivity extends AppCompatActivity {
     }
 
     private void setChart() {
-        Fragment fragment = new ActualChartFragment(target.buildMap());
+        Fragment fragment = new TargetChartFragment(target.buildMap());
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
