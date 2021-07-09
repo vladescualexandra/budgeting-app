@@ -30,7 +30,7 @@ public abstract class ChartFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            transactionList = getArguments().getParcelableArrayList(TRANSACTIONS);
+            this.transactionList = getArguments().getParcelableArrayList(TRANSACTIONS);
         }
     }
 

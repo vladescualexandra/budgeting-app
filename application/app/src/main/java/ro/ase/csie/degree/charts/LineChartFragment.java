@@ -36,7 +36,9 @@ public class LineChartFragment extends ChartFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_line_chart, container, false);
 
         if (this.transactionList != null && !this.transactionList.isEmpty()) {
@@ -53,7 +55,10 @@ public class LineChartFragment extends ChartFragment {
         this.entries = buildEntries();
 
         LineDataSet lineDataSet = new LineDataSet(this.entries, "");
+        lineDataSet.setValueTextSize(14.0f);
+        lineDataSet.setValueTextColor(getTextColor());
         LineData lineData = new LineData(lineDataSet);
+
 
         lineChart.setData(lineData);
         lineChart.invalidate();

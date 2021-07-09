@@ -35,9 +35,10 @@ public class TargetChartFragment extends ChartFragment {
     }
 
     @Nullable
-    @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_target_chart, container, false);
 
         if (this.actualMap != null && !this.actualMap.isEmpty()) {
@@ -55,6 +56,8 @@ public class TargetChartFragment extends ChartFragment {
 
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
         pieDataSet.setColors(getColors());
+        pieDataSet.setValueTextSize(14.0f);
+        pieDataSet.setValueTextColor(getResources().getColor(R.color.rally_white));
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
@@ -74,7 +77,9 @@ public class TargetChartFragment extends ChartFragment {
             return new ArrayList<>();
         } else {
             for (String key : this.actualMap.keySet()) {
-                pieEntries.add(new PieEntry(this.actualMap.get(key), key));
+                if (this.actualMap.get(key) != null) {
+                    pieEntries.add(new PieEntry(this.actualMap.get(key), key));
+                }
             }
             return pieEntries;
         }

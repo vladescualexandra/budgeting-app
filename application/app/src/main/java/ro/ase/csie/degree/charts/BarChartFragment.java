@@ -39,7 +39,9 @@ public class BarChartFragment extends ChartFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
         if (this.transactionList != null && !this.transactionList.isEmpty()) {
             buildBarChart(view);
@@ -60,7 +62,10 @@ public class BarChartFragment extends ChartFragment {
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "");
         barDataSet.setColors(this.colors);
-        barDataSet.setValueTextColor(getResources().getColor(R.color.rally_white));
+        barDataSet.setValueTextSize(14.0f);
+        barDataSet.setValueTextColor(getTextColor());
+
+
 
         BarData barData = new BarData(barDataSet);
 

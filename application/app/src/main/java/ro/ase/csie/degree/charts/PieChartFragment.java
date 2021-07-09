@@ -61,6 +61,8 @@ public class PieChartFragment extends ChartFragment {
 
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
         pieDataSet.setColors(this.colors);
+        pieDataSet.setValueTextSize(14.0f);
+        pieDataSet.setValueTextColor(getResources().getColor(R.color.rally_white));
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
