@@ -1,5 +1,6 @@
 package ro.ase.csie.degree.settings;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,7 @@ import java.util.List;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
+import ro.ase.csie.degree.main.MainActivity;
 import ro.ase.csie.degree.model.Account;
 import ro.ase.csie.degree.model.Currency;
 import ro.ase.csie.degree.network.CurrenciesManager;
@@ -64,12 +66,13 @@ public class CurrencyActivity extends AppCompatActivity {
 
     private AdapterView.OnItemClickListener setCurrency() {
         return (parent, view, position, id) -> {
-
             currency = filteredList.get(position);
-            Log.e("test", currency.toString());
-
             Account.getInstance().setCurrency(currency);
             Account.updateAccount();
+
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+
         };
     }
 
@@ -104,16 +107,24 @@ public class CurrencyActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filteredList = filter(s);
-                ArrayAdapter adapter = (ArrayAdapter) lv_currencies.getAdapter();
-                adapter.notifyDataSetChanged();
-                Log.e("test", filteredList.toString());
+                if (s.toString().isEmpty()) {
+                    filteredList.clear();
+                    filteredList.addAll(currencyList);
+                } else {
+                    filteredList = filter(s);
+                }
+                notifyAdapter();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         };
+    }
+
+    private void notifyAdapter() {
+        ArrayAdapter adapter = (ArrayAdapter) lv_currencies.getAdapter();
+        adapter.notifyDataSetChanged();
     }
 
     public List<Currency> filter(CharSequence filter) {

@@ -44,7 +44,6 @@ public class AccountService {
     }
 
     public void getAccount(final Callback<Account> callback, String email) {
-        Log.e("FirebaseService", "getAccount: " + email);
         Query query =
                 firebaseService
         .getDatabase()
