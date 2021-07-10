@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.model.Transaction;
+import ro.ase.csie.degree.settings.language.LanguageManager;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -32,10 +33,10 @@ public class InputValidation {
         String name = tiet.getText().toString().trim();
 
         if (name.length() < MINIMUM_NUMBER_OF_CHARACTERS_NAME || name.length() > MAXIMUM_NUMBER_OF_CHARACTERS_NAME) {
-            tiet.setError(context.getString(R.string.error_invalid_name_length));
+            tiet.setError(context.getResources().getString(R.string.error_invalid_name_length));
             return false;
         } else if (!isMatching(REGEX_ONLY_LETTERS, name)) {
-            tiet.setError(context.getString(R.string.error_invalid_name_not_letters));
+            tiet.setError(context.getResources().getString(R.string.error_invalid_name_not_letters));
             return false;
         } else {
             tiet.setError(null);
@@ -60,7 +61,7 @@ public class InputValidation {
             tiet.setError(null);
             return true;
         } else {
-            tiet.setError(context.getString(R.string.error_invalid_email));
+            tiet.setError(context.getResources().getString(R.string.error_invalid_email));
             return false;
         }
 
@@ -74,7 +75,7 @@ public class InputValidation {
             tiet.setError(null);
             return true;
         } else {
-            tiet.setError(context.getString(R.string.error_invalid_password));
+            tiet.setError(context.getResources().getString(R.string.error_invalid_password));
             return false;
         }
     }
@@ -103,7 +104,7 @@ public class InputValidation {
             tiet.setError(null);
             return true;
         } else {
-            tiet.setError(context.getString(R.string.error_invalid_amount));
+            tiet.setError(context.getResources().getString(R.string.error_invalid_amount));
             return false;
         }
     }
@@ -205,7 +206,7 @@ public class InputValidation {
             tiet.setError(null);
             return true;
         } else {
-            tiet.setError(context.getString(R.string.error_invalid_amount));
+            tiet.setError(context.getResources().getString(R.string.error_invalid_amount));
             return false;
         }
     }

@@ -43,10 +43,10 @@ public class AddBalanceActivity extends AppCompatActivity {
 
     private View.OnClickListener saveBalanceEventListener() {
         return v -> {
-            if (InputValidation.nameValidation(getApplicationContext(), tiet_name)) {
+            if (InputValidation.nameValidation(getBaseContext(), tiet_name)) {
                 balance = new Balance();
                 balance.setName(tiet_name.getText().toString().trim());
-                if (InputValidation.availableAmountValidation(getApplicationContext(), tiet_amount)) {
+                if (InputValidation.availableAmountValidation(getBaseContext(), tiet_amount)) {
                     balance.setAvailable_amount(Double.parseDouble(tiet_amount.getText().toString().trim()));
                     saveBalance();
                 }

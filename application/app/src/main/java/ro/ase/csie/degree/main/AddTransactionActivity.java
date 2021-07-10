@@ -297,7 +297,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private View.OnClickListener saveTransactionEventListener() {
         return v -> {
 
-            if (InputValidation.amountValidation(getApplicationContext(), tiet_amount)) {
+            if (InputValidation.amountValidation(getBaseContext(), tiet_amount)) {
 
                 buildTransaction();
 
@@ -311,12 +311,12 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private boolean validate(int id, Transaction transaction) {
         if (id == R.id.add_transaction_type_expense) {
-            return InputValidation.expenseValidation(getApplicationContext(), transaction);
+            return InputValidation.expenseValidation(getBaseContext(), transaction);
         } else if (id == R.id.add_transaction_type_income) {
-            return InputValidation.incomeValidation(getApplicationContext(), transaction);
+            return InputValidation.incomeValidation(getBaseContext(), transaction);
         } else {
             transaction.setCategory(Transfer.getTransferCategory());
-            return InputValidation.transferValidation(getApplicationContext(), transaction);
+            return InputValidation.transferValidation(getBaseContext(), transaction);
         }
     }
 
@@ -325,7 +325,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             transaction.setDetails(tiet_details.getText().toString().trim());
         }
 
-        if (InputValidation.amountValidation(getApplicationContext(), tiet_amount)) {
+        if (InputValidation.amountValidation(getBaseContext(), tiet_amount)) {
             double amount = Double.parseDouble(tiet_amount.getText().toString());
             transaction.setAmount(amount);
         }

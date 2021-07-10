@@ -83,7 +83,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private View.OnClickListener saveCategoryEventListener() {
         return v -> {
-            if (InputValidation.nameValidation(getApplicationContext(), tiet_name)) {
+            if (InputValidation.nameValidation(getBaseContext(), tiet_name)) {
                 category.setName(tiet_name.getText().toString().trim());
 
                 if (isExpense) {

@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class ConverterActivity extends AppCompatActivity {
 
     private View.OnClickListener convertEventListener() {
         return v -> {
-            if (InputValidation.amountValidation(getApplicationContext(), tiet_amount_from)) {
+            if (InputValidation.amountValidation(getBaseContext(), tiet_amount_from)) {
                 double amount_from = Double.parseDouble(tiet_amount_from.getText().toString().trim());
                 String from = ((Currency) spn_currency_from.getSelectedItem()).getCode();
                 String to = ((Currency) spn_currency_to.getSelectedItem()).getCode();
@@ -81,7 +82,8 @@ public class ConverterActivity extends AppCompatActivity {
                     double rate = object.getDouble(node);
                     double amount_to = rate * amount_from;
 
-                    tv_amount_to.setText(String.valueOf(amount_to));
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    tv_amount_to.setText(df.format(amount_to));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

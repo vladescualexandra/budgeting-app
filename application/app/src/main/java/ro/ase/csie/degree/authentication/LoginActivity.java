@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private View.OnClickListener resetPasswordEventListener() {
         return v -> {
-            if (InputValidation.emailValidation(getApplicationContext(), tiet_email)) {
+            if (InputValidation.emailValidation(getBaseContext(), tiet_email)) {
                 emailAuthentication.resetPassword(tiet_email.getText().toString().trim());
             }
         };
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private boolean validate() {
-        return InputValidation.loginValidation(getApplicationContext(), tiet_email, tiet_password);
+        return InputValidation.loginValidation(getBaseContext(), tiet_email, tiet_password);
     }
 
     @Override
