@@ -22,6 +22,10 @@
     <string name="save_transaction">Salvează tranzacție</string>
     <string name="save_template">Salvează șablon</string>
 
+    <string name="expense">Cheltuieli</string>
+    <string name="income">Venit</string>
+    <string name="transfer">Transfer</string>
+
 
     <!--    Authentication-->
     <string name="name">Nume</string>

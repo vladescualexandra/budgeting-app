@@ -21,6 +21,10 @@
     <string name="save_transaction">Save transaction</string>
     <string name="save_template">Save template</string>
 
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="transfer">Transfer</string>
+
 
     <!--    Authentication-->
     <string name="name">Name</string>

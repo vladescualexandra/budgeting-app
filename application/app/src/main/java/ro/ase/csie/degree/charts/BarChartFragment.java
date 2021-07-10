@@ -65,8 +65,6 @@ public class BarChartFragment extends ChartFragment {
         barDataSet.setValueTextSize(14.0f);
         barDataSet.setValueTextColor(getTextColor());
 
-
-
         BarData barData = new BarData(barDataSet);
 
         barChart.setData(barData);
@@ -101,24 +99,31 @@ public class BarChartFragment extends ChartFragment {
     }
 
     private HashMap<String, Float> buildMap() {
-        map.put(TransactionType.EXPENSE.toString(), 0.0f);
-        map.put(TransactionType.INCOME.toString(), 0.0f);
-        map.put(TransactionType.TRANSFER.toString(), 0.0f);
+        map.put(getResources().getString(R.string.expense), 0.0f);
+        map.put(getResources().getString(R.string.income), 0.0f);
+        map.put(getResources().getString(R.string.transfer), 0.0f);
+
+        String key;
 
         if (transactionList != null && !transactionList.isEmpty()) {
             for (Transaction transaction : transactionList) {
-                String key = transaction.getCategory().getType().toString();
-                if (map.containsKey(key)) {
-                    float old_value = map.get(key);
-                    float new_value = old_value + (float) transaction.getAmount();
-                    map.put(key, new_value);
+                if (transaction.getCategory().getType().equals(TransactionType.EXPENSE)) {
+                    key = getResources().getString(R.string.expense);
+                } else if (transaction.getCategory().getType().equals(TransactionType.INCOME)) {
+                    key = getResources().getString(R.string.income);
+                } else {
+                    key = getResources().getString(R.string.transfer);
                 }
 
+                float old_value = map.get(key);
+                float new_value = old_value + (float) transaction.getAmount();
+                map.put(key, new_value);
             }
         }
 
         return this.map;
     }
+
 
     private ArrayList<LegendEntry> buildLegend() {
         if (this.map.isEmpty()) {
@@ -129,11 +134,11 @@ public class BarChartFragment extends ChartFragment {
         for (String key : this.map.keySet()) {
             int color = R.color.rally_white;
 
-            if (key.equals(TransactionType.EXPENSE.toString())) {
+            if (key.equals(getResources().getString(R.string.expense))) {
                 color = R.color.rally_red;
-            } else if (key.equals(TransactionType.INCOME.toString())) {
+            } else if (key.equals(getResources().getString(R.string.income))) {
                 color = R.color.rally_dark_green;
-            } else if (key.equals(TransactionType.TRANSFER.toString())) {
+            } else if (key.equals(getResources().getString(R.string.transfer))) {
                 color = R.color.color_26;
             }
             LegendEntry entry = buildLegendEntry(key, color);
