@@ -2,7 +2,7 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16sp">
+    android:padding="8sp">
 
     <RadioButton
         android:id="@+id/row_item_template_category_type"

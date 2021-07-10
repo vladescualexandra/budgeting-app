@@ -72,6 +72,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         intent = getIntent();
         Transaction transaction = intent.getParcelableExtra(TemplatesActivity.USE_TEMPLATE);
 
+
         boolean isTemplate = intent.getBooleanExtra(TemplatesActivity.NEW_TEMPLATE, false);
         if (isTemplate) {
             btn_save.setText(R.string.save_template);
@@ -83,6 +84,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             this.transaction.setId(null);
             isTransaction = true;
         }
+
+        setCurrentDate();
     }
 
     private int getCategoryPosition(Category category, List<Category> categories) {
@@ -206,15 +209,17 @@ public class AddTransactionActivity extends AppCompatActivity {
         };
     }
 
-
-    private void initDefaults() {
+    private void setCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-
         transaction.setDate(DateConverter.toDate(day, month, year));
+        btn_date.setText(DateConverter.format(day, month, year));
+    }
 
+    private void initDefaults() {
+        setCurrentDate();
         transaction.getCategory().setType(rg_type.getCheckedRadioButtonId()
                 == R.id.add_transaction_type_expense
                 ? TransactionType.EXPENSE : TransactionType.INCOME);
