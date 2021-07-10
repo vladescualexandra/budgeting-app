@@ -1,9 +1,11 @@
 package ro.ase.csie.degree.model;
 
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class Currency implements Serializable {
+public class Currency implements Serializable, Cloneable {
 
     private int position;
     private String code;
@@ -45,5 +47,16 @@ public class Currency implements Serializable {
     @Override
     public String toString() {
         return this.code + " (" + this.name + ")";
+    }
+
+    @NonNull
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Currency clone = new Currency();
+        clone.code = this.code;
+        clone.name = this.name;
+        clone.symbol = this.symbol;
+        clone.position = this.position;
+        return clone;
     }
 }

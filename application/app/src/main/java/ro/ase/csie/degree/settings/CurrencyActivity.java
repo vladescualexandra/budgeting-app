@@ -1,8 +1,10 @@
 package ro.ase.csie.degree.settings;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +20,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.LongFunction;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.async.Callback;
@@ -35,6 +36,7 @@ public class CurrencyActivity extends AppCompatActivity {
     private ListView lv_currencies;
 
     private List<Currency> currencyList = new ArrayList<>();
+    private List<Currency> filteredList = new ArrayList<>();
     private Currency currency = null;
 
     @Override
@@ -56,14 +58,16 @@ public class CurrencyActivity extends AppCompatActivity {
         lv_currencies = findViewById(R.id.currency_list);
         lv_currencies.setOnItemClickListener(setCurrency());
 
-
         lv_currencies.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         lv_currencies.setSelector(R.color.rally_dark_green);
     }
 
     private AdapterView.OnItemClickListener setCurrency() {
         return (parent, view, position, id) -> {
-            currency = currencyList.get(position);
+
+            currency = filteredList.get(position);
+            Log.e("test", currency.toString());
+
             Account.getInstance().setCurrency(currency);
             Account.updateAccount();
         };
@@ -73,7 +77,7 @@ public class CurrencyActivity extends AppCompatActivity {
         ArrayAdapter<Currency> adapter = new ArrayAdapter<>
                 (getApplicationContext(),
                         R.layout.row_item_currency,
-                        currencyList);
+                        filteredList);
         lv_currencies.setAdapter(adapter);
     }
 
@@ -82,6 +86,8 @@ public class CurrencyActivity extends AppCompatActivity {
             if (result != null) {
                 currencyList.clear();
                 currencyList = CurrencyJSONParser.getCurrencies(result);
+                filteredList.clear();
+                filteredList.addAll(currencyList);
                 setAdapter();
             }
         };
@@ -95,16 +101,29 @@ public class CurrencyActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filteredList = filter(s);
                 ArrayAdapter adapter = (ArrayAdapter) lv_currencies.getAdapter();
-                adapter.getFilter().filter(s);
+                adapter.notifyDataSetChanged();
+                Log.e("test", filteredList.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         };
+    }
+
+    public List<Currency> filter(CharSequence filter) {
+        filteredList.clear();
+        for (Currency currency : currencyList) {
+            if (currency.getCode().toLowerCase().contains(filter.toString().toLowerCase())
+                    || currency.getName().toLowerCase().contains(filter.toString().toLowerCase())) {
+                filteredList.add(currency);
+            }
+        }
+        return filteredList;
     }
 }
