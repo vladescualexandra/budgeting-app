@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_ADD_TRANSACTION = 201;
     private static final int SNACKBAR_DELAY = 2000;
+    private static int COUNT = 0;
+
 
     private ImageButton ib_refresh;
     private TextView tv_date_filter;
@@ -80,11 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
         initComponents();
         setDefaultDate();
+        if (COUNT == 0) {
+            displayStreakDays();
+        }
 
-        displayStreakDays();
-
-        boolean isNightTheme = ThemeManager.getTheme(getApplicationContext());
-        String language = LanguageManager.getSelectedLanguage(getApplicationContext());
     }
 
     private void displayStreakDays() {
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     getResources().getString(R.string.settings_account_streak, Streak.days),
                     BaseTransientBottomBar.LENGTH_LONG).show();
         }, SNACKBAR_DELAY);
+        COUNT++;
     }
 
     private void setDefaultDate() {

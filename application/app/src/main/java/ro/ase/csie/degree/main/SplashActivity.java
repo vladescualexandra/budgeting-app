@@ -6,8 +6,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.rbddevs.splashy.Splashy;
 
 import ro.ase.csie.degree.R;
@@ -56,4 +59,5 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
         }, DISPLAY_DURATION);
     }
+
 }
