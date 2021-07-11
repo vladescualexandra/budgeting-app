@@ -66,7 +66,7 @@
     <string name="settings_theme">Theme</string>
     <string name="settings_language">Language</string>
     <string name="settings_sign_out">Sign out</string>
-    <string name="settings_contact">Contact</string>
+    <string name="settings_contact">Contact and Credits</string>
     <string name="settings_reminders">Reminders</string>
     <string name="settings_categories">Categories</string>
     <string name="settings_currency">Currency</string>
@@ -138,4 +138,5 @@
     <string name="target_current_spendings">This month you spent %s (%s) out of %s (%s)</string>
     <string name="change_target">Change target</string>
     <string name="target_change_target_error">You need to choose a percentage between 0 and 100.</string>
+    <string name="external_libraries">External libraries:</string>
 </resources>

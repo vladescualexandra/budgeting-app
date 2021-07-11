@@ -1,43 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_margin="16sp"
+    android:orientation="vertical"
+    tools:context=".settings.ContactActivity">
 
-    <LinearLayout
+    <ImageButton
+
+        android:id="@+id/contact_mail"
+        style="@style/image_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".settings.ContactActivity">
+        android:layout_height="75sp"
+        android:layout_margin="15sp"
+        android:scaleType="centerInside"
+        android:src="@drawable/gmail" />
 
-        <ImageButton
+    <ImageButton
+        android:id="@+id/contact_github"
+        style="@style/image_button"
+        android:layout_width="match_parent"
+        android:layout_height="75sp"
+        android:layout_margin="15sp"
+        android:scaleType="centerInside"
+        android:src="@drawable/github" />
 
-            android:id="@+id/contact_mail"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:scaleType="centerInside"
-            android:src="@drawable/gmail"
-            style="@style/image_button"
-            android:layout_margin="50sp"/>
+    <ImageButton
+        android:id="@+id/contact_linkedin"
+        style="@style/image_button"
+        android:layout_width="match_parent"
+        android:layout_height="75sp"
+        android:layout_margin="15sp"
+        android:scaleType="centerInside"
+        android:src="@drawable/linkedin" />
 
-        <ImageButton
-            android:id="@+id/contact_github"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:layout_margin="50sp"
-            style="@style/image_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/github" />
+    <TextView
+        android:layout_marginTop="50sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginLeft="16sp"
+        android:text="@string/external_libraries" />
 
-        <ImageButton
-            android:id="@+id/contact_linkedin"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:layout_margin="50sp"
-            style="@style/image_button"
-            android:scaleType="centerInside"
-            android:src="@drawable/linkedin" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="https://github.com/rahuldange09/Splashy"
+        android:textAlignment="center" />
 
-    </LinearLayout>
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="https://github.com/premkumarroyal/MonthAndYearPicker"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="https://github.com/AnyChart/AnyChart-Android"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="https://github.com/jakebonk/NotifyMe"
+        android:textAlignment="center" />
+
+</LinearLayout>

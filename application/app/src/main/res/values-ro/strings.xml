@@ -66,12 +66,13 @@
     <string name="settings_theme">Temă</string>
     <string name="settings_language">Limbă</string>
     <string name="settings_sign_out">Deconectare</string>
-    <string name="settings_contact">Contact</string>
+    <string name="settings_contact">Contact și Credite</string>
     <string name="settings_reminders">Notificări</string>
     <string name="settings_categories">Categorii</string>
     <string name="settings_currency">Valută</string>
     <string name="settings_converter">Conversie</string>
     <string name="target">Misiune</string>
+    <string name="external_libraries">Librării externe:</string>
 
     <!--    Balances-->
     <string name="balances_total">Balanță totală: %.2f</string>
@@ -91,7 +92,7 @@
     <string name="expense_category_name">Nume categorie cheltuială</string>
     <string name="income_category_name">Nume categorie venit</string>
 
-    <!-- Theme-->
+    <!--    Theme-->
     <string name="theme_light">Luminoasă</string>
     <string name="theme_dark">Întunecată</string>
 
