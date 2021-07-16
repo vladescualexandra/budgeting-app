@@ -1,11 +1,13 @@
 package ro.ase.csie.degree.settings.language;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 import java.util.Locale;
@@ -33,7 +35,6 @@ public class LanguageManager {
 
     public static void getSettings(Context context) {
         setLanguage(context, getSelectedLanguage(context));
-        apply(context);
     }
 
     public static void apply(Context context) {
@@ -46,25 +47,29 @@ public class LanguageManager {
         persist(context, SELECTED_LANGUAGE, language);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, language);
+            context = updateResources(context, language);
+        } else {
+            context = updateResourcesLegacy(context, language);
         }
-        return updateResourcesLegacy(context, language);
+
+        apply(context);
+        return context;
     }
 
+
+    @TargetApi(Build.VERSION_CODES.N)
     private static Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLayoutDirection(locale);
 
-        configuration = context.getResources().getConfiguration();
-        configuration.locale = locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLayoutDirection(locale);
-        }
-
-        return context;
+        return context.createConfigurationContext(configuration);
     }
 
+    @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
@@ -73,12 +78,12 @@ public class LanguageManager {
 
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             configuration.setLayoutDirection(locale);
         }
 
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
         return context;
     }
 

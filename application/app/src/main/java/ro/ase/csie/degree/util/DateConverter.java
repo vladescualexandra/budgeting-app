@@ -6,6 +6,7 @@ import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.firebase.DateDisplayType;
@@ -14,22 +15,10 @@ import ro.ase.csie.degree.settings.language.LanguageManager;
 public class DateConverter {
 
     private static final String DATE_FORMAT = "dd/MM/yyyy";
-    static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+    static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     public static String format(int day, int month, int year) {
         return day + "/" + (month + 1) + "/" + year;
-    }
-
-    public static long toMillis(String date) {
-        if (date != null) {
-            try {
-                Date parsedDate = sdf.parse(date);
-                return parsedDate.getTime();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return -1;
     }
 
     public static String toString(Date date) {

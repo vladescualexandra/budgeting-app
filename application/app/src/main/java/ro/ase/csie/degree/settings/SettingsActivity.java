@@ -49,6 +49,9 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn_contact;
     private Button btn_sign_out;
 
+    private AlertDialog themeDialog;
+    private AlertDialog languageDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         initComponents();
-        setAccount();
+        if (Account.getInstance() != null) {
+            setAccount();
+        }
         initEventListeners();
     }
 
@@ -94,12 +99,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initEventListeners() {
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
+        btn_back.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         });
 
         btn_balances.setOnClickListener(balancesEventListener());
@@ -174,7 +176,6 @@ public class SettingsActivity extends AppCompatActivity {
         };
     }
 
-    AlertDialog themeDialog;
 
     private View.OnClickListener themeEventListener() {
         return v -> {
@@ -193,14 +194,6 @@ public class SettingsActivity extends AppCompatActivity {
                             })
                     .show();
         };
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (themeDialog != null && themeDialog.isShowing()) {
-            themeDialog.cancel();
-        }
     }
 
     private View.OnClickListener languageEventListener() {
@@ -256,4 +249,17 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (themeDialog != null && themeDialog.isShowing()) {
+            themeDialog.cancel();
+        }
+        if (languageDialog != null && languageDialog.isShowing()) {
+            languageDialog.cancel();
+        }
+        finish();
+    }
+
 }

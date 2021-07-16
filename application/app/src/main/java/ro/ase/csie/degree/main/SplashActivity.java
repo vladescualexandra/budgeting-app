@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 
@@ -16,6 +17,7 @@ import com.rbddevs.splashy.Splashy;
 import ro.ase.csie.degree.R;
 import ro.ase.csie.degree.authentication.LoginActivity;
 import ro.ase.csie.degree.model.Account;
+import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.Streak;
 import ro.ase.csie.degree.settings.language.LanguageManager;
 import ro.ase.csie.degree.settings.theme.ThemeManager;
@@ -33,9 +35,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        LanguageManager.getSettings(getBaseContext());
-        ThemeManager.getSettings(getApplicationContext());
-
         KEY = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
                 .getString(Account.USER_KEY, null);
 
@@ -52,8 +51,14 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
             } else {
                 Account.retrieveAccount(getApplicationContext());
-                intent = new Intent(getApplicationContext(), MainActivity.class);
 
+                String selectedLanguage = LanguageManager.getSelectedLanguage(getBaseContext());
+                LanguageManager.setLanguage(getBaseContext(), selectedLanguage);
+                LanguageManager.apply(getBaseContext());
+
+                ThemeManager.getSettings(getApplicationContext());
+
+                intent = new Intent(getApplicationContext(), MainActivity.class);
                 Streak.handleStreak(getApplicationContext());
             }
             startActivity(intent);
