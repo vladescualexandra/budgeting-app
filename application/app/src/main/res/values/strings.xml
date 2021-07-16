@@ -136,7 +136,7 @@
     <string name="target_current_balance">Current balance: %.2f</string>
     <string name="target_target_spendings">Target spendings: %s out of %s (%s)</string>
     <string name="target_current_spendings">This month you spent %s (%s) out of %s (%s)</string>
-    <string name="change_target">Change target</string>
+    <string name="change_target">Change target (percent)</string>
     <string name="target_change_target_error">You need to choose a percentage between 0 and 100.</string>
     <string name="external_libraries">External libraries:</string>
 </resources>
