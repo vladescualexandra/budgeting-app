@@ -11,6 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="16sp"
         android:isScrollContainer="true">
 
         <ImageButton
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foregroundGravity="center"
-            android:padding="16sp"
+            android:padding="18sp"
             android:scaleX="1.5"
             android:scaleY="1.5"
             android:src="@drawable/ic_baseline_save_24"
@@ -51,6 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="4"
+        android:padding="16sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
