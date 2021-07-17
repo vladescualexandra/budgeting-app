@@ -1,6 +1,5 @@
 package ro.ase.csie.degree.settings;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,10 +68,7 @@ public class CurrencyActivity extends AppCompatActivity {
             currency = filteredList.get(position);
             Account.getInstance().setCurrency(currency);
             Account.updateAccount();
-
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-
+            finish();
         };
     }
 
@@ -82,6 +78,13 @@ public class CurrencyActivity extends AppCompatActivity {
                         R.layout.row_item_currency,
                         filteredList);
         lv_currencies.setAdapter(adapter);
+    }
+
+    private void notifyAdapter() {
+        ArrayAdapter adapter = (ArrayAdapter) lv_currencies.getAdapter();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private Callback<String> currenciesCallback() {
@@ -120,11 +123,6 @@ public class CurrencyActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         };
-    }
-
-    private void notifyAdapter() {
-        ArrayAdapter adapter = (ArrayAdapter) lv_currencies.getAdapter();
-        adapter.notifyDataSetChanged();
     }
 
     public List<Currency> filter(CharSequence filter) {

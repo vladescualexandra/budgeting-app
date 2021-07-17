@@ -259,7 +259,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (languageDialog != null && languageDialog.isShowing()) {
             languageDialog.cancel();
         }
-        finish();
+//        finish();
     }
 
 }

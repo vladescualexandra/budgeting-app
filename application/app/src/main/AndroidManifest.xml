@@ -30,6 +30,7 @@
         <activity android:name=".settings.SettingsActivity" />
         <activity
             android:name=".main.MainActivity"
+            android:launchMode="singleInstance"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +40,8 @@
         <activity android:name=".authentication.RegisterActivity" />
         <activity
             android:name=".main.SplashActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

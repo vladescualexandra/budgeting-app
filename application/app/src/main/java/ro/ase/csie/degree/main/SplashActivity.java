@@ -35,6 +35,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        LanguageManager.getSettings(getBaseContext());
+        ThemeManager.getSettings(getApplicationContext());
+
         KEY = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
                 .getString(Account.USER_KEY, null);
 
@@ -51,12 +54,6 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
             } else {
                 Account.retrieveAccount(getApplicationContext());
-
-                String selectedLanguage = LanguageManager.getSelectedLanguage(getBaseContext());
-                LanguageManager.setLanguage(getBaseContext(), selectedLanguage);
-                LanguageManager.apply(getBaseContext());
-
-                ThemeManager.getSettings(getApplicationContext());
 
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 Streak.handleStreak(getApplicationContext());
