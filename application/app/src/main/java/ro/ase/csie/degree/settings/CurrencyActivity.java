@@ -68,7 +68,9 @@ public class CurrencyActivity extends AppCompatActivity {
             currency = filteredList.get(position);
             Account.getInstance().setCurrency(currency);
             Account.updateAccount();
-            finish();
+
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         };
     }
 
@@ -134,5 +136,11 @@ public class CurrencyActivity extends AppCompatActivity {
             }
         }
         return filteredList;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

@@ -40,16 +40,17 @@ public class AccountService {
                 .child(account.getId())
                 .setValue(account);
 
+        Log.e("AccService", account.toString());
         return account;
     }
 
     public void getAccount(final Callback<Account> callback, String email) {
         Query query =
                 firebaseService
-        .getDatabase()
-                .child(Table.USERS.toString())
-                .orderByChild(ATTRIBUTE_EMAIL)
-                .equalTo(email);
+                        .getDatabase()
+                        .child(Table.USERS.toString())
+                        .orderByChild(ATTRIBUTE_EMAIL)
+                        .equalTo(email);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override

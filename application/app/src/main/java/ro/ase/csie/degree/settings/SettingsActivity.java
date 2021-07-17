@@ -247,6 +247,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        finish();
         startActivity(intent);
     }
 
@@ -259,7 +260,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (languageDialog != null && languageDialog.isShowing()) {
             languageDialog.cancel();
         }
-//        finish();
     }
 
 }

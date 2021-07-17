@@ -63,7 +63,7 @@ public class Account extends FirebaseObject implements Cloneable {
 
     public static void updateAccount() {
         AccountService accountService = new AccountService();
-        accountService.upsert(account);
+        account = accountService.upsert(account);
     }
 
     public static void retrieveAccount(Context context) {
