@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LanguageManager.getSettings(MainActivity.this);
+        LanguageManager.apply(MainActivity.this);
+
         initComponents();
         setDefaultDate();
         if (COUNT == 0) {

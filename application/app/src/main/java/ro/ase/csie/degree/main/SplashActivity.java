@@ -35,8 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        LanguageManager.getSettings(getBaseContext());
-        ThemeManager.getSettings(getApplicationContext());
+        ThemeManager.getTheme(getApplicationContext());
 
         KEY = getSharedPreferences(Account.USER_PREFS, MODE_PRIVATE)
                 .getString(Account.USER_KEY, null);
