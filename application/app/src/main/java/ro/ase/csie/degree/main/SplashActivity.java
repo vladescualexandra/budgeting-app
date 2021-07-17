@@ -57,8 +57,13 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 Streak.handleStreak(getApplicationContext());
             }
+            finish();
             startActivity(intent);
         }, DISPLAY_DURATION);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
