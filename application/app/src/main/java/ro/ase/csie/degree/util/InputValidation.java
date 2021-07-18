@@ -18,7 +18,7 @@ public class InputValidation {
     public static int NUMBER_OF_MINIMUM_CHARACTERS_PASSWORD = 6;
 
     public static int MINIMUM_NUMBER_OF_CHARACTERS_NAME = 3;
-    public static int MAXIMUM_NUMBER_OF_CHARACTERS_NAME = 12;
+    public static int MAXIMUM_NUMBER_OF_CHARACTERS_NAME = 20;
 
     public static String REGEX_ONLY_LETTERS = "^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$";
 

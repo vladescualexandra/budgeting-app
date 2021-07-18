@@ -127,7 +127,7 @@
     <string name="error_same_balances_transfer">Balanțele trebuie să fie diferite.</string>
     <string name="error_amount_negative">Valoarea trebuie să fie un număr pozitiv.</string>
     <string name="error_amount_not_available">Sumă indisponibilă.</string>
-    <string name="error_invalid_name_length">Numele trebuie să aibă între 3 și 12 litere.</string>
+    <string name="error_invalid_name_length">Numele trebuie să aibă între 3 și 20 litere.</string>
     <string name="error_invalid_name_not_letters">Numele trebuie să conțină doar litere, numere și spații.</string>
     <string name="error_invalid_amount">Suma disponibilă trebuie să fie mai mare decât 0 și mai mică decât 1 milion.</string>
     <string name="error_invalid_category">Trebuie să selectezi o categorie.</string>
