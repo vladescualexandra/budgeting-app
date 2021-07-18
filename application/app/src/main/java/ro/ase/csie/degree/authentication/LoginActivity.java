@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_SIGN_IN
                 && data != null) {
-            Log.e("LoginActivity", "onActivityResult");
             googleAuthentication.handleSignInResult(data);
         }
     }

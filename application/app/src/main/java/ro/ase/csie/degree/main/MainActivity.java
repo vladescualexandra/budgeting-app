@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int SNACKBAR_DELAY = 2000;
     private static int COUNT = 0;
 
-
     private ImageButton ib_refresh;
     private TextView tv_date_filter;
     private ImageButton btn_settings;

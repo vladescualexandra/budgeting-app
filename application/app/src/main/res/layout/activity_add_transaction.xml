@@ -83,21 +83,18 @@
             android:id="@+id/add_transaction_balance_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16sp"
             android:spinnerMode="dialog" />
 
         <Spinner
             android:id="@+id/add_transaction_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16sp"
             android:spinnerMode="dialog" />
 
         <Spinner
             android:id="@+id/add_transaction_balance_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16sp"
             android:spinnerMode="dialog" />
 
         <Button
