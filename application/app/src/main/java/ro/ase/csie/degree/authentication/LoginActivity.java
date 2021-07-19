@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import ro.ase.csie.degree.main.MainActivity;
 import ro.ase.csie.degree.R;
+import ro.ase.csie.degree.main.SplashActivity;
+import ro.ase.csie.degree.settings.SettingsActivity;
 import ro.ase.csie.degree.util.InputValidation;
 
 import com.google.android.gms.common.SignInButton;
@@ -110,5 +112,24 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SplashActivity.KEY != null) {
+            finish();
+        }
     }
 }

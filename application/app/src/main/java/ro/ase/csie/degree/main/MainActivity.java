@@ -289,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener settingsEventListener() {
         return v -> {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            finish();
             startActivity(intent);
         };
     }

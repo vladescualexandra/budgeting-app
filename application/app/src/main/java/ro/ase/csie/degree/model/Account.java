@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import ro.ase.csie.degree.authentication.LoginActivity;
 import ro.ase.csie.degree.main.MainActivity;
 import ro.ase.csie.degree.main.SplashActivity;
 import ro.ase.csie.degree.async.Callback;
@@ -148,6 +149,8 @@ public class Account extends FirebaseObject implements Cloneable {
         intent.putExtra(USER_KEY, (Parcelable) account);
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+
+
     }
 
     private static void saveKey(Context context) {

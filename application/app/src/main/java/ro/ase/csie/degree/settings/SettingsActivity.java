@@ -59,6 +59,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        Log.e("test", "SettingsActivity - onCreate");
+
         initComponents();
         if (Account.getInstance() != null) {
             setAccount();
